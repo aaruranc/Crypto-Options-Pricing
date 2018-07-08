@@ -11,16 +11,13 @@ if __name__ == '__main__':
     asset = asset + '.csv'
     assetCSV = Path('master_prices') / asset
 
-    csv_file = open(assetCSV)
-    r = csv.reader(csv_file)
-
-    # Standardize dateTime
-    dateTime(assetCSV)
-
-    # Append Price Movements for 1,2,7 and 14-Day & 1,2,6 and 12-Months
-    price_movements(assetCSV)
-    # Append Interest Rates
-    interest_rates(assetCSV)
+    # # Standardize dateTime
+    # dateTime(assetCSV)
+    #
+    # # Append Price Movements for 1,2,7 and 14-Day & 1,2,6 and 12-Months
+    # price_movements(assetCSV)
+    # # Append Interest Rates
+    # interest_rates(assetCSV)
     # Append CCI30 Prices
     CCI30(assetCSV)
 

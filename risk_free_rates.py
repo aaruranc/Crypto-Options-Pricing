@@ -19,7 +19,6 @@ def parse_rates(rates):
         parsed_rates.append(last_rate)
     return parsed_rates
 
-
 def interest_rates(assetCSV):
     rates = get_rates()
     csv_file = open(assetCSV)

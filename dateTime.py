@@ -1,22 +1,37 @@
 import datetime
 import csv
+import sys
+import pandas as pd
 
+def get_info(asset):
+    cols = [0, 1]
+    info = pd.read_csv(asset, usecols=cols)
+    return info
 
-def dateTime(assetCSV)
-    csv_file = open(assetCSV)
-    r = csv.reader(csv_file)
+def dateTime(asset):
+    info = get_info(asset)
+    # print(info)
+    updated_info = []
 
     HARDCODE = "str"
-    r = []
 
-
-    counter = 0
-    for row in r:
-        if counter == 7
+    count = 0
+    for row in info:
+        if count == 7:
             break
 
-        w = csv.writer(csv_file)
+        date = info['Date'][count]
+        print(date)
 
-        print(row[])
+        datetime.
 
-        counter = counter + 1
+        strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+
+        count = count + 1
+    # out = open(assetCSV, 'w')
+    # csv_out = csv.writer(out)
+    # csv_out.writerows(rows_to_write)
+
+
+if __name__ == '__main__':
+    dateTime('test.csv')

@@ -9,9 +9,16 @@ def get_rates():
     return metrics
 
 def index_values(assetCSV):
-    values = get_rates()
+    metrics = get_rates()
+    csv_file = open(assetCSV)
+    r = csv.reader(csv_file)
+    row0 = next(r)
+    row0.append("CCI30 Open")
+    row0.append("CCI30 High")
+    row0.append("CCI30 Low")
+    row0.append("CCI30 Close")
+    rows_to_write = [row0]
 
-    csv_index = open("CCI30/CCI30.csv")
 
 
 if __name__ == '__main__':

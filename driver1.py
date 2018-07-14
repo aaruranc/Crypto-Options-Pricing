@@ -1,12 +1,11 @@
 import sys
-# import matlab.engine
-import csv
+import os
 import pandas as pd
 from pathlib import Path
 from date import standardize_date, start_date
 from price_history import price_movements
 from risk_free import interest_rates
-# from deterministic_volatility import volatilities
+from CCI30 import index_vals
 
 if __name__ == '__main__':
     asset = sys.argv[1]
@@ -20,22 +19,28 @@ if __name__ == '__main__':
     start = start_date(assetCSV)
     print(asset + ' ' + 'Start Date is:')
     print(start)
-    # Append Price Movements for 1,2,3,5,6,7,8,9,10,11,12,13 and 14-Day & 1,2,3,6 and 12-Months & 1, 1.5, and 2-Years
-    print('Calculating Price Movements...')
-    step_2 = price_movements(step_1)
-    print('Price Movements Have Been Appended')
-    # Append Interest Rates
-    print('Appending Historical Interest Rates')
-    step_3 = interest_rates(step_2)
-    print(step_3)
+    # Append Movements & Volatilities for 1,2,3,5,6,7,8,9,10,11,12,13,14-Day & 1,2,3,6,12-Months & 1,1.5,2-Years
+    print('Calculating Price Movements and Volatilities...')
+    step_2 = price_movements(step_1, start)
+    print('Price Movements and Volatilities Have Been Appended')
+    # Append Interest Rates for 1,3 and 6-Month & 11 and 2-Year U.S. Treasury Bills
+    print('Appending Historical Interest Rates...')
+    step_3 = interest_rates(step_2, start)
     print('Interest Rates Have Been Appended')
-    # Append CCI30 Prices
-    # step_4 = CCI30(step_3)
-    #
-    # # Append Deterministic Volatility Measures
-    # step_5 = volatilities(step_4)
-    #
-    # # Generate New csv
-    # newCSV = Path('pricing') / asset / 'historical.csv'
-    # step_5.to_csv(newCSV)
+    # Append CCI30 Data
+    print('Appending CCI30 Index...')
+    step_4 = index_vals(step_3, start)
+    print('CCI30 Index Appended')
+    print(step_4)
+    # Generate New csv
+    print('Generating New .csv File...')
+    newDir = Path('pricing') / asset
+    newCSV = newDir / 'historical.csv'
+    os.makedirs(newDir)
+    step_4.to_csv(newCSV)
+    print('New .csv File Generated')
+    print('File is located at:')
+    print(newCSV)
+    next_command = 'Use next driver w/ command: python driver2.py' + ' ' + asset
+    print(next_command)
 

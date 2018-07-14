@@ -2,6 +2,7 @@ import math
 from collections import  OrderedDict
 import pandas as pd
 
+
 def parse_rates(rates):
     parsed_rates = []
     last_rate = None
@@ -13,7 +14,8 @@ def parse_rates(rates):
         parsed_rates.append(last_rate)
     return parsed_rates
 
-def interest_rates(step_2):
+
+def interest_rates(step_2, start):
     cols = [0, 1, 2, 3, 4, 5]
     rates = pd.read_csv("risk_free_rates.csv", usecols=cols)
 
@@ -21,7 +23,7 @@ def interest_rates(step_2):
                    '2 Year Treasury Bill']
     headers = OrderedDict.fromkeys(header_tags, [])
     df = pd.DataFrame.from_dict(headers)
-    dict = {}
+    d = {}
 
     weekday = 0
     numskips = 0
@@ -38,10 +40,7 @@ def interest_rates(step_2):
             count = series - skipped
             weekday = weekday + 1
         for val in header_tags:
-            dict.update({val: rates[val][count]})
-        df = df.append(dict, ignore_index=True)
+            d.update({val: rates[val][count]})
+        df = df.append(d, ignore_index=True)
     step_3 = pd.concat([step_2, df], axis=1)
-    return (step_3)
-
-if __name__ == '__main__':
-    interest_rates()
+    return step_3

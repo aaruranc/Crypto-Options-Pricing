@@ -2,15 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5341665-55de-4ace-9f7b-19b54456ff7f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/options_pricer/driver1/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/pricing/module_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Crypto-Options-Pricing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Crypto-Options-Pricing.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CCI30.py" beforeDir="false" afterPath="$PROJECT_DIR$/CCI30.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CCI30/CCI30.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CCI30/CCI30.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/date.py" beforeDir="false" afterPath="$PROJECT_DIR$/date.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deterministic_volatility.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver1.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/price_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/price_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pricing/BTC.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk_free.py" beforeDir="false" afterPath="$PROJECT_DIR$/risk_free.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BTC.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CCI30.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_scraping/BTC_historical.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/date.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dateTime" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/historical.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/price_history.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk_free.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk_free_rates.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.csv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,44 +30,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="driver1.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/driver1.py">
+      <file leaf-file-name="scratch_11.py" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_11.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="405">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BTC_historical.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_scraping/BTC_historical.py">
+      <file leaf-file-name="backend.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/backend.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="22" selection-start-line="7" selection-end-line="8" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="date.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/date.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="19" selection-start-column="19" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="price_history.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/price_history.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="757">
-              <caret line="77" column="67" lean-forward="true" selection-start-line="77" selection-start-column="67" selection-end-line="77" selection-end-column="67" />
+            <state relative-caret-position="148">
+              <caret line="29" selection-start-line="29" selection-end-line="36" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -66,41 +51,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="risk_free.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/risk_free.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-              <folding>
-                <element signature="e#1#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CCI30.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CCI30.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="driver2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/driver2.py">
+      <file leaf-file-name="7-Day.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/7-Day.csv">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
+      <file leaf-file-name="module_2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="module_1.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="393" selection-start-line="393" selection-end-line="462" selection-end-column="63" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>next</find>
       <find>step_1</find>
+      <find>str</find>
+      <find>libor_date</find>
+      <find>return 0</find>
+      <find>print</find>
+      <find>prin</find>
+      <find>drop</find>
+      <find>1-wee</find>
+      <find>fro</find>
+      <find>to_csv</find>
+      <find>volatilit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -125,17 +124,36 @@
         <option value="$PROJECT_DIR$/risk_free_rates.py" />
         <option value="$PROJECT_DIR$/one_year_price_movements.py" />
         <option value="$PROJECT_DIR$/deterministic_volatility.py" />
-        <option value="$PROJECT_DIR$/driver2.py" />
         <option value="$PROJECT_DIR$/date.py" />
-        <option value="$PROJECT_DIR$/risk_free.py" />
-        <option value="$PROJECT_DIR$/driver1.py" />
-        <option value="$PROJECT_DIR$/price_history.py" />
+        <option value="$PROJECT_DIR$/code/driver1/__init__.py" />
+        <option value="$PROJECT_DIR$/options_pricer/driver1/risk_free.py" />
+        <option value="$PROJECT_DIR$/options_pricer/driver1/CCI30.py" />
+        <option value="$PROJECT_DIR$/options_pricer/driver1/__init__.py" />
+        <option value="$PROJECT_DIR$/options_pricer/__init__.py" />
         <option value="$PROJECT_DIR$/CCI30.py" />
+        <option value="$PROJECT_DIR$/price_history.py" />
+        <option value="$PROJECT_DIR$/vanilla_black_scholes.py" />
+        <option value="$PROJECT_DIR$/driver3.py" />
+        <option value="$PROJECT_DIR$/black_scholes.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_11.py" />
+        <option value="$PROJECT_DIR$/driver2.py" />
+        <option value="$PROJECT_DIR$/driver1.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_12.py" />
+        <option value="$PROJECT_DIR$/risk_free.py" />
+        <option value="$PROJECT_DIR$/normalize_date.py" />
+        <option value="$PROJECT_DIR$/code/risk_free.py" />
+        <option value="$PROJECT_DIR$/backend.py" />
+        <option value="$PROJECT_DIR$/web/bl.py" />
+        <option value="$PROJECT_DIR$/code/price_history.py" />
+        <option value="$PROJECT_DIR$/web/backend.py" />
+        <option value="$PROJECT_DIR$/web/module_2.py" />
+        <option value="$PROJECT_DIR$/web/pricing/module_2.py" />
+        <option value="$PROJECT_DIR$/web/pricing/module_1.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1074" />
+    <option name="width" value="1421" />
     <option name="height" value="895" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -146,31 +164,41 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Crypto-Options-Pricing" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Crypto-Options-Pricing" type="462c0819:PsiDirectoryNode" />
+              <item name="Options-Pricing-Webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Options-Pricing-Webapp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Crypto-Options-Pricing" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Crypto-Options-Pricing" type="462c0819:PsiDirectoryNode" />
-              <item name="data_scraping" type="462c0819:PsiDirectoryNode" />
+              <item name="Options-Pricing-Webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Options-Pricing-Webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="code" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Crypto-Options-Pricing" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Options-Pricing-Webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Options-Pricing-Webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Options-Pricing-Webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Options-Pricing-Webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="pricing" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/Aaruran/Documents/GitHub/Options-Pricing-Webapp/code/price_history.py" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -228,10 +256,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1074" height="895" extended-state="0" />
+    <frame x="0" y="0" width="1421" height="895" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.096834265" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17522871" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.11449452" />
@@ -274,139 +302,12 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="7" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/driver1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/date.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/risk_free.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="31" selection-end-column="26" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CCI30.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/price_history.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/driver1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="11" column="4" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/risk_free.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="57" column="4" lean-forward="true" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="36" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CCI30.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/price_history.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dateTime.py" />
-    <entry file="file://$PROJECT_DIR$/driver1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dateTime.py" />
-    <entry file="file://$PROJECT_DIR$/CCI30.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/price_history.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/risk_free.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/price_history.py" />
+    <entry file="file://$PROJECT_DIR$/risk_free.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -424,13 +325,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BTC.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BTC.csv" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -445,13 +340,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dateTime">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dateTime" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_7.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -475,67 +364,128 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deterministic_volatility.py">
+    <entry file="file://$PROJECT_DIR$/deterministic_volatility.py" />
+    <entry file="file://$PROJECT_DIR$/data_scraping/BTC_historical.py" />
+    <entry file="file://$PROJECT_DIR$/date.py" />
+    <entry file="file://$PROJECT_DIR$/code/driver1/CCI30.py" />
+    <entry file="file://$PROJECT_DIR$/code/driver1/driver1.py" />
+    <entry file="file://$PROJECT_DIR$/code/driver1/driver2.py" />
+    <entry file="file://$PROJECT_DIR$/code/driver1/risk_free.py" />
+    <entry file="file://$PROJECT_DIR$/code/driver1/price_history.py" />
+    <entry file="file://$PROJECT_DIR$/options_pricer/driver1/risk_free.py" />
+    <entry file="file://$PROJECT_DIR$/options_pricer/driver1/CCI30.py" />
+    <entry file="file://$PROJECT_DIR$/options_pricer/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/options_pricer/driver1/normalize_date.py" />
+    <entry file="file://$PROJECT_DIR$/options_pricer/driver1/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/driver2.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/date.py">
+    <entry file="file://$PROJECT_DIR$/CCI30.py" />
+    <entry file="file://$PROJECT_DIR$/driver3.py" />
+    <entry file="file://$PROJECT_DIR$/price_history.py" />
+    <entry file="file://$PROJECT_DIR$/black_scholes.py" />
+    <entry file="file://$PROJECT_DIR$/driver2.py" />
+    <entry file="file://$PROJECT_DIR$/driver1.py" />
+    <entry file="file://$PROJECT_DIR$/code/normalize_date.py" />
+    <entry file="file://$PROJECT_DIR$/risk_free.py" />
+    <entry file="file://$PROJECT_DIR$/normalize_date.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        <state relative-caret-position="495">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/risk_free.py">
+    <entry file="file://$PROJECT_DIR$/code/risk_free.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-5">
+          <caret line="35" column="34" lean-forward="true" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_scraping/BTC_historical.py">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_12.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="22" selection-start-line="7" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="480">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/driver1.py">
+    <entry file="file://$PROJECT_DIR$/backend.py" />
+    <entry file="file://$PROJECT_DIR$/code/driver2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        <state relative-caret-position="60">
+          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/price_history.py">
+    <entry file="file://$PROJECT_DIR$/web/bl.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/price_history.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="757">
-          <caret line="77" column="67" lean-forward="true" selection-start-line="77" selection-start-column="67" selection-end-line="77" selection-end-column="67" />
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CCI30.py">
+    <entry file="file://$PROJECT_DIR$/code/driver1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="27" />
+        <state relative-caret-position="690">
+          <caret line="46" column="17" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_11.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/module_2.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/7-Day.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/backend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="29" selection-start-line="29" selection-end-line="36" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="393" selection-start-line="393" selection-end-line="462" selection-end-column="63" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

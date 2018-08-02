@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- Custom CSS -->
+    <link href="css/analysis.css" rel="stylesheet">
+    
+<div class="col-md-12">
+    <p>Select which types of options you wish to investigate. All combinations of choices per eachcategory will be computed and analyzed. Beware of the curse of dimensionality.</p>
+</div>
+    
+<h2>Option Length</h2>
+<form action="/action_page.php" method="get">
+    <input type="checkbox" name="vehicle" value="1">1 Day<br>
+    <input type="checkbox" name="vehicle" value="2">2 Days<br>        
+    <input type="checkbox" name="vehicle" value="3">3 Days<br>
+    <input type="checkbox" name="vehicle" value="4">4 Days<br>
+    <input type="checkbox" name="vehicle" value="5">5 Days<br>
+    <input type="checkbox" name="vehicle" value="6">6 Days<br>
+    <input type="checkbox" name="vehicle" value="7">7 Days<br>
+    <input type="checkbox" name="vehicle" value="8">8 Days<br>
+    <input type="checkbox" name="vehicle" value="9">9 Days<br>
+    <input type="checkbox" name="vehicle" value="10">10 Days<br>
+    <input type="checkbox" name="vehicle" value="11">11 Days<br>
+    <input type="checkbox" name="vehicle" value="12">12 Days<br>
+    <input type="checkbox" name="vehicle" value="13">13 Days<br>
+    <input type="checkbox" name="vehicle" value="14">14 Days<br>
+    <br> 
+    <input type="checkbox" name="vehicle" value="30">1 Month<br>
+    <input type="checkbox" name="vehicle" value="60">2 Months<br>
+    <input type="checkbox" name="vehicle" value="90">3 Months<br>
+    <input type="checkbox" name="vehicle" value="120">4 Months<br>
+    <input type="checkbox" name="vehicle" value="150">5 Months<br>
+    <input type="checkbox" name="vehicle" value="180">6 Months<br>
+    <br>
+    <input type="checkbox" name="vehicle" value="365">1 Year<br>
+    <input type="checkbox" name="vehicle" value="545">1.5 Years<br>
+    <input type="checkbox" name="vehicle" value="730">2 Years<br>
+</form>
+
+<h2>Strike Price (as a percent of Spot Price)</h2>
+<form action="/action_page.php" method="get">
+    <input type="checkbox" name="vehicle" value="1">90%<br>
+    <input type="checkbox" name="vehicle" value="2">91%<br>
+    <input type="checkbox" name="vehicle" value="3">92%<br>
+    <input type="checkbox" name="vehicle" value="4">93%<br>
+    <input type="checkbox" name="vehicle" value="1">94%<br>
+    <input type="checkbox" name="vehicle" value="2">95%<br>
+    <input type="checkbox" name="vehicle" value="3">96%<br>
+    <input type="checkbox" name="vehicle" value="4">97%<br>
+    <input type="checkbox" name="vehicle" value="1">98%<br>
+    <input type="checkbox" name="vehicle" value="2">99%<br>
+    <input type="checkbox" name="vehicle" value="3">100%<br>
+    <input type="checkbox" name="vehicle" value="4">101%<br>
+    <input type="checkbox" name="vehicle" value="3">102%<br>
+    <input type="checkbox" name="vehicle" value="4">103%<br>
+    <input type="checkbox" name="vehicle" value="3">104%<br>
+    <input type="checkbox" name="vehicle" value="4">105%<br>
+    <input type="checkbox" name="vehicle" value="4">106%<br>
+    <input type="checkbox" name="vehicle" value="3">107%<br>
+    <input type="checkbox" name="vehicle" value="4">108%<br>
+    <input type="checkbox" name="vehicle" value="3">109%<br>
+    <input type="checkbox" name="vehicle" value="4">110%<br>
+</form>
+
+<h2>Trading Strategies</h2>
+<form action="/action_page.php" method="get">
+    <input type="checkbox" name="vehicle" value="1">Calls<br>
+    <input type="checkbox" name="vehicle" value="2">Puts<br>
+    <br>
+    <input type="checkbox" name="vehicle" value="3">Bear Spreads<br>
+    <input type="checkbox" name="vehicle" value="4">Box Spreads<br>
+    <input type="checkbox" name="vehicle" value="1">Butterfly Spreads<br>
+    <input type="checkbox" name="vehicle" value="2">Calendar Spreads<br>
+    <input type="checkbox" name="vehicle" value="3">Straddles<br>
+    <input type="checkbox" name="vehicle" value="4">Straps<br>
+    <input type="checkbox" name="vehicle" value="1">Strips<br>
+    <input type="checkbox" name="vehicle" value="2">Strangles<br>
+</form>
+<br>
+
+<h2>Pricing Methods</h2>
+<form action="/action_page.php" method="get">
+    <input type="checkbox" name="vehicle" value="1">Vanilla Black-Scholes<br>
+    <input type="checkbox" name="vehicle" value="2">Heston<br>
+    <input type="checkbox" name="vehicle" value="3">Garch(1,1)<br>
+    <input type="checkbox" name="vehicle" value="3">Garch(1,2)<br>
+    <input type="checkbox" name="vehicle" value="4">Jump Diffusion<br>
+</form>
+<br>
+    
+<button id="final_submit"><a href="index.html">SUBMIT</a></button>
+
+</body>
+</html>

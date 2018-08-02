@@ -1,0 +1,29 @@
+#title{
+    justify-content: center;
+    margin-left: 38%;
+}
+
+#how-to{
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+#upload{
+    margin-left: 50%;
+/*    margin-top: 170px;*/
+}
+
+#input_table{
+}
+
+#file_display{
+    margin-top: 5px;
+}
+
+#next{
+/*    margin-left: 100%*/
+}
+
+input.default{
+    color: gray;
+}

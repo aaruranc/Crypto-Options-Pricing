@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Custom CSS -->
+<link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">
+<!--    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">-->
+    
+    <style>
+</style>
+    
+</head>
+    
+<body>
+<header>
+    <h1 id="title">Options-Pricer</h1>
+</header>
+    
+<h1>'AAPL'</h1>    
+<button class="collapsible">Create New Visualization</button>
+    <div class="content">
+        <form action="http://action.com" method="post">
+            <h3>Pricing Methodology</h3>
+            <select size="1" name="method">
+                <option value="B-S">Black-Scholes
+                </option>
+                <option value="GARCH(1,1)">GARCH(1,1)
+                </option>
+                <option value="GARCH(1,2)">GARCH(1,2)
+                </option>
+                <option value="NGARCH">NGARCH
+                </option>
+                <option value="Jump Diffusion">Jump Diffusion
+                </option>
+                <option value="10-Step Binomial">10-Step Binomial
+                </option>
+            </select>
+            <h3>Trading Strategy</h3>
+            <select size="1" name="trading_strategy">
+                <option value="Calls">Calls
+                </option>
+                <option value="Puts">Puts
+                </option>
+                <option value="Straddles">Straddles
+                </option>
+                <option value="Bear-Spreads-A">Bear Spreads: Aggressive
+                </option>
+                <option value="Bear-Spreads-P">Bear Spreads:  Passive
+                </option>
+                <option value="Bull-Spreads-A">Bull Spreads: Aggressive
+                </option>
+                <option value="Bull-Spreads-P">Bull Spreads:  Passive
+                </option>
+<!--
+                <option value="Box Spreads">Box Spreads
+                </option>
+                <option value="Butterfly Spreads">Butterfly Spreads
+                </option>
+                <option value="Calendar Spreads">Calendar Spreads
+                </option>
+                <option value="Straddles">Straddles
+                </option>
+                <option value="Straps">Straps
+                </option>
+                <option value="Strips">Strips
+                </option>
+                <option value="Strangles">Strangles
+                </option>
+-->
+            </select>
+            <h3>Option Length</h3>
+            <select size="1" name="option_length" >
+                <option value="1" selected="selected">1-Day
+                </option>
+                <option value="2">2-Day
+                </option>
+                <option value="3">3-Day
+                </option>
+                <option value="4">4-Day
+                </option>
+                <option value="5">5-Day
+                </option>
+                <option value="6">6-Day
+                </option>
+                <option value="7">7-Day
+                </option>
+                <option value="8">8-Day
+                </option>
+                <option value="9">9-Day
+                </option>
+                <option value="10">10-Day
+                </option>
+                <option value="11">11-Day
+                </option>
+                <option value="12">12-Day
+                </option>
+                <option value="13">13-Day
+                </option>
+                <option value="14">14-Day
+                </option>
+                <option value="30">1-Month
+                </option>
+                <option value="60">2-Month
+                </option>
+                <option value="90">3-Month
+                </option>
+                <option value="120">4-Month
+                </option>
+                <option value="150">5-Month
+                </option>
+                <option value="180">6-Month
+                </option>
+                <option value="365">1-Year
+                </option>
+            </select>
+            <h3>Strike Price (as Percentage of Spot Price)</h3>
+            <select size="1" name="strike">
+                <option value="90" selected="selected">90%
+                </option>
+                <option value="91">91%
+                </option>
+                <option value="92">92%
+                </option>
+                <option value="93">93%
+                </option>
+                <option value="94">94%
+                </option>
+                <option value="95">95%
+                </option>
+                <option value="96">96%
+                </option>
+                <option value="97">97%
+                </option>
+                <option value="98">98%
+                </option>
+                <option value="99">99%
+                </option>
+                <option value="100">100%
+                </option>
+                <option value="101">101%
+                </option>
+                <option value="102">102%
+                </option>
+                <option value="103">103%
+                </option>
+                <option value="104">104%
+                </option>
+                <option value="105">105%
+                </option>
+                <option value="106">106%
+                </option>
+                <option value="107">107%
+                </option>
+                <option value="108">108%
+                </option>
+                <option value="109">109%
+                </option>
+                <option value="110">110%
+                </option>
+            </select>
+            <br>
+            <br>
+            <button>Generate</button>
+        </form>
+        <br>
+    </div>
+
+<button class="collapsible">Asset Price Evolution</button>
+    <div class="content">
+        <br>
+
+        <br>
+    </div>
+    
+<!--
+<button class="collapsible">Calls - 1 Month - 90% Strike </button>
+    <div class="content">
+        <br>
+        <h2>Option Price Evolution</h2>
+        <h2>Volatility Evolution</h2>
+        <h2>Day-to-Day ROI</h2>
+        <h2>Historical Payoffs</h2>
+        <br>
+    </div>
+-->
+    
+<!--
+<button class="collapsible">Selected Options</button>
+    <div class="content col-md-3">
+        <p>Bull Spreads — 14 Day — 100% Strike</p>
+        <p>Calendar Spreads — 14 Day — 90% Strike</p>
+    </div>
+-->
+    
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
+</body>
+</html>
+

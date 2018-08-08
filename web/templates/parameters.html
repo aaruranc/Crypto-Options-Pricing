@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Options-Pricer</title>
+    
+<!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+<!-- Custom CSS -->
+<link rel="stylesheet" type = "text/css" href={{ url_for('static', filename='parameters.css') }}>
+<!--<link rel="stylesheet" type = "text/css" href="../static/index.css">-->
+    
+<!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Uncial+Antiqua" rel="stylesheet">
+    
+<!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+    
+<body>
+<header>
+    <h1 id="title">Options-Pricer</h1>
+</header>
+    
+<div id="container">   
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <p>Please make sure that initial parameters match uploaded file.</p>   
+
+        <form action= {{ url_for('analysis') }} method="post">
+            <h4>Asset Name</h4>
+            <input class="default" type="text" name="asset" value="AAPL">
+            <br>
+            <h4>Date Format</h4>
+            <input class="default" type="text" name="format" value="">
+            <br>
+            <h4>Start Date</h4>
+            <input class="default" type="text" name="start" value="aa-bb-cccc">
+            <br>
+            <h4>End Date</h4>
+            <input class="default" type="text" name="end" value="xx-yy-zzzz">
+            <br>
+            <h4>Trading Days</h4>
+            <select size="1" name="trading_days">
+                <option value="weekdays" selected="selected">Mo-Tu-We-Th-Fr
+                </option>
+                <option value="weekends">Mo-Tu-We-Th-Fr-Sa-Su
+                </option>
+            </select>
+            <br>
+            <br>
+            <button id="next">Next</button>
+        </form>
+        <br>
+    </div>
+
+    
+</div>
+    
+</body>        
+</html>

@@ -2,24 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5341665-55de-4ace-9f7b-19b54456ff7f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/options_pricer/driver1/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/pricing/module_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Crypto-Options-Pricing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Crypto-Options-Pricing.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/pricing/module_3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BTC.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CCI30.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Untitled.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_scraping/BTC_historical.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/date.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dateTime" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/historical.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/price_history.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk_free.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk_free_rates.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/normalize_date.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/analysis.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/computing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/css/analysis.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/css/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/data/2-AAPL/historical.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/line.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/module_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/module_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/module_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/module_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,8 +28,8 @@
       <file leaf-file-name="scratch_11.py" pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_11.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="120">
+              <caret line="8" selection-start-line="8" selection-end-line="35" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -42,8 +37,8 @@
       <file leaf-file-name="backend.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/backend.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="29" selection-start-line="29" selection-end-line="36" />
+            <state relative-caret-position="610">
+              <caret line="560" column="8" selection-start-line="560" selection-start-column="8" selection-end-line="561" selection-end-column="31" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -51,27 +46,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="7-Day.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/7-Day.csv">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="module_1.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="15" selection-start-column="15" selection-end-column="15" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="module_2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="-1099">
+              <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="module_1.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+      <file leaf-file-name="module_3.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/pricing/module_3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="393" selection-start-line="393" selection-end-line="462" selection-end-column="63" />
+            <state relative-caret-position="191">
+              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,6 +102,8 @@
       <find>fro</find>
       <find>to_csv</find>
       <find>volatilit</find>
+      <find>read</find>
+      <find>from_dict</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -147,13 +151,16 @@
         <option value="$PROJECT_DIR$/code/price_history.py" />
         <option value="$PROJECT_DIR$/web/backend.py" />
         <option value="$PROJECT_DIR$/web/module_2.py" />
-        <option value="$PROJECT_DIR$/web/pricing/module_2.py" />
         <option value="$PROJECT_DIR$/web/pricing/module_1.py" />
+        <option value="$PROJECT_DIR$/web/pricing/module_2.py" />
+        <option value="$PROJECT_DIR$/web/pricing/module_3.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1421" />
+    <option name="x" value="-11" />
+    <option name="y" value="4" />
+    <option name="width" value="1399" />
     <option name="height" value="895" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -256,10 +263,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1421" height="895" extended-state="0" />
+    <frame x="-11" y="4" width="1399" height="895" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17522871" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17798427" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.11449452" />
@@ -280,21 +287,21 @@
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12177986" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.11449452" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -306,6 +313,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5865">
+          <caret line="393" selection-start-line="393" selection-end-line="462" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/price_history.py" />
     <entry file="file://$PROJECT_DIR$/risk_free.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
@@ -423,22 +437,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/bl.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/code/price_history.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -446,29 +451,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="46" column="17" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_11.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="35" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/module_2.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/7-Day.csv">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="15" selection-start-column="15" selection-end-column="15" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/backend.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="29" selection-start-line="29" selection-end-line="36" />
+        <state relative-caret-position="610">
+          <caret line="560" column="8" selection-start-line="560" selection-start-column="8" selection-end-line="561" selection-end-column="31" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -477,17 +483,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="-1099">
+          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="393" selection-start-line="393" selection-end-line="462" selection-end-column="63" />
+        <state relative-caret-position="191">
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -2,9 +2,9 @@ from flask import Flask, redirect, request, render_template, session
 import os
 import time
 # from pricing.module_1 import module_1_function
-from pricing.module_2 import search_and_compute
-from pricing.module_3 import price_JSON
-from pricing.module_3 import query_to_JSON
+from pricing.computations import search_and_compute
+from pricing.export_data import price_JSON, query_JSON
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -26,9 +26,9 @@ def index():
     	# Nonnegative price data
     	# Contiguous Data
     	# return redirect(url_for('/invalid/<x>'))
+    
     start = str(int(time.time()))
     print(start)
-    print(type(start))
     session['location'] = 'data' + '/' + start
     print(session['location'])
     # rename csv and place in user directory
@@ -39,29 +39,27 @@ def index():
 def throw_error():
 	# Check error method
 	error = ''
-	return render_template('/', data=error)
+	return render_template('/', injection=error)
+
 
 @app.route('/analysis.html', methods=['POST', 'GET'])
 def analysis():
-	return render_template('analysis.html')
 
 	if session['wraparound'] == False:
 		session['wraparound'] = True
-		initial_data = price_JSON(session['location'])
-		# Create json of historical price
-		# Inject JSON into analysis template / Render
-		return render_template('analysis.html')
+		input_data = price_JSON(session['location'])
+		return render_template('analysis.html', injection=input_data)
 	
-	elif session['wraparound'] == True:
+	else:
 		query = {'trading_strategy': request.form['trading_strategy'], 
 				'option_length': request.form['option_length'],
 				'strike': request.form['strike'],
-				'user_directory': session['dir'] 
+				'current_directory': session['dir'] 
 				}
 		
-		# search_and_compute(query)
-		# injection = query_to_JSON(query)
-		render_template('analysis.html', data=injection)
+		search_and_compute(query)
+		query_data = query_JSON(query)
+		return render_template('analysis.html', injection=query_data)
 
 
 if __name__ == '__main__':

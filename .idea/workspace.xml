@@ -2,19 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5341665-55de-4ace-9f7b-19b54456ff7f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/web/pricing/module_3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/pricing/hello.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/normalize_date.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/analysis.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/computing.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/css/analysis.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/css/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/2-AAPL/historical.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/line.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pricing/module_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/module_1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pricing/module_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/module_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/module_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/module_3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/templates/analysis.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/analysis.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,7 +32,7 @@
       <file leaf-file-name="backend.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/backend.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
+            <state relative-caret-position="8216">
               <caret line="560" column="8" selection-start-line="560" selection-start-column="8" selection-end-line="561" selection-end-column="31" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -46,20 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="module_1.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="module_1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="15" selection-start-column="15" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="module_2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1099">
-              <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+            <state relative-caret-position="45">
+              <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -67,11 +53,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="module_3.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="module_2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="module_3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/pricing/module_3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+            <state relative-caret-position="639">
+              <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -151,15 +146,16 @@
         <option value="$PROJECT_DIR$/code/price_history.py" />
         <option value="$PROJECT_DIR$/web/backend.py" />
         <option value="$PROJECT_DIR$/web/module_2.py" />
-        <option value="$PROJECT_DIR$/web/pricing/module_1.py" />
+        <option value="$PROJECT_DIR$/web/pricing/hello.py" />
+        <option value="$PROJECT_DIR$/web/pricing/test.py" />
         <option value="$PROJECT_DIR$/web/pricing/module_2.py" />
         <option value="$PROJECT_DIR$/web/pricing/module_3.py" />
+        <option value="$PROJECT_DIR$/web/pricing/module_1.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-11" />
-    <option name="y" value="4" />
+    <option name="y" value="1" />
     <option name="width" value="1399" />
     <option name="height" value="895" />
   </component>
@@ -263,10 +259,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="4" width="1399" height="895" extended-state="0" />
+    <frame x="0" y="1" width="1399" height="895" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17798427" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17726947" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.11449452" />
@@ -287,21 +283,21 @@
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12177986" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.11449452" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -309,18 +305,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5865">
-          <caret line="393" selection-start-line="393" selection-end-line="462" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/price_history.py" />
     <entry file="file://$PROJECT_DIR$/risk_free.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -411,13 +399,7 @@
     <entry file="file://$PROJECT_DIR$/driver1.py" />
     <entry file="file://$PROJECT_DIR$/code/normalize_date.py" />
     <entry file="file://$PROJECT_DIR$/risk_free.py" />
-    <entry file="file://$PROJECT_DIR$/normalize_date.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/normalize_date.py" />
     <entry file="file://$PROJECT_DIR$/code/risk_free.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5">
@@ -454,9 +436,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_11.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -464,16 +443,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="15" selection-start-column="15" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/backend.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
+        <state relative-caret-position="8216">
           <caret line="560" column="8" selection-start-line="560" selection-start-column="8" selection-end-line="561" selection-end-column="31" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -481,20 +453,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
+    <entry file="file://$PROJECT_DIR$/web/pricing/test_module.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1099">
-          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+        <state>
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="159" lean-forward="true" selection-start-line="159" selection-end-line="159" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/hello.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/pricing/module_3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+        <state relative-caret-position="639">
+          <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/module_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

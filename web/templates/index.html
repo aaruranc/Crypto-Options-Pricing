@@ -38,13 +38,32 @@
         <br>
         <p id="how-to">Options-Pricer is an automated backtesting software. The premise is simple: you pick an asset you want option pricing analysis on and O-P computes the results and presents them to you visually. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below.</p>   
         <br>
-        <form action= {{ url_for('parameters') }} method="post" enctype="multipart/form-data" id="upload">
+        <form action= {{ url_for('analysis') }} method="post" enctype="multipart/form-data" id="upload">
             <input type="file" value="historical" name="upload-file">
+            <h4>Asset Name</h4>
+            <input class="default" type="text" name="asset" value="AAPL">
+            <br>
+            <h4>Date Format</h4>
+            <input class="default" type="text" name="format" value="">
+            <br>
+            <h4>Start Date</h4>
+            <input class="default" type="text" name="start" value="aa-bb-cccc">
+            <br>
+            <h4>End Date</h4>
+            <input class="default" type="text" name="end" value="xx-yy-zzzz">
+            <br>
+            <h4>Trading Days</h4>
+            <select size="1" name="trading_days">
+                <option value="weekdays" selected="selected">Mo-Tu-We-Th-Fr
+                </option>
+                <option value="weekends">Mo-Tu-We-Th-Fr-Sa-Su
+                </option>
+            </select>
+            <br>
             <br>
             <br>
             <input type="submit" id="upload-file-btn">
         </form>
-
     </div>
 
     
@@ -64,6 +83,7 @@ $( "form" ).submit(function( event ) {
 });
 </script>
 
+<!--
 <script>
 $(function() {
     $('#upload-file-btn').click(function() {
@@ -83,6 +103,7 @@ $(function() {
     });
 });    
 </script>
+-->
     
 </body>        
 </html>

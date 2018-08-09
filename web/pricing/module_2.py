@@ -2,7 +2,6 @@ from pathlib import Path
 import os
 import pandas as pd
 
-# Should return JSON information of the relevant graphs to the server
 
 def bull_spreads():
     return
@@ -155,21 +154,22 @@ def search_and_compute(directory, horizon, strike, strategy):
         return
 
 
+if __name__ == '__main__':
+    print("hello")
+    print('module_2 executed')
 
-if __name__ == '__main___':
-
-    d = {'strategy': 'Calls', 'length': 1, 'strike': 90, 'user_directory': Path('data/AAPL'), 'granularity': '5'}
+    d = {'trading_strategy': 'Calls', 'length': 1, 'strike': 90, 'user_directory': Path('data/AAPL'), 'granularity': '5'}
 
     directory = d['user_directory']
     horizon = d['length']
     strike = d['strike']
-    strategy = d['strategy']
+    strategy = d['trading_strategy']
+
 
     # Checks if data is available, updates csv if not
-    search_and_compute(directory, horizon, strike, strategy)
+    # search_and_compute(directory, horizon, strike, strategy)
 
     # Asset Price Evolution
-
 
     # Volatility Evolution
 
@@ -180,10 +180,3 @@ if __name__ == '__main___':
     # Distribution of Payoffs
 
     # Day to Day ROI
-
-
-
-
-
-
-    return

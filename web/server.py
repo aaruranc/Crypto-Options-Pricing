@@ -1,68 +1,67 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, redirect, request, render_template, session
 import os
-import sys 
 import time
-from pathlib import Path
 # from pricing.module_1 import module_1_function
-# from pricing.module_2 import module_2_function  
+from pricing.module_2 import search_and_compute
+from pricing.module_3 import price_JSON
+from pricing.module_3 import query_to_JSON
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
 @app.route('/')
 def index():
+
+	# Check if first post
+    # Create Session Variables
+    session['wraparound'] = False
+    # Handle csv 
+    # Check if csv is valid (route to /invalid and throw error if not)
+    	# 'Date' and 'Price' columns are labeled
+    	# Start and End Dates Match
+    	# Date format works
+    	# Longer than 2 weeks
+    	# Price is just numbers 
+    	# Nonnegative price data
+    	# Contiguous Data
+    	# return redirect(url_for('/invalid/<x>'))
+    start = str(int(time.time()))
+    print(start)
+    print(type(start))
+    session['location'] = 'data' + '/' + start
+    print(session['location'])
+    # rename csv and place in user directory
     return render_template('index.html')
 
 
-@app.route('/parameters.html', methods=['POST', 'GET'])
-def parameters():
-    if request.method == 'POST':
-        
-        if session.get('dir') == None:
-            start = int(time.time())
-            session['dir'] = start
-
-            # Initialize User Directory
-            print('XXXXXXXXXXXXXXXXXXX')
-            user_directory = Path('data') / str(start)
-            print(user_directory)
-            session['dir_path'] = user_directory
-            os.mkdir(user_directory)
-            print('XXXXXXXXXXXXXXXXXXX')
-
-            csv = request.files['historical']
-            dest = user_directory / 'historical.csv'
-            print('XXXXXXXXXXXXXXXXXXX', file=sys.stderr)
-            csv.save(dest)
-
-
-
-    
-    return render_template('parameters.html')
-
+@app.route('/invalid/<x>')
+def throw_error():
+	# Check error method
+	error = ''
+	return render_template('/', data=error)
 
 @app.route('/analysis.html', methods=['POST', 'GET'])
 def analysis():
-    return render_template('analysis.html')
+	return render_template('analysis.html')
 
- #    location = session['dir']
- #    if session['wraparound'] == False:
- #        # Generate Directory and perform initial file handling
- #    	user_parameters = {}
- #    	for header in request.form:
- #    		user_parameters.update({header: request.form[header]})     	
- #    	module_1_function(user_parameters, location)
- #    	session['wraparound'] = True
+	if session['wraparound'] == False:
+		session['wraparound'] = True
+		initial_data = price_JSON(session['location'])
+		# Create json of historical price
+		# Inject JSON into analysis template / Render
+		return render_template('analysis.html')
+	
+	elif session['wraparound'] == True:
+		query = {'trading_strategy': request.form['trading_strategy'], 
+				'option_length': request.form['option_length'],
+				'strike': request.form['strike'],
+				'user_directory': session['dir'] 
+				}
 		
-
-	# if session['wraparound'] == True:
-	# 	viz_parameters = {}
- #    	for header in request.form:
- #    		user_parameters.update({header: request.form[header]})
-
- #    	# Modify csv's, Generate Graphs and push relevant info to dictionary
- #    	user_dict = module_2_function(viz_parameters, location)
- #    	return render_template('analysis.html', user_dict)
+		# search_and_compute(query)
+		# injection = query_to_JSON(query)
+		render_template('analysis.html', data=injection)
 
 
 if __name__ == '__main__':

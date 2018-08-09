@@ -19,7 +19,7 @@
 <h1>'AAPL'</h1>    
 <button class="collapsible">Create New Visualization</button>
     <div class="content">
-        <form action="http://action.com" method="post">
+        <form action= {{ url_for('analysis') }} method="post">
             <h3>Pricing Methodology</h3>
             <select size="1" name="method">
                 <option value="B-S">Black-Scholes

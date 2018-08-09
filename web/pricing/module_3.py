@@ -4,15 +4,22 @@ import json
 import time
 
 
-def price_JSON(df):
+def price_JSON():
 
+    print('executed')
+    # current_file = Path(current_directory) / 'historical.csv'
+    hardcode = Path('data/AAPL.csv')
+
+    df = pd.DataFrame.read_csv(hardcode)
     a = []
     for index, series in df.iterrows():
         a.append({df['Date'][index]: df['Price'][index]})
 
     df_length = len(a)
-    d = {'length': df_length, 'data': a}
-    return d
+    data = {'length': df_length, 'data': a}
+    print(json.JSONEncoder(data))
+
+    return
 
 
 def volatility_JSON(df):
@@ -56,18 +63,15 @@ def ROI_JSON(df, option_length, method):
     return d
 
 
-def distribution_JSON():
+def distribution_JSON(df, method):
+    num_buckets = 50
+    return 0
 
-
-
-
-
+def query_to_JSON():
     return
 
 
-
-if __name__ == '__main___':
-
+def hardcode():
     # Hardcoded Information
     d = {'strategy': 'Calls', 'length': 1, 'strike': 90, 'user_directory': Path('data/AAPL'), 'granularity': '5'}
 
@@ -107,19 +111,20 @@ if __name__ == '__main___':
     ROI_evolution = ROI_JSON(df, method)
 
     # Distribution of Payoffs
-    payoff_distribution = distribution_JSON()
+    payoff_distribution = distribution_JSON(df, method)
 
     data = {'Price Evolution': price_evolution, 'Volatility Evolution': volatility_evolution,
-         'Strategy Evolution': strategy_evolution, 'ROI Evolution': ROI_evolution, 'Distribution': payoff_distribution}
+            'Strategy Evolution': strategy_evolution, 'ROI Evolution': ROI_evolution,
+            'Distribution': payoff_distribution}
 
     id = str(int(time.time())) + '.txt'
     json_loc = current_directory / id
 
     with open(json_loc, 'w') as outfile:
         json.dump(data, outfile)
-
-
-
-
-
     return
+
+
+if __name__ == '__main__':
+    print('main executed')
+    price_JSON()

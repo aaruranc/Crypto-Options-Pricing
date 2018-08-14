@@ -3,22 +3,24 @@ import pandas as pd
 import json
 from math import ceil
 import numpy as np
-from module_2 import option_label
 
 
-def price_JSON(current_directory):
+def price_JSON(current_file):
 
-    current_file = Path(current_directory) / 'historical.csv'
     df = pd.read_csv(current_file)
 
     a = []
+    b = []
+    count = 0
     for index, series in df.iterrows():
-        a.append({df['Date'][index]: df['Price'][index]})
+        a.append(df['Date'][index])
+        b.append(df['Price'][index])
+        count = count + 1
 
     length = len(a)
-    data = {'length': length, 'type': 'Price', 'data': a}
+    data = {'length': length, 'Dates': a, 'Prices': b}
     x = json.JSONEncoder().encode(data)
-    return x
+    return data
 
 
 def probability_density_JSON(df, method):
@@ -71,6 +73,17 @@ def LIBOR_label(rf_rates):
     else:
         return 'Synthetic LIBOR'
 
+def option_label(length):
+    
+    if length <= 14:
+        option_length = str(length) + '-Day'
+    elif 14 < length < 365:
+        num = length // 30
+        option_length = str(num) + '-Month'
+    else:
+        option_length = '1-Year'
+    return option_length
+
 def query_JSON(query):
 
     trading_strategy = query['trading_strategy']
@@ -104,4 +117,4 @@ def query_JSON(query):
 
 
 if __name__ == '__main__':
-    print('main executed')
+    print('export_data main executed')

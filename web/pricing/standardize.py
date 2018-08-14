@@ -14,3 +14,11 @@ if __name__ == '__main__':
     # Append to prices
     # Create new csv
 
+    # 'Date' and 'Price' columns are labeled
+    # Start and End Dates Match
+    # Date format works
+    # Longer than 2 weeks
+    # Price is just numbers
+    # Nonnegative price data
+    # Contiguous Data
+    # return redirect(url_for('/invalid/<x>'))

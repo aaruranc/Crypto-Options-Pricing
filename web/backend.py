@@ -563,6 +563,7 @@ def BS_prices(user_directory, option_lengths, strikes):
 
     return
 
+
 def BS_dict(df, series, length, strike_percentage):
 
     d = {'strike': '', 'spot': '', 'rf': '', 'd1_mean': 0, 'd2_mean': 0, 'd1_no_mean': 0, 'd2_no_mean': 0,

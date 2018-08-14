@@ -3,12 +3,15 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Custom CSS -->
-<link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">
-<!--    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">-->
-    
-    <style>
-</style>
-    
+    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">
+<!--    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">-->
+<!-- Plotly -->
+<!--	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    -->
+<!-- HighCharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+<!-- jQuery -->  
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
     
 <body>
@@ -17,9 +20,11 @@
 </header>
     
 <h1>'AAPL'</h1>    
-<button class="collapsible">Create New Visualization</button>
+<h2>'1-Day / 90% Spot / Bull Spread'</h2>
+<button class="collapsible">Create New Visualizations</button>
     <div class="content">
         <form action= {{ url_for('analysis') }} method="post">
+<!--
             <h3>Pricing Methodology</h3>
             <select size="1" name="method">
                 <option value="B-S">Black-Scholes
@@ -35,6 +40,7 @@
                 <option value="10-Step Binomial">10-Step Binomial
                 </option>
             </select>
+-->
             <h3>Trading Strategy</h3>
             <select size="1" name="trading_strategy">
                 <option value="Calls">Calls
@@ -165,37 +171,75 @@
         <br>
     </div>
 
+<!--<div id="loc" style="width:100%; height:300px;"></div>    -->
+
+<!--
+<script>
+$(document).ready(function () { 
+    var myChart = Highcharts.chart('#loc', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+        }, {
+            name: 'John',
+            data: [5, 7, 3]
+        }]
+    });
+});
+</script>
+-->
+    
+
 <button class="collapsible">Asset Price Evolution</button>
     <div class="content">
         <br>
+        <br>
+        <br>
+        {{ input_data.Dates }}
+        <br>
+        <br>
+        <br>
+        {{ input_data.Prices }}
+        <br>
+    </div>
+<!--
+<button class="collapsible">Volatility Evolution</button>
+    <div id="asset_price">
+    </div>
+    
+<button class="collapsible">Strategy Cost</button>
+    <div id="asset_price">
+    </div>
 
-        <br>
+<button class="collapsible">Day-to-Day ROI</button>
+    <div id="asset_price">
     </div>
     
-<!--
-<button class="collapsible">Calls - 1 Month - 90% Strike </button>
-    <div class="content">
-        <br>
-        <h2>Option Price Evolution</h2>
-        <h2>Volatility Evolution</h2>
-        <h2>Day-to-Day ROI</h2>
-        <h2>Historical Payoffs</h2>
-        <br>
+<button class="collapsible">Distribution of Returns</button>
+    <div id="asset_price">
     </div>
 -->
-    
-<!--
-<button class="collapsible">Selected Options</button>
-    <div class="content col-md-3">
-        <p>Bull Spreads — 14 Day — 100% Strike</p>
-        <p>Calendar Spreads — 14 Day — 90% Strike</p>
-    </div>
--->
+
+<!--  SCRIPTS DOWN HERE  -->
     
 <script>
 var coll = document.getElementsByClassName("collapsible");
 var i;
-
+    
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
     this.classList.toggle("active");
@@ -209,6 +253,58 @@ for (i = 0; i < coll.length; i++) {
 }
 </script>
 
+
+<!--
+<script type="text/javascript">
+	test = document.getElementById('insert_here');
+    
+    var trace1 = {
+        type: "scatter",
+        mode: "lines",
+        name: 'AAPL',
+        x: [1, 2, 3, 4]
+        y: [10, 20, 30, 40]
+        line: {color: '#17BECF'}
+    };
+
+    var data = [trace1];
+
+    Plotly.newPlot('inser_here', data);
+    
+    var x_input = {{ date |safe }}
+    var y_input = {{ price |safe }}
+    x_input = 
+    y_input = 
+    Plotly.newPlot( test, [{
+	x: x_input
+	y: y_input }]);
+</script>
+-->
+    
+<!--
+<script>
+    
+Plotly.d3.csv("AAPL.csv", function(err, rows){
+    function unpack(rows, key) {
+        return rows.map(function(row) { return row[key]; });
+    }
+    
+    var trace1 = {
+        type: "scatter",
+        mode: "lines",
+        name: 'AAPL',
+        x: unpack(rows, 'Date') 
+        y: unpack(rows, 'Price')
+        line: {color: '#17BECF'}
+    };
+
+    var data = [trace1];
+
+    Plotly.newPlot('tester', data);
+    })
+     
+</script>
+-->
+    
 </body>
 </html>
-

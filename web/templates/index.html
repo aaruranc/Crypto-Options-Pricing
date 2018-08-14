@@ -38,8 +38,8 @@
         <br>
         <p id="how-to">Options-Pricer is an automated backtesting software. The premise is simple: you pick an asset you want option pricing analysis on and O-P computes the results and presents them to you visually. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below.</p>   
         <br>
-        <form action= {{ url_for('analysis') }} method="post" enctype="multipart/form-data" id="upload">
-            <input type="file" value="historical" name="upload-file">
+        <form action= {{ url_for('index') }} method="post" enctype="multipart/form-data" id="upload">
+            <input type="file" value="historical" name="upload">
             <h4>Asset Name</h4>
             <input class="default" type="text" name="asset" value="AAPL">
             <br>
@@ -62,13 +62,14 @@
             <br>
             <br>
             <br>
-            <input type="submit" id="upload-file-btn">
+            <input type="submit" id="upload-file-btn" value=Upload>
         </form>
     </div>
 
     
 </div>
 
+<!--
 <script>
 let input = $( "input:file" )
 //.css({
@@ -82,6 +83,7 @@ $( "form" ).submit(function( event ) {
   event.preventDefault();
 });
 </script>
+-->
 
 <!--
 <script>

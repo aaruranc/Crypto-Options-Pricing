@@ -34,30 +34,7 @@
     <div class="col-sm-8">
         <p>Please make sure that initial parameters match uploaded file.</p>   
 
-        <form action= {{ url_for('analysis') }} method="post">
-            <h4>Asset Name</h4>
-            <input class="default" type="text" name="asset" value="AAPL">
-            <br>
-            <h4>Date Format</h4>
-            <input class="default" type="text" name="format" value="">
-            <br>
-            <h4>Start Date</h4>
-            <input class="default" type="text" name="start" value="aa-bb-cccc">
-            <br>
-            <h4>End Date</h4>
-            <input class="default" type="text" name="end" value="xx-yy-zzzz">
-            <br>
-            <h4>Trading Days</h4>
-            <select size="1" name="trading_days">
-                <option value="weekdays" selected="selected">Mo-Tu-We-Th-Fr
-                </option>
-                <option value="weekends">Mo-Tu-We-Th-Fr-Sa-Su
-                </option>
-            </select>
-            <br>
-            <br>
-            <button id="next">Next</button>
-        </form>
+        
         <br>
     </div>
 

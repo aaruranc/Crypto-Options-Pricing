@@ -1,38 +1,18 @@
 from pathlib import Path
 import os
 import pandas as pd
-import strategies as strat
 from math import sqrt, log
+import strategies
 
-def handle_strategy(directory, length, current_file, df, strike, strategy):
 
-    name = strategy[:-2]
-    method = str(strike) + '-' + strategy
-    payoff = method + '-P'
-    ROI = method + '-ROI'
+def BS_option_calcs(parameters):
 
-    if strategy == 'Calls':
-        return
-    elif strategy == 'Puts':
-        return
-    elif strategy == 'Straddles':
-        strat.straddle(current_file, df, method, payoff, ROI)
-        return
-    elif name == 'Bear-Spreads':
-        strat.bear_spreads(directory, length, current_file, df, strike, strategy, method, payoff, ROI)
-        return
-
-    ##### Add the rest of the strategies
-
-    return
-
-def call_price()
+    return {}
 
 
 def BS_dict(df, index, length, percentage):
 
-    d = {'strike': '', 'spot': '', 'rf': '', 'd1_mean': 0, 'd2_mean': 0, 'd1_no_mean': 0, 'd2_no_mean': 0,
-         'length': length}
+    d = {'length': length}
 
     if (length + 3) > index:
         return d
@@ -46,16 +26,19 @@ def BS_dict(df, index, length, percentage):
     v_m = title + '-VM'
     v_nm = title + '-VNM'
     rf_title = title + '-LIBOR'
-    rf = df[rf_title][index]
+    risk_free = df[rf_title][index]
     vol_mean = df[v_m][index]
     vol_no_mean = df[v_nm][index]
 
-    d1_mean = (1 / (vol_mean * sqrt(length))) * (log((1 / ratio)) + (rf + ((vol_mean ** 2) / 2)) * length)
-    d2_mean = d1_mean - vol_mean * sqrt(length)
-    d1_no_mean = (1 / (vol_no_mean * sqrt(length))) * (log((1 / ratio)) + (rf + ((vol_no_mean ** 2) / 2)) * length)
-    d2_no_mean = d1_no_mean - vol_no_mean * sqrt(length)
+    compute_d1 = lambda v, l, r, rf : (1/(v*sqrt(l)))*(log((1/r))+(rf+((v**2)/2)*l))
+    compute_d2 = lambda d1, v, l: d1-(v*sqrt(l))
 
-    d.update({'rf': rf, 'd1_mean': d1_mean, 'd2_mean': d2_mean, 'd1_no_mean': d1_no_mean, 'd2_no_mean': d2_no_mean})
+    d1_mean = compute_d1(vol_mean, length, ratio, risk_free)
+    d2_mean = compute_d2(d1_mean, vol_mean, length)
+    d1_no_mean = compute_d1(vol_no_mean, length, ratio, risk_free)
+    d2_no_mean = compute_d2(d1_no_mean, vol_no_mean, length)
+
+    d.update({'d1_mean': d1_mean, 'd2_mean': d2_mean, 'd1_no_mean': d1_no_mean, 'd2_no_mean': d2_no_mean})
     return d
 
 
@@ -80,25 +63,70 @@ def new_strike_data(query_file, df, length, strike):
         if size < (index + length + 1):
             break
 
-        BS_data = BS_dict(df, index, length, percentage)
+        parameters = BS_dict(df, index, length, percentage)
+        data = BS_option_calcs(parameters)
 
-        d.update({(c + '-VM'): call_price(BS_data),
-                  (c + '-VM-P'): 0,
-                  (c + '-VM-ROI'): 0,
-                  (c + '-VNM'): call_price(BS_data),
-                  (c + '-VNM-P'): 0,
-                  (c + '-VNM-ROI'): 0,
-                  (p + '-VM'): put_price(BS_data),
-                  (p + '-VM-P'): 0,
-                  (p + '-VM-ROI'): 0,
-                  (p + '-VNM'): put_price(BS_data),
-                  (p + '-VNM-P'): 0,
-                  (p + '-VNM-ROI'): 0,
+        d.update({(c + '-VM'): data['Calls']['Mean']['Price'],
+                  (c + '-VM-P'): data['Calls']['Mean']['Payoff'],
+                  (c + '-VM-ROI'): data['Calls']['Mean']['ROI'],
+                  (c + '-VNM'): data['Calls']['No-Mean']['Price'],
+                  (c + '-VNM-P'): data['Calls']['No-Mean']['Payoff'],
+                  (c + '-VNM-ROI'): data['Calls']['Mean']['ROI'],
+                  (p + '-VM'): data['Puts']['Mean']['Price'],
+                  (p + '-VM-P'): data['Puts']['Mean']['Payoff'],
+                  (p + '-VM-ROI'): data['Puts']['Mean']['ROI'],
+                  (p + '-VNM'): data['Puts']['No-Mean']['Price'],
+                  (p + '-VNM-P'): data['Puts']['No-Mean']['Payoff'],
+                  (p + '-VNM-ROI'): data['Puts']['Mean']['ROI'],
                   })
         options_df.append(d, ignore_index=True)
     updated_df = pd.concat([df, strike_df, options_df], axis=1)
     updated_df.to_csv(query_file)
     return
+
+
+def handle_strategy(current_directory, length, current_file, df, strike, strategy):
+
+    method = str(strike) + '-' + strategy
+    payoff = method + '-P'
+    ROI = method + '-ROI'
+    name = method[:-2]
+
+    if strategy == 'Calls':
+        strategy.calls()
+        return
+    elif strategy == 'Puts':
+        strategy.puts()
+        return
+    elif strategy == 'Straddles':
+        strategies.straddle(current_file, df, method, payoff, ROI)
+        return
+    elif name == 'Bear-Spreads':
+        strategies.bear_spreads(current_directory, length, current_file, df, strike, strategy, method, payoff, ROI)
+        return
+
+    ##### Add the rest of the strategies
+
+    return
+
+
+# def calc_volatilities(df, option_length):
+#     return []
+#
+#
+# def grab_LIBOR(dates):
+#     return []
+#
+#
+
+def grab_dates(df):
+
+    l = len(df)
+    e = l - 1
+    start_date = df['Date'][0]
+    end_date = df['Date'][e]
+    d = {'start': start_date, 'end': end_date}
+    return d
 
 
 def option_label(length):
@@ -119,14 +147,14 @@ def search_and_compute(query):
     length = query['option_length']
     strike = query['strike']
     current_directory = query['current_directory']
+    source = query['source']
 
     option_length = option_label(length)
 
     loc = option_length + '.csv'
-    query_directory = Path(current_directory) / option_length
-    query_file = query_directory / loc
+    query_file = current_directory / loc
 
-    if os.path.isdir(query_directory):
+    if os.path.isfile(query_file):
         df = pd.read_csv(query_file)
         headers = list(df)
         strike_str = str(strike)
@@ -144,14 +172,15 @@ def search_and_compute(query):
             return
 
     else:
-        os.mkdir(query_directory)
-        df = 0
-        # Create Directory
-        # Create File
-        # Append Data (up to Call/Put Payoffs)
+        df = pd.read_csv(source)
+        dates = grab_dates(df)
+        rf_rates = grab_LIBOR(dates)
+        vols = calc_volatilities(df, length)
+
+        df = pd.concat([df, rf_rates, vols], axis=1)
         handle_strategy(current_directory, length, query_file, df, strike, trading_strategy)
         return
 
 
 if __name__ == '__main__':
-    return
+    print('computations main executed')

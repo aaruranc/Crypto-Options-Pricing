@@ -1,5 +1,13 @@
 import pandas as pd
-from module_2 import search_and_compute
+from computations import search_and_compute
+
+
+def calls():
+    return
+
+
+def puts():
+    return
 
 
 def bear_spreads(directory, horizon, current_file, df, strike, strategy, method, payoff, ROI):

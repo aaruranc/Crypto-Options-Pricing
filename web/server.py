@@ -1,66 +1,71 @@
-from flask import Flask, redirect, request, render_template, session
+from flask import Flask, json, redirect, render_template, request, session
+from werkzeug.utils import secure_filename
+from pathlib import Path
+import jinja2
 import os
 import time
-# from pricing.module_1 import module_1_function
-from pricing.computations import search_and_compute
-from pricing.export_data import price_JSON, query_JSON
+import pandas as pd 
+# from pricing.standardize import error_labels, validate
+# from pricing.computations import search_and_compute
+from pricing.export import price_JSON, query_JSON
 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.debug = True
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
 
-	# Check if first post
-    # Create Session Variables
-    session['wraparound'] = False
-    # Handle csv 
-    # Check if csv is valid (route to /invalid and throw error if not)
-    	# 'Date' and 'Price' columns are labeled
-    	# Start and End Dates Match
-    	# Date format works
-    	# Longer than 2 weeks
-    	# Price is just numbers 
-    	# Nonnegative price data
-    	# Contiguous Data
-    	# return redirect(url_for('/invalid/<x>'))
-    
-    start = str(int(time.time()))
-    print(start)
-    session['location'] = 'data' + '/' + start
-    print(session['location'])
-    # rename csv and place in user directory
-    return render_template('index.html')
+	if request.method == 'GET':
+	    start = str(int(time.time()))
+	    session['location'] = 'data' + '/' + start
+	    return render_template('index.html')
 
+	if request.method == 'POST':
+		file = request.files['upload']
+		dest = session['location'] + '/' + file.filename
+		session['file'] = dest
+		
+		if not os.path.isdir(session['location']):
+	   		os.mkdir(session['location'])
+		
+		file.save(dest)
+		file.close()
+		user_df = pd.read_csv(session['file'])
+		
+		error = []
+		# error = validate(user_df)
 
-@app.route('/invalid/<x>')
-def throw_error():
-	# Check error method
-	error = ''
-	return render_template('/', injection=error)
-
+		if not error:
+			input_data = price_JSON(session['file'])
+			return render_template('/analysis.html', input_data=input_data)
+		else:
+			flags = error_labels(error)
+			return render_template('index.html', flags=flags)
 
 @app.route('/analysis.html', methods=['POST', 'GET'])
 def analysis():
-
-	if session['wraparound'] == False:
-		session['wraparound'] = True
-		input_data = price_JSON(session['location'])
-		return render_template('analysis.html', injection=input_data)
 	
-	else:
+	if request.method == 'POST':	
+		
 		query = {'trading_strategy': request.form['trading_strategy'], 
 				'option_length': request.form['option_length'],
 				'strike': request.form['strike'],
-				'current_directory': session['dir'] 
+				'current_directory': session['location'] 
+				'source': session['file']
 				}
 		
 		search_and_compute(query)
 		query_data = query_JSON(query)
-		return render_template('analysis.html', injection=query_data)
+		# print(query_data)
+
+		return render_template('/analysis.html', query_data=query_data)
+	
+	elif request.method == 'GET':
+		return render_template('/')
 
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run()

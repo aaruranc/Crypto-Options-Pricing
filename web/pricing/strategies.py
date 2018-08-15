@@ -2,7 +2,16 @@ import pandas as pd
 from computations import search_and_compute
 
 
-def calls():
+def calls(current_file, df, length, strike):
+
+    pd.DataFrame(columns=['Calls'])
+    d = {'Calls': []}
+
+    for index, series in df.iterrows():
+
+
+
+
     return
 
 
@@ -10,7 +19,10 @@ def puts():
     return
 
 
-def bear_spreads(directory, horizon, current_file, df, strike, strategy, method, payoff, ROI):
+def bear_spreads(directory, horizon, current_file, df, strike, strategy, method):
+
+    payoff = method + '-P'
+    ROI = method + '-ROI'
 
     if strategy[-1:] == 'A':
         diff = 5
@@ -76,7 +88,10 @@ def calendar_spreads():
     return
 
 
-def straddle(current_file, df, method, payoff, ROI):
+def straddle(current_file, df, method):
+
+    payoff = method + '-P'
+    ROI = method + '-ROI'
 
     straddle_df = pd.DataFrame(columns=[method, payoff, ROI])
 

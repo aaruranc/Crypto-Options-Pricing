@@ -85,24 +85,21 @@ def new_strike_data(query_file, df, length, strike):
     return
 
 
-def handle_strategy(current_directory, length, current_file, df, strike, strategy):
+def handle_strategy(current_directory, current_file, df, length, strike, strategy):
 
     method = str(strike) + '-' + strategy
-    payoff = method + '-P'
-    ROI = method + '-ROI'
-    name = method[:-2]
 
     if strategy == 'Calls':
-        strategy.calls()
+        strategies.calls(current_file, df, length, strike)
         return
     elif strategy == 'Puts':
-        strategy.puts()
+        strategies.puts()
         return
     elif strategy == 'Straddles':
-        strategies.straddle(current_file, df, method, payoff, ROI)
+        strategies.straddle(current_file, df, method)
         return
-    elif name == 'Bear-Spreads':
-        strategies.bear_spreads(current_directory, length, current_file, df, strike, strategy, method, payoff, ROI)
+    elif strategy == 'Bear-Spreads':
+        strategies.bear_spreads(current_directory, length, current_file, df, strike, strategy, method)
         return
 
     ##### Add the rest of the strategies
@@ -163,12 +160,12 @@ def search_and_compute(query):
             if method in headers:
                 return
             else:
-                handle_strategy(current_directory, length, query_file, df, strike, trading_strategy)
+                handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
                 return
 
         else:
             new_strike_data(query_file, df, length, strike)
-            handle_strategy(current_directory, length, query_file, df, strike, trading_strategy)
+            handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
             return
 
     else:
@@ -178,7 +175,7 @@ def search_and_compute(query):
         vols = calc_volatilities(df, length)
 
         df = pd.concat([df, rf_rates, vols], axis=1)
-        handle_strategy(current_directory, length, query_file, df, strike, trading_strategy)
+        handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
         return
 
 

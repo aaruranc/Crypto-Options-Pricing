@@ -1,5 +1,5 @@
 import pandas as pd
-
+from math import isnan
 
 def option_label(length):
 
@@ -44,7 +44,13 @@ def bootstrap_LIBOR(df, num, index):
         l = 180
         r = 365
 
-    y = df[right_bound][index] - df[left_bound][index]
+    if df[right_bound][index] == '.' or df[left_bound][index] == '.':
+        return ''
+
+    if isnan(float(df[right_bound][index])) or isnan(float(df[left_bound][index])):
+        return ''
+
+    y = float(df[right_bound][index]) - float(df[left_bound][index])
     x = r - l
     m = y / x
 
@@ -68,7 +74,20 @@ def modify():
 
     bootstrap_df = pd.DataFrame(columns=headers)
 
-    for index, series in df.itterrows():
+    l = len(df)
+    q = l // 4
+    h = l // 2
+    t = q * 3
+
+    for index, series in df.iterrows():
+        print(index)
+        if index == q:
+            print('Quarter Done')
+        if index == h:
+            print('Halfway Done')
+        if index == t:
+            print('Three-Quarters Done')
+
         count = 0
         for num in n:
             d.update({option_label(num): bootstrap_LIBOR(df, num, index)})

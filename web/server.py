@@ -5,7 +5,7 @@ import jinja2
 import os
 import time
 import pandas as pd 
-# from pricing.standardize import error_labels, validate
+# from pricing.standardize import convert_datetime, error_labels, validate
 # from pricing.computations import search_and_compute
 from pricing.export import price_JSON, query_JSON
 
@@ -19,8 +19,8 @@ app.debug = True
 def index():
 
 	if request.method == 'GET':
-	    start = str(int(time.time()))
-	    session['location'] = 'data' + '/' + start
+	    start_time = str(int(time.time()))
+	    session['location'] = 'data' + '/' + start_time
 	    return render_template('index.html')
 
 	if request.method == 'POST':
@@ -34,7 +34,7 @@ def index():
 		file.save(dest)
 		file.close()
 		user_df = pd.read_csv(session['file'])
-		
+
 		error = []
 		# error = validate(user_df)
 
@@ -53,14 +53,12 @@ def analysis():
 		query = {'trading_strategy': request.form['trading_strategy'], 
 				'option_length': request.form['option_length'],
 				'strike': request.form['strike'],
-				'current_directory': session['location'] 
+				'current_directory': session['location'], 
 				'source': session['file']
 				}
 		
 		search_and_compute(query)
 		query_data = query_JSON(query)
-		# print(query_data)
-
 		return render_template('/analysis.html', query_data=query_data)
 	
 	elif request.method == 'GET':

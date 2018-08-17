@@ -47,7 +47,7 @@ def bootstrap_LIBOR(df, num, index):
     if df[right_bound][index] == '.' or df[left_bound][index] == '.':
         return ''
 
-    if isnan(float(df[right_bound][index])) or isnan(float(df[left_bound][index])):
+    elif isnan(float(df[right_bound][index])) or isnan(float(df[left_bound][index])):
         return ''
 
     y = float(df[right_bound][index]) - float(df[left_bound][index])
@@ -63,8 +63,8 @@ def bootstrap_LIBOR(df, num, index):
 
 def modify():
 
-    df = pd.read_csv('LIBOR.csv')
-    n = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 90, 120, 150, 210, 240, 270, 300, 330]
+    df = pd.read_csv('LIBOR-master.csv')
+    n = [2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 120, 150, 210, 240, 270, 300, 330]
     headers = []
     d = {}
     for num in n:
@@ -93,7 +93,7 @@ def modify():
             d.update({option_label(num): bootstrap_LIBOR(df, num, index)})
             count = count + 1
         bootstrap_df = bootstrap_df.append(d, ignore_index=True)
-    df = pd.concat([df, bootstrap_df], axis=0)
+    df = pd.concat([df, bootstrap_df], axis=1)
     df.to_csv('LIBOR.csv')
     return
 

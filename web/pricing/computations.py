@@ -5,8 +5,23 @@ from math import sqrt, log
 import strategies
 
 
-def BS_option_calcs(parameters):
+def str_adjust(date):
+    length = len(date)
+    if length == 6:
+        new_date = "0" + date[0:2] + "0" + date[2:]
+        return  new_date
+    if length == 7:
+        if date[1] == "/":
+            new_date = "0" + date
+            return new_date
+        else:
+            new_date = date[0:3] + "0" + date[3:]
+            return new_date
+    if length == 8:
+        return date
 
+
+def BS_option_calcs(parameters):
     return {}
 
 
@@ -90,7 +105,7 @@ def handle_strategy(current_directory, current_file, df, length, strike, strateg
     method = str(strike) + '-' + strategy
 
     if strategy == 'Calls':
-        strategies.calls(current_file, df, length, strike)
+        strategies.calls()
         return
     elif strategy == 'Puts':
         strategies.puts()
@@ -107,19 +122,111 @@ def handle_strategy(current_directory, current_file, df, length, strike, strateg
     return
 
 
-# def calc_volatilities(df, option_length):
-#     return []
-#
-#
-# def grab_LIBOR(dates):
-#     return []
-#
-#
+def volatility_mean(df, length, index):
+    if length == 1:
+        return ''
+    if index < (length+1):
+        return ''
+    sum = 0
+    for i in range((index - length), index):
+        log_return = log(df['Price'][i] / df['Price'][i-1])
+        sum = sum + log_return
+    mu = sum / length
+    total = 0
+    for j in range((index - length), index):
+        diff = (log(df['Price'][j] / df['Price'][j-1]) - mu) ** 2
+        total = total + diff
+    vol = 16 * (sqrt(total / (length-1)))
+    return vol
 
-def grab_dates(df):
 
-    l = len(df)
-    e = l - 1
+def volatility_no_mean(df, length, index):
+    if length == 1:
+        if index >= 1:
+            log_return = log(df['Price'][index] / df['Price'][index - 1])
+            vol = 16 * (log_return ** 2)
+            return vol
+
+    if index < (length+1):
+        return ''
+
+    total = 0
+    for j in range((index - length), index):
+        diff = (log(df['Price'][j] / df['Price'][j - 1])) ** 2
+        total = total + diff
+    vol = (sqrt(256 * (total / (length - 1))))
+    return vol
+
+
+def volatility_dict(df, length, index, mean_title, no_mean_title):
+    vm = volatility_mean(df, length, index)
+    vnm = volatility_no_mean(df, length, index)
+
+    d = {mean_title: vm, no_mean_title: vnm}
+    return d
+
+
+def calc_volatilities(df, length):
+
+    title = option_label(length)
+    mean_title = title + '-VM'
+    no_mean_title = title + '-VNM'
+    vol_df = pd.DataFrame(columns=[mean_title, no_mean_title])
+    d = {mean_title: [], no_mean_title: []}
+
+    for index, series in df.iterrows():
+        if index < length:
+            d.update({mean_title: '', no_mean_title: ''})
+        else:
+            d.update(volatility_dict(df, length, index, mean_title, no_mean_title))
+        vol_df = vol_df.append(d, ignore_index=True)
+    return vol_df
+
+
+def grab_data(dates, length=0):
+    if length == 0:
+        df = pd.read_csv('VIX.csv', usecols=['Date', 'VIX-Close'])
+        vals = pd.read_csv('VIX.csv', usecols=['VIX-Close'])
+        start = str_adjust(dates['start'])
+        end = str_adjust(dates['end'])
+    else:
+        header = option_label(length) + '-LIBOR'
+        df = pd.read_csv('LIBOR.csv', usecols=['Date', header])
+        vals = pd.read_csv('LIBOR.csv', usecols=[header])
+        start = dates['start']
+        end = dates['end']
+
+    started = False
+    start_index = 0
+    end_index = 0
+    for index, series in df.iterrows():
+        if not started:
+            if df['Date'][index] == start or str_adjust(df['Date'][index]) == start:
+                print(df['Date'][index])
+                started = True
+                start_index = index
+            continue
+        if started:
+            if df['Date'][index] == end or str_adjust(df['Date'][index]) == end:
+                print('executed')
+                print(df['Date'][index])
+                end_index = index
+                break
+            continue
+    print(start)
+    print(start_index)
+    print(end)
+    print(end_index)
+
+    data = (df.loc[start_index:end_index]).copy()
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+
+def find_dates(df):
+
+    n = len(df)
+    e = n - 3
     start_date = df['Date'][0]
     end_date = df['Date'][e]
     d = {'start': start_date, 'end': end_date}
@@ -128,9 +235,9 @@ def grab_dates(df):
 
 def option_label(length):
 
-    if length <= 14:
+    if int(length) < 15:
         option_length = str(length) + '-Day'
-    elif 14 < length < 365:
+    elif 14 < int(length) < 365:
         num = length // 30
         option_length = str(num) + '-Month'
     else:
@@ -141,15 +248,17 @@ def option_label(length):
 def search_and_compute(query):
 
     trading_strategy = query['trading_strategy']
-    length = query['option_length']
+    length = int(query['option_length'])
     strike = query['strike']
-    current_directory = query['current_directory']
-    source = query['source']
+    current_directory = Path(query['current_directory'])
+    source = Path(query['source'])
 
     option_length = option_label(length)
 
     loc = option_length + '.csv'
     query_file = current_directory / loc
+    print(loc)
+    print(query_file)
 
     if os.path.isfile(query_file):
         df = pd.read_csv(query_file)
@@ -170,14 +279,138 @@ def search_and_compute(query):
 
     else:
         df = pd.read_csv(source)
-        dates = grab_dates(df)
-        rf_rates = grab_LIBOR(dates)
+        print(df)
+        dates = find_dates(df)
+        print(dates)
+        VIX = grab_data(dates)
+        print(VIX)
+        LIBOR = grab_data(dates, length)
+        print(LIBOR)
         vols = calc_volatilities(df, length)
+        print(vols)
 
-        df = pd.concat([df, rf_rates, vols], axis=1)
-        handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
+        a = len(df)
+        b = len(VIX)
+        c = len(LIBOR)
+
+        if b <= c:
+            if a <= b:
+                VIX = VIX.loc[:a]
+                LIBOR = LIBOR.loc[:a-1]
+            else:
+                df = df.loc[:b]
+                LIBOR = LIBOR.loc[:b]
+        else:
+            if a <= c:
+                VIX = VIX.loc[:a]
+                LIBOR = LIBOR.loc[:a]
+            else:
+                df = df.loc[:c]
+                LIBOR = LIBOR.loc[:c]
+
+        df = pd.concat([df, vols], axis=1)
+        df_2 = pd.concat([VIX, LIBOR], axis=1)
+        print(df)
+        print(df_2)
+
         return
+
+        # k = len(rf_rates)
+        # for index, series in df.iterrows():
+        #     count = 0
+        #     for index_2, series_2 in rf_rates.iterrows():
+        #         if index == index_2:
+        #             print(df['Date'][index])
+
+                # if df['Date'][index] == rf_rates['Date'][index_2]:
+                #     # print(index)
+                #     # print(df['Date'][index])
+                #     # print(index_2)
+                #     # print(rf_rates['Date'][index_2])
+                #     # print('_____')
+                #     # print('FOUND')
+                #     break
+                # elif index_2 == k-1:
+                #     print(df['Date'][index])
+                #     count = count + 1
+
+
+        # if rf_rates['Date'][index] != df['Date'][index]:
+        #     print(index)
+        #     print(rf_rates['Date'][index])
+
+
+
+        return
+        # df = pd.concat([df, BS_df], axis=1)
+
+        # handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
+        # return
+
+
+def check_dates():
+    LIBOR = pd.read_csv('LIBOR.csv', usecols=['Date'])
+    VIX = pd.read_csv('VIX.csv', usecols=['Date'])
+
+    print('LIBOR')
+
+    length = len(LIBOR)
+    q = length // 4
+    h = length // 2
+    t = q * 3
+
+    for index, series in LIBOR.iterrows():
+
+        if index == q:
+            print('1/4 Done')
+        elif index == h:
+            print('1/2 Done')
+        elif index == t:
+            print('3/4 Done')
+
+        length = len(LIBOR)
+        date = LIBOR['Date'][index]
+        found = False
+        for k in range(index+1, length):
+            if LIBOR['Date'][k] == date:
+                found = True
+                break
+        if found:
+            print(date)
+    print('______________')
+
+    length = len(LIBOR)
+    q = length // 4
+    h = length // 2
+    t = q * 3
+
+    print('VIX')
+    for index, series in VIX.iterrows():
+
+        if index == q:
+            print('1/4 Done')
+        elif index == h:
+            print('1/2 Done')
+        elif index == t:
+            print('3/4 Done')
+
+        length = len(VIX)
+        date = LIBOR['Date'][index]
+        found = False
+        for k in range(index, length-index):
+            if VIX['Date'][k] == date:
+                found = True
+        if found:
+            print(date)
+    print('______________')
+
+    return
 
 
 if __name__ == '__main__':
     print('computations main executed')
+
+    test_query = {'trading_strategy': 'Calls', 'option_length': '12', 'strike': '90',
+                  'current_directory': 'data/1534366837', 'source': 'data/1534366837/BTC.csv'}
+    # search_and_compute(test_query)
+    check_dates()

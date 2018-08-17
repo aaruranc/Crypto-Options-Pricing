@@ -8,11 +8,7 @@ def calls(current_file, df, length, strike):
     d = {'Calls': []}
 
     for index, series in df.iterrows():
-
-
-
-
-    return
+        return
 
 
 def puts():

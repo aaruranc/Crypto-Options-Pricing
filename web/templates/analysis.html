@@ -11,7 +11,7 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
 <!-- jQuery -->  
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
     
 <body>
@@ -23,7 +23,8 @@
 <h2>'1-Day / 90% Spot / Bull Spread'</h2>
 <button class="collapsible">Create New Visualizations</button>
     <div class="content">
-        <form action= {{ url_for('analysis') }} method="post">
+<!--        {{ url_for('update') }}-->
+        <div>
 <!--
             <h3>Pricing Methodology</h3>
             <select size="1" name="method">
@@ -42,7 +43,7 @@
             </select>
 -->
             <h3>Trading Strategy</h3>
-            <select size="1" name="trading_strategy">
+            <select size="1" id="trading_strategy">
                 <option value="Calls">Calls
                 </option>
                 <option value="Puts">Puts
@@ -75,7 +76,7 @@
 -->
             </select>
             <h3>Option Length</h3>
-            <select size="1" name="option_length" >
+            <select size="1" id="option_length" >
                 <option value="1" selected="selected">1-Day
                 </option>
                 <option value="2">2-Day
@@ -120,7 +121,7 @@
                 </option>
             </select>
             <h3>Strike Price (as Percentage of Spot Price)</h3>
-            <select size="1" name="strike">
+            <select size="1" id="strike">
                 <option value="90" selected="selected">90%
                 </option>
                 <option value="91">91%
@@ -166,8 +167,8 @@
             </select>
             <br>
             <br>
-            <button>Generate</button>
-        </form>
+            <button id="submit">Generate</button>
+        </div>
         <br>
     </div>
 
@@ -203,17 +204,19 @@ $(document).ready(function () {
 </script>
 -->
     
-
 <button class="collapsible">Asset Price Evolution</button>
     <div class="content">
+        <br>
+        <div id="container" style="width:100%; height:400px;"></div>
         <br>
         <br>
         <br>
         {{ input_data.Dates }}
         <br>
         <br>
-        <br>
         {{ input_data.Prices }}
+        <br>
+
         <br>
     </div>
 <button class="collapsible">Volatility Evolution</button>
@@ -251,7 +254,105 @@ for (i = 0; i < coll.length; i++) {
 }
 </script>
 
+<script>
+//var myChart = Highcharts.chart('container', {
+//    chart: {
+//        type: 'bar'
+//    },
+//    title: {
+//        text: 'Fruit Consumption'
+//    },
+//    xAxis: {
+//        categories: ['Apples', 'Bananas', 'Oranges']
+//    },
+//    yAxis: {
+//        title: {
+//            text: 'Fruit eaten'
+//        }
+//    },
+//    series: [{
+//        name: 'Jane',
+//        data: [1, 0, 4]
+//    }, {
+//        name: 'John',
+//        data: [5, 7, 3]
+//    }]
+//});
+    
+$.getJSON(
+    'https://cdn.rawgit.com/highcharts/highcharts/057b672172ccc6c08fe7dbb27fc17ebca3f5b770/samples/data/usdeur.json',
+    function (data) {
+//        console.log(data)
+        Highcharts.chart('container', {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'AAPL Price'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'Exchange rate'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
 
+            series: [{
+                type: 'area',
+                name: 'USD to EUR',
+                data: data
+            }]
+        });
+    }
+);
+</script>
+
+<script>
+$( '#submit' ).click(function() {
+    $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
+               $('#option_length').val(), strike: $('#strike').val() } )
+    .done(function( data ) {
+        console.log(data)    
+//    alert( "Data Loaded: " + data );
+  });
+});
+</script>
+    
 <!--
 <script type="text/javascript">
 	test = document.getElementById('insert_here');

@@ -4,7 +4,8 @@ from pathlib import Path
 import jinja2
 import os
 import time
-import pandas as pd 
+import pandas as pd
+import json
 # from pricing.standardize import convert_datetime, error_labels, validate
 # from pricing.computations import search_and_compute
 from pricing.export import price_JSON, query_JSON
@@ -24,19 +25,26 @@ def index():
 	    return render_template('index.html')
 
 	if request.method == 'POST':
+		asset_name = request.form['asset']
+		session['asset_name'] = asset_name
+
 		file = request.files['upload']
 		dest = session['location'] + '/' + file.filename
-		session['file'] = dest
+		session['source'] = dest
 		
 		if not os.path.isdir(session['location']):
 	   		os.mkdir(session['location'])
 		
 		file.save(dest)
 		file.close()
-		user_df = pd.read_csv(session['file'])
+		
+		user_parameters = {'start': request.form['start'], 
+							'end': request.form['end'], 
+							'trading_days': request.form['trading_days'], 
+							'source': session['source']}
 
 		error = []
-		# error = validate(user_df)
+		# error = validate(user_parameters)
 
 		if not error:
 			input_data = price_JSON(session['file'])
@@ -45,25 +53,19 @@ def index():
 			flags = error_labels(error)
 			return render_template('index.html', flags=flags)
 
-@app.route('/analysis.html', methods=['POST', 'GET'])
-def analysis():
+@app.route('/update.html', methods=['GET', 'POST'])
+def update():
 	
-	if request.method == 'POST':	
-		
-		query = {'trading_strategy': request.form['trading_strategy'], 
-				'option_length': request.form['option_length'],
-				'strike': request.form['strike'],
-				'current_directory': session['location'], 
-				'source': session['file']
-				}
-		
-		search_and_compute(query)
+	if request.method == 'GET':
+		query = request.args.to_dict()
+		query.update({'current_directory': session['location'], 'source': session['file']})
+		# search_and_compute(query)
+		print(query)
 		query_data = query_JSON(query)
-		return render_template('/analysis.html', query_data=query_data)
-	
-	elif request.method == 'GET':
-		return render_template('/')
+		return query_data
 
+	else: 
+		return render_template('/')
 
 if __name__ == '__main__':
 	app.run()

@@ -33,25 +33,37 @@
 </header>
     
 <div id="container">   
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-        <br>
-        <p id="how-to">Options-Pricer is an automated backtesting software. The premise is simple: you pick an asset you want option pricing analysis on and O-P computes the results and presents them to you visually. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below.</p>   
+<br>
+<p id="how-to">Options-Pricer is an an exploratory data visualization tool. The premise is simple: you choose an asset that you want <a href="https://www.investopedia.com/university/options/option.asp" target="_blank">option</a> pricing analysis on. O-P computes the results and renders them graphically. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below. Please make sure that the start and end dates match the 'mm-dd-yyyy' format. </p>
+<p>O-P only supports option pricing from 1/2/01 to present.</p>
+        
+    {% if flags %}
+        <h3>Error(s)</h3>
+        {% for value in flags %}     
+            <p>{{ value }}</p>
+        {% endfor %}
+    {% endif %}
+        
         <br>
         <form action= {{ url_for('index') }} method="post" enctype="multipart/form-data" id="upload">
             <input type="file" value="historical" name="upload">
+            <br>
+            
+            
             <h4>Asset Name</h4>
             <input class="default" type="text" name="asset" value="AAPL">
             <br>
             <h4>Start Date</h4>
-            <input class="default" type="text" name="start" value="aa-bb-cccc">
+            <input class="default" type="text" name="start" value="7/30/2008">
             <br>
             <h4>End Date</h4>
-            <input class="default" type="text" name="end" value="xx-yy-zzzz">
+            <input class="default" type="text" name="end" value="7/30/2018">
             <br>
             <h4>Trading Days</h4>
             <select size="1" name="trading_days">
-                <option value="weekdays" selected="selected">Mo-Tu-We-Th-Fr
+                <option value="weekdays-H" selected="selected">Standard U.S. Trading Days
+                </option>
+                <option value="weekdays">Mo-Tu-We-Th-Fr
                 </option>
                 <option value="weekends">Mo-Tu-We-Th-Fr-Sa-Su
                 </option>

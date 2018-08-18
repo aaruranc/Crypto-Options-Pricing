@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 import pandas as pd
 from math import sqrt, log
-import strategies
+# import strategies
 
 
 def str_adjust(date):
@@ -226,9 +226,9 @@ def grab_data(dates, length=0):
 def find_dates(df):
 
     n = len(df)
-    e = n - 3
-    start_date = df['Date'][0]
-    end_date = df['Date'][e]
+    e = n - 1
+    start_date = df['Datetime'][0]
+    end_date = df['Datetime'][e]
     d = {'start': start_date, 'end': end_date}
     return d
 
@@ -280,6 +280,9 @@ def search_and_compute(query):
     else:
         df = pd.read_csv(source)
         print(df)
+
+        # Find Dates needs debugged
+
         dates = find_dates(df)
         print(dates)
         VIX = grab_data(dates)
@@ -296,7 +299,7 @@ def search_and_compute(query):
         if b <= c:
             if a <= b:
                 VIX = VIX.loc[:a]
-                LIBOR = LIBOR.loc[:a-1]
+                LIBOR = LIBOR.loc[:a]
             else:
                 df = df.loc[:b]
                 LIBOR = LIBOR.loc[:b]
@@ -346,65 +349,6 @@ def search_and_compute(query):
 
         # handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
         # return
-
-
-def check_dates():
-    LIBOR = pd.read_csv('LIBOR.csv', usecols=['Date'])
-    VIX = pd.read_csv('VIX.csv', usecols=['Date'])
-
-    print('LIBOR')
-
-    length = len(LIBOR)
-    q = length // 4
-    h = length // 2
-    t = q * 3
-
-    for index, series in LIBOR.iterrows():
-
-        if index == q:
-            print('1/4 Done')
-        elif index == h:
-            print('1/2 Done')
-        elif index == t:
-            print('3/4 Done')
-
-        length = len(LIBOR)
-        date = LIBOR['Date'][index]
-        found = False
-        for k in range(index+1, length):
-            if LIBOR['Date'][k] == date:
-                found = True
-                break
-        if found:
-            print(date)
-    print('______________')
-
-    length = len(LIBOR)
-    q = length // 4
-    h = length // 2
-    t = q * 3
-
-    print('VIX')
-    for index, series in VIX.iterrows():
-
-        if index == q:
-            print('1/4 Done')
-        elif index == h:
-            print('1/2 Done')
-        elif index == t:
-            print('3/4 Done')
-
-        length = len(VIX)
-        date = LIBOR['Date'][index]
-        found = False
-        for k in range(index, length-index):
-            if VIX['Date'][k] == date:
-                found = True
-        if found:
-            print(date)
-    print('______________')
-
-    return
 
 
 if __name__ == '__main__':

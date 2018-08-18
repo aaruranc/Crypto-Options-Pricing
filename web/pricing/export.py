@@ -9,17 +9,15 @@ def price_JSON(current_file):
 
     df = pd.read_csv(current_file)
 
-    a = []
     b = []
-    count = 0
     for index, series in df.iterrows():
-        a.append(df['Date'][index])
-        b.append(df['Price'][index])
-        count = count + 1
+        a = []
+        a.append(int(df['Timestamp'][index])*1000)
+        a.append(df['Price'][index])
+        b.append(a)
 
-    length = len(a)
-    data = {'length': length, 'Dates': a, 'Prices': b}
-    x = json.JSONEncoder().encode(data)
+    data = json.dumps(b)
+    # y = json.JSONEncoder().encode(b)
     return data
 
 #

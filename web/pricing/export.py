@@ -12,7 +12,7 @@ def price_JSON(current_file):
     b = []
     for index, series in df.iterrows():
         a = []
-        a.append(int(df['Timestamp'][index])*1000)
+        a.append(int(df['Timestamp'][index]))
         a.append(df['Price'][index])
         b.append(a)
 

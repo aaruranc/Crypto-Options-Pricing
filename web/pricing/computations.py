@@ -185,41 +185,45 @@ def calc_volatilities(df, length):
 
 def grab_data(dates, length=0):
     if length == 0:
-        df = pd.read_csv('VIX.csv', usecols=['Date', 'VIX-Close'])
-        vals = pd.read_csv('VIX.csv', usecols=['VIX-Close'])
-        start = str_adjust(dates['start'])
-        end = str_adjust(dates['end'])
+        df = pd.read_csv('VIX.csv', usecols=['Datetime', 'VIX-Close'])
     else:
         header = option_label(length) + '-LIBOR'
-        df = pd.read_csv('LIBOR.csv', usecols=['Date', header])
-        vals = pd.read_csv('LIBOR.csv', usecols=[header])
-        start = dates['start']
-        end = dates['end']
+        df = pd.read_csv('LIBOR.csv', usecols=['Datetime', header])
+
+    print(df)
 
     started = False
     start_index = 0
     end_index = 0
+    start = dates['start']
+    end = dates['end']
+
+    print('stop 1')
+
     for index, series in df.iterrows():
         if not started:
-            if df['Date'][index] == start or str_adjust(df['Date'][index]) == start:
-                print(df['Date'][index])
+            if df['Datetime'][index] == start:
                 started = True
                 start_index = index
             continue
-        if started:
-            if df['Date'][index] == end or str_adjust(df['Date'][index]) == end:
-                print('executed')
-                print(df['Date'][index])
+        elif started:
+            if df['Datetime'][index] == end:
                 end_index = index
                 break
             continue
+
+    print('Start')
     print(start)
+    print('Start Index')
     print(start_index)
+    print('End')
     print(end)
+    print('End Index')
     print(end_index)
 
     data = (df.loc[start_index:end_index]).copy()
     data.reset_index(drop=True, inplace=True)
+
     return data
 
 
@@ -257,104 +261,58 @@ def search_and_compute(query):
 
     loc = option_length + '.csv'
     query_file = current_directory / loc
-    print(loc)
     print(query_file)
 
     if os.path.isfile(query_file):
-        df = pd.read_csv(query_file)
-        headers = list(df)
-        strike_str = str(strike)
-        if strike_str in headers:
-            method = strike_str + '-' + trading_strategy
-            if method in headers:
-                return
-            else:
-                handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
-                return
-
-        else:
-            new_strike_data(query_file, df, length, strike)
-            handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
+        # df = pd.read_csv(query_file)
+        # headers = list(df)
+        # strike_str = str(strike)
+        # if strike_str in headers:
+        #     method = strike_str + '-' + trading_strategy
+        #     if method in headers:
+        #         return
+        #     else:
+        #         handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
+        #         return
+        #
+        # else:
+        #     new_strike_data(query_file, df, length, strike)
+        #     handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
             return
 
     else:
         df = pd.read_csv(source)
         print(df)
-
-        # Find Dates needs debugged
-
         dates = find_dates(df)
+        # print('df read')
         print(dates)
-        VIX = grab_data(dates)
+        VIX = grab_data(dates, length=0)
+        # print('dates read')
         print(VIX)
-        LIBOR = grab_data(dates, length)
+        LIBOR = grab_data(dates, length=length)
+        # print('VIX found')
         print(LIBOR)
         vols = calc_volatilities(df, length)
+        # print('LIBOR found')
         print(vols)
 
-        a = len(df)
-        b = len(VIX)
-        c = len(LIBOR)
-
-        if b <= c:
-            if a <= b:
-                VIX = VIX.loc[:a]
-                LIBOR = LIBOR.loc[:a]
-            else:
-                df = df.loc[:b]
-                LIBOR = LIBOR.loc[:b]
-        else:
-            if a <= c:
-                VIX = VIX.loc[:a]
-                LIBOR = LIBOR.loc[:a]
-            else:
-                df = df.loc[:c]
-                LIBOR = LIBOR.loc[:c]
-
-        df = pd.concat([df, vols], axis=1)
-        df_2 = pd.concat([VIX, LIBOR], axis=1)
+        df = pd.concat([df, VIX['VIX-Close'], LIBOR[option_length + '-LIBOR'], vols], axis=1)
         print(df)
-        print(df_2)
+
+        # Temporary trim for cleanliness of export
+        # Didn't work lmaoooo
+
+        # l = len(df['Datetime'])
+        # c = l - 15
+        # print_df = (df.loc[0:c]).copy()
+        df.to_csv(query_file, index=False)
 
         return
-
-        # k = len(rf_rates)
-        # for index, series in df.iterrows():
-        #     count = 0
-        #     for index_2, series_2 in rf_rates.iterrows():
-        #         if index == index_2:
-        #             print(df['Date'][index])
-
-                # if df['Date'][index] == rf_rates['Date'][index_2]:
-                #     # print(index)
-                #     # print(df['Date'][index])
-                #     # print(index_2)
-                #     # print(rf_rates['Date'][index_2])
-                #     # print('_____')
-                #     # print('FOUND')
-                #     break
-                # elif index_2 == k-1:
-                #     print(df['Date'][index])
-                #     count = count + 1
-
-
-        # if rf_rates['Date'][index] != df['Date'][index]:
-        #     print(index)
-        #     print(rf_rates['Date'][index])
-
-
-
-        return
-        # df = pd.concat([df, BS_df], axis=1)
-
-        # handle_strategy(current_directory, query_file, df, length, strike, trading_strategy)
-        # return
-
 
 if __name__ == '__main__':
     print('computations main executed')
 
-    test_query = {'trading_strategy': 'Calls', 'option_length': '12', 'strike': '90',
-                  'current_directory': 'data/1534366837', 'source': 'data/1534366837/BTC.csv'}
-    # search_and_compute(test_query)
-    check_dates()
+    test_query = {'trading_strategy': 'Calls', 'option_length': '3', 'strike': '100',
+                  'current_directory': 'data/1534366837', 'source': 'data/1534366837/AAPL.csv'}
+    search_and_compute(test_query)
+    # check_dates()

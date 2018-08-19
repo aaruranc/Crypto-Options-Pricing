@@ -64,6 +64,7 @@ def update():
 	if request.method == 'GET':
 		query = request.args.to_dict()
 		query.update({'current_directory': session['location'], 'source': session['source']})
+		print(query)
 		search_and_compute(query)
 		print(query)
 		query_data = query_JSON(query)

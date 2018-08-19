@@ -64,7 +64,7 @@ def move_date(timestamp, shift, date):
 
 
 def UNIX_timestamp(val):
-    x = int(time.mktime(val.timetuple()))
+    x = int(time.mktime(val.timetuple()))*1000
     return x
 
 def timestamp_convert(start, end):
@@ -213,11 +213,55 @@ def validate(user_parameters):
         os.remove(source)
         return error
 
+def handle_entry(entry):
+    if int(entry[-2:]) > 85:
+        add_on = '19'
+    else:
+        add_on = '20'
+
+    val = 0
+    if len(entry) == 6:
+        val = datetime.date(year=int(add_on + entry[-2:]), month=int(entry[0]), day=int(entry[2]))
+    elif len(entry) == 7:
+        if entry[1] == '/':
+            val = datetime.date(year=int(add_on + entry[-2:]), month=int(entry[0]), day=int(entry[2:4]))
+        else:
+            val = datetime.date(year=int(add_on + entry[-2:]), month=int(entry[0:2]), day=int(entry[3]))
+    elif len(entry) == 8:
+        val = datetime.date(year=int(add_on + entry[-2:]), month=int(entry[0:2]), day=int(entry[3:5]))
+    return val
+
+
+def convert_date_to_datetime():
+
+    x = ['LIBOR.csv', 'VIX.csv']
+    for file in x:
+        df = pd.read_csv(file)
+        cols = list(df)
+        cols.remove('Date')
+        date_df = df['Date']
+
+        k = []
+        for index, series in date_df.iteritems():
+            a = handle_entry(date_df[index])
+            k.append(a)
+
+        d = {'Datetime': k}
+        datetime_df = pd.DataFrame.from_dict(d)
+        vals = df[cols]
+        new_df = pd.concat([datetime_df, vals], axis=1)
+        print(new_df)
+        new_df.to_csv(file, index=False)
+
+    return
+
 
 if __name__ == '__main__':
 
     d = {'start': '7/30/2008', 'end': '7/19/2018', 'trading_days': 'weekdays-H', 'source': 'data/1534366837/AAPL.csv'}
 
-    error = validate(d)
-    print(error)
+    # convert_date_to_datetime()
+
+    # error = validate(d)
+    # print(error)
 

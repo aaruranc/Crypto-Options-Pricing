@@ -1,8 +1,7 @@
 from pathlib import Path
 import pandas as pd
 import json
-from math import ceil
-import numpy as np
+import datetime, time
 
 
 def price_JSON(current_file):
@@ -82,11 +81,17 @@ def option_label(length):
         option_length = '1-Year'
     return option_length
 
+
+def UNIX_timestamp(val):
+    x = int(time.mktime(val.timetuple()))*1000
+    return x
+
+
 def query_JSON(query):
 
     trading_strategy = query['trading_strategy']
     length = int(query['option_length'])
-    strike = query['strike']
+    strike = int(query['strike'])
     current_directory = Path(query['current_directory'])
     source = Path(query['source'])
 
@@ -96,26 +101,59 @@ def query_JSON(query):
     rf_header = LIBOR_label(option_length)
     returns = method + '-ROI'
 
-    current_file = source
-    df = pd.read_csv(current_file)
+    current_file = option_length + '.csv'
+    file_loc = current_directory / current_file
+    df = pd.read_csv(file_loc)
 
     # pdf = probability_density_JSON(df, method)
 
-    a = []
-    for index, series in df.iterrows():
+    end = datetime.datetime(year=2018, month=7, day=5)
+    end_check = UNIX_timestamp(end)
+
+    headers = [option_length + '-' + 'VM', option_length + '-' + 'VNM', 'VIX']
+
+    c = []
+    for title in headers:
+        b = []
+        for index, series in df.iterrows():
+            a = []
+            print(df['Datetime'][index])
+            if index <= length + 1:
+                continue
+            elif df['Timestamp'][index] == end_check:
+                break
+
+            a.append(int(df['Timestamp'][index]))
+            a.append(df[title][index])
+            b.append(a)
+
+        d = {'name': title, 'data': b}
+        c.append(d)
+
         # k = {'Price': df['Price'][index], 'Vol-Mean': df['Vol-Mean'][index], 'Vol-No-Mean': df['Vol-No-Mean'][index],
         #      'Strategy-Cost': df[method][index], rf_header: df[rf_rates][index], 'ROI': df[returns][index],
         #      'Probability-Density': pdf}
 
-        k = {'Date': df['Date'][index], 'Price': df['Price'][index]}
+        # k = {'Date': df['Datetime'][index], 'Price': df['Price'][index]}
         # p = {df['Date'][index]: k}
-        a.append(k)
+        # a.append(k)
 
     # df_length = len(a)
     # d = {'length': df_length, 'type': 'Query', 'data': a}
-    y = json.JSONEncoder().encode(a)
+
+    # print(b)
+    y = json.JSONEncoder().encode(c)
+    # print(y)
+    # print(type(y))
     return y
 
 
 if __name__ == '__main__':
+
+    seriesOptions[i] = {
+        name: name,
+        data: data
+    };
+    test_query = {'trading_strategy': 'Calls', 'option_length': '3', 'strike': '90',
+                  'current_directory': 'data/1534716161', 'source': 'data/1534716161/AAPL.csv'}
     print('export_data main executed')

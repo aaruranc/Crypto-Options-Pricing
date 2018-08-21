@@ -1,27 +1,76 @@
 from pathlib import Path
 import os
 import pandas as pd
-from math import sqrt, log
-# import strategies
+from math import sqrt, log, e, ceil
+from community import strategies
+from scipy.stats import norm
 
 
-def str_adjust(date):
-    length = len(date)
-    if length == 6:
-        new_date = "0" + date[0:2] + "0" + date[2:]
-        return  new_date
-    if length == 7:
-        if date[1] == "/":
-            new_date = "0" + date
-            return new_date
-        else:
-            new_date = date[0:3] + "0" + date[3:]
-            return new_date
-    if length == 8:
-        return date
+# def str_adjust(date):
+#     length = len(date)
+#     if length == 6:
+#         new_date = "0" + date[0:2] + "0" + date[2:]
+#         return  new_date
+#     if length == 7:
+#         if date[1] == "/":
+#             new_date = "0" + date
+#             return new_date
+#         else:
+#             new_date = date[0:3] + "0" + date[3:]
+#             return new_date
+#     if length == 8:
+#         return date
+
+def option_payoff(a, b, d, df, title, index):
+    n = len(df)
 
 
-def BS_option_calcs(parameters):
+
+
+    return
+
+
+def option_price(a, d1, d2, parameters):
+    m = parameters['spot']
+    n = parameters['strike']
+    o = parameters['rf']
+    p = parameters['length']
+
+    if a == 'Calls':
+        x = (norm.cdf(d1) * m) - (norm.cdf(d2) * n * (e ** (-1 * o * p)))
+    elif a == 'Puts':
+        x = (norm.cdf(-1 * d2) * n * (e ** (-1 * o * p))) - (norm.cdf(-1 * d1) * m)
+    return x
+
+
+
+def BS_option_calcs(df, parameters, title, index):
+
+    options = ['Calls', 'Puts']
+    volatilities = ['VM', 'VNM']
+    type = ['Price', 'Payoff', 'ROI']
+
+    d = {}
+    for a in options:
+        for b in volatilities:
+            if b == 'VM':
+                d1 = parameters['d1_mean']
+                d2 = parameters['d2_mean']
+            else:
+                d1 = parameters['d1_no_mean']
+                d2 = parameters['d2_no_mean']
+            for c in type:
+                if c == 'Price':
+                    x = option_price(a, d1, d2, parameters)
+                elif c == 'Payoff':
+                    x = option_payoff(a, b, d, df, title, index)
+                else:
+                    x = d[a][b]['Payoff'] / d[a][b]['Price']
+
+
+                d.update({a: {b : {c: x}}})
+
+
     return {}
 
 
@@ -42,6 +91,7 @@ def BS_dict(df, index, length, percentage):
     v_nm = title + '-VNM'
     rf_title = title + '-LIBOR'
     risk_free = df[rf_title][index]
+    d.update({'rf': risk_free})
     vol_mean = df[v_m][index]
     vol_no_mean = df[v_nm][index]
 
@@ -79,7 +129,7 @@ def new_strike_data(query_file, df, length, strike):
             break
 
         parameters = BS_dict(df, index, length, percentage)
-        data = BS_option_calcs(parameters)
+        data = BS_option_calcs(df, parameters, title, index)
 
         d.update({(c + '-VM'): data['Calls']['Mean']['Price'],
                   (c + '-VM-P'): data['Calls']['Mean']['Payoff'],
@@ -95,6 +145,7 @@ def new_strike_data(query_file, df, length, strike):
                   (p + '-VNM-ROI'): data['Puts']['Mean']['ROI'],
                   })
         options_df.append(d, ignore_index=True)
+
     updated_df = pd.concat([df, strike_df, options_df], axis=1)
     updated_df.to_csv(query_file)
     return
@@ -183,22 +234,62 @@ def calc_volatilities(df, length):
     return vol_df
 
 
+def fix_length(df, date_length, title=''):
+    df_length = len(df)
+
+    if df_length == date_length:
+        return df
+    else:
+        shorter = False
+        diff = date_length - df_length
+        stepsize = ceil(df_length / diff)
+        if diff > 0:
+            shorter = True
+
+    if shorter:
+        vals = df['VIX-Close'].tolist()
+        counter = 0
+        while (len(vals) < date_length):
+            x = int(((counter + 1) * stepsize) + counter)
+            if x > len(vals):
+                vals.append(vals[len(vals) - 1])
+            else:
+                vals.insert(x, vals[x-1])
+            counter = counter + 1
+        d = {'VIX': vals}
+        df = pd. DataFrame.from_dict(d)
+
+    else:
+        name = title + '-LIBOR'
+        vals = df[name].tolist()
+        counter = 0
+        while (len(vals) > date_length):
+            x = -1 * int(((counter + 1) * stepsize) - counter)
+            if x >= len(vals):
+                vals.pop()
+            else:
+                vals.pop(x)
+            counter = counter + 1
+        d = {name: vals}
+        df = pd.DataFrame.from_dict(d)
+
+    return df
+
+
 def grab_data(dates, length=0):
     if length == 0:
+        print('VIX started')
         df = pd.read_csv('VIX.csv', usecols=['Datetime', 'VIX-Close'])
     else:
+        print('LIBOR started')
         header = option_label(length) + '-LIBOR'
         df = pd.read_csv('LIBOR.csv', usecols=['Datetime', header])
-
-    print(df)
 
     started = False
     start_index = 0
     end_index = 0
     start = dates['start']
     end = dates['end']
-
-    print('stop 1')
 
     for index, series in df.iterrows():
         if not started:
@@ -212,20 +303,9 @@ def grab_data(dates, length=0):
                 break
             continue
 
-    print('Start')
-    print(start)
-    print('Start Index')
-    print(start_index)
-    print('End')
-    print(end)
-    print('End Index')
-    print(end_index)
-
     data = (df.loc[start_index:end_index]).copy()
     data.reset_index(drop=True, inplace=True)
-
     return data
-
 
 def find_dates(df):
 
@@ -258,7 +338,6 @@ def search_and_compute(query):
     source = Path(query['source'])
 
     option_length = option_label(length)
-
     loc = option_length + '.csv'
     query_file = current_directory / loc
     print(query_file)
@@ -282,29 +361,18 @@ def search_and_compute(query):
 
     else:
         df = pd.read_csv(source)
-        print(df)
         dates = find_dates(df)
-        # print('df read')
-        print(dates)
-        VIX = grab_data(dates, length=0)
-        # print('dates read')
-        print(VIX)
+        date_length = len(df['Datetime'])
+        VIX = grab_data(dates)
+        updated_VIX = fix_length(VIX, date_length)
         LIBOR = grab_data(dates, length=length)
-        # print('VIX found')
-        print(LIBOR)
+        updated_LIBOR = fix_length(LIBOR, date_length, title=option_length)
         vols = calc_volatilities(df, length)
-        # print('LIBOR found')
-        print(vols)
-
-        df = pd.concat([df, VIX['VIX-Close'], LIBOR[option_length + '-LIBOR'], vols], axis=1)
+        df = pd.concat([df, updated_VIX, updated_LIBOR, vols], axis=1)
         print(df)
 
-        # Temporary trim for cleanliness of export
-        # Didn't work lmaoooo
+        # new_strike_data(query_file, df, length, strike)
 
-        # l = len(df['Datetime'])
-        # c = l - 15
-        # print_df = (df.loc[0:c]).copy()
         df.to_csv(query_file, index=False)
 
         return
@@ -312,7 +380,7 @@ def search_and_compute(query):
 if __name__ == '__main__':
     print('computations main executed')
 
-    test_query = {'trading_strategy': 'Calls', 'option_length': '3', 'strike': '100',
-                  'current_directory': 'data/1534366837', 'source': 'data/1534366837/AAPL.csv'}
+    test_query = {'trading_strategy': 'Calls', 'option_length': '3', 'strike': '90',
+                  'current_directory': 'data/1534716161', 'source': 'data/1534716161/AAPL.csv'}
+
     search_and_compute(test_query)
-    # check_dates()

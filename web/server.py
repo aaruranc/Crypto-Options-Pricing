@@ -1,4 +1,5 @@
 from flask import Flask, json, redirect, render_template, request, session
+from flask_cors import CORS, cross_origin
 from pathlib import Path
 import os
 import time
@@ -10,11 +11,13 @@ from pricing.export import price_JSON, query_JSON
 
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = os.urandom(24)
 app.debug = True
 
 
 @app.route('/', methods=['POST', 'GET'])
+@cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
 def index():
 
 	if request.method == 'GET':
@@ -59,15 +62,17 @@ def prices():
 
 
 @app.route('/update.html', methods=['GET', 'POST'])
+@cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
 def update():
-	
+
 	if request.method == 'GET':
 		query = request.args.to_dict()
 		query.update({'current_directory': session['location'], 'source': session['source']})
 		print(query)
 		search_and_compute(query)
-		print(query)
+		print('MADE IT')
 		query_data = query_JSON(query)
+		print('MADE IT 2')
 		return query_data
 
 	else: 

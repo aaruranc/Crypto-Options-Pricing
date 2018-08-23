@@ -1,18 +1,12 @@
 import pandas as pd
-from computations import search_and_compute
 
 
-def calls(current_file, df, length, strike):
-
-    pd.DataFrame(columns=['Calls'])
-    d = {'Calls': []}
-
-    for index, series in df.iterrows():
+def missing_strikes(query, query_file, strategy):
+    if query['trading_strategy'] == 'Calls' or query['trading_strategy'] == 'Puts':
+        return []
+    else:
+        #####
         return
-
-
-def puts():
-    return
 
 
 def bear_spreads(directory, horizon, current_file, df, strike, strategy, method):
@@ -84,31 +78,36 @@ def calendar_spreads():
     return
 
 
-def straddle(current_file, df, method):
+def straddle(query, query_file):
 
+    strike = (query['strike'])
+    strategy = query['trading_strategy']
+
+    method = strike + '-' + strategy
     payoff = method + '-P'
     ROI = method + '-ROI'
 
     straddle_df = pd.DataFrame(columns=[method, payoff, ROI])
+    df = pd.read_csv(query_file)
 
-    c = str(strike) + '-Calls'
+    c = strike + '-Calls'
     cp = c + '-P'
-    p = str(strike) + '-Puts'
+    p = strike + '-Puts'
     pp = c + '-P'
 
     for index, series in df.iterrows():
-
         cost = df[c][index] + df[p][index]
         profit = df[cp][index] + df[pp][index]
-        returns = payoff / cost
+        returns = profit / cost
 
         d = {method: cost, payoff: profit, ROI: returns}
         straddle_df = straddle_df.append(d, ignore_index=True)
 
     df = pd.concat([df, straddle_df], axis=1)
-    df.to_csv(current_file)
+    df.to_csv(query_file)
 
     return
+
 
 
 def strangle():

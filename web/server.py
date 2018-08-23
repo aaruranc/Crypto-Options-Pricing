@@ -46,6 +46,7 @@ def index():
 							'trading_days': request.form['trading_days'], 
 							'source': session['source']}
 
+		session['trading_days'] = user_parameters['trading_days']
 		flags = validate(user_parameters)
 
 		if not flags:
@@ -67,7 +68,8 @@ def update():
 
 	if request.method == 'GET':
 		query = request.args.to_dict()
-		query.update({'current_directory': session['location'], 'source': session['source']})
+		query.update({'current_directory': session['location'], 'source': session['source'],
+					'trading_days': session['trading_days']})
 		print(query)
 		search_and_compute(query)
 		print('MADE IT')

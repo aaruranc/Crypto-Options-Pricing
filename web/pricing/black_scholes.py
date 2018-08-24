@@ -1,3 +1,6 @@
+import pandas as pd
+from math import log, sqrt, exp
+from scipy.stats import norm
 
 
 def option_payoff(df, parameters, type, price):
@@ -51,6 +54,18 @@ def calc_d2(d1, vol, length):
 
 def calc_d1(vol, length, ratio, rf):
     return (log(ratio) + (length * (rf + ((vol ** 2) / 2)))) / (vol * sqrt(length))
+
+
+def option_label(length):
+
+    if int(length) < 15:
+        option_length = str(length) + '-Day'
+    elif 14 < int(length) < 365:
+        num = int(length) // 30
+        option_length = str(num) + '-Month'
+    else:
+        option_length = '1-Year'
+    return option_length
 
 
 def black_scholes_dict(query, df, index):

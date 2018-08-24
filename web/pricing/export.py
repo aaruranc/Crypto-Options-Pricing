@@ -1,8 +1,8 @@
 from pathlib import Path
 import pandas as pd
 import json
-import datetime, time
-
+import time
+import numpy as np
 
 def price_JSON(current_file):
 
@@ -97,6 +97,8 @@ def query_JSON(query):
     trading_days = query['trading_days']
 
     method = str(strike) + '-' + trading_strategy
+    payoff = method + '-P'
+
     option_length = option_label(length)
     rf_rates = option_length + '-LIBOR'
     rf_header = LIBOR_label(option_length)
@@ -106,14 +108,21 @@ def query_JSON(query):
     current_file = option_length + '.csv'
     file_loc = current_directory / current_file
     df = pd.read_csv(file_loc)
+    df_length = len(df)
 
     k = []
     for index, series in df.iterrows():
         if index <= length:
             continue
-
-        j = [int(df['Timestamp'][index]), float("{0:.2f}".format(df[vol][index]))]
-        k.append(j)
+        if (index + length) == df_length:
+            break
+        val = float(df[vol][index])
+        if np.isnan(val):
+            continue
+        else:
+            j = [int(df['Timestamp'][index]), float("{0:.2f}".format(df[vol][index]))]
+            # j = [int(df['Timestamp'][index]), float(df[ROI][index])]
+            k.append(j)
 
     y = json.JSONEncoder().encode(k)
     return y

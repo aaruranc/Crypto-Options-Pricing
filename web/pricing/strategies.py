@@ -24,7 +24,7 @@ def missing_strikes(query, strategy):
 def strategy_payoff(query, df, index, strategy, cost):
 
     if str(cost) == '':
-        return 0
+        return ''
 
     length = int(query['option_length'])
     new_index = index + length
@@ -54,7 +54,7 @@ def strategy_payoff(query, df, index, strategy, cost):
         elif expiration_price > strike_price:
             return inc_payoff - cost
         else:
-            return 0
+            return ''
 
     elif strategy == 'Bear-Spreads' or strategy == 'Bull-Spreads':
         if strategy == 'Bear-Spreads':
@@ -148,7 +148,7 @@ def compute(query, query_file, strategy):
             elif strategy == 'Bull-Spreads':
                 short_strike = strike + 5
                 short_call = str(short_strike) + '-Calls'
-                cost = df[put][index] - df[short_call][index]
+                cost = df[call][index] - df[short_call][index]
             elif strategy == 'Butterfly-Spreads':
                 low_call_strike = strike - 2
                 high_call_strike = strike + 2

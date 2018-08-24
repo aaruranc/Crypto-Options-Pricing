@@ -94,58 +94,72 @@ def query_JSON(query):
     strike = int(query['strike'])
     current_directory = Path(query['current_directory'])
     source = Path(query['source'])
+    trading_days = query['trading_days']
 
     method = str(strike) + '-' + trading_strategy
     option_length = option_label(length)
     rf_rates = option_length + '-LIBOR'
     rf_header = LIBOR_label(option_length)
     returns = method + '-ROI'
+    vol = option_length + '-VM'
 
     current_file = option_length + '.csv'
     file_loc = current_directory / current_file
     df = pd.read_csv(file_loc)
 
+    k = []
+    for index, series in df.iterrows():
+        if index <= length:
+            continue
+
+        j = [int(df['Timestamp'][index]), float("{0:.2f}".format(df[vol][index]))]
+        k.append(j)
+
+    y = json.JSONEncoder().encode(k)
+    return y
+
+
     # pdf = probability_density_JSON(df, method)
-
-    end = datetime.datetime(year=2018, month=7, day=5)
-    end_check = UNIX_timestamp(end)
-
-    headers = [option_length + '-' + 'VM', option_length + '-' + 'VNM', 'VIX']
-
-    c = []
-    for title in headers:
-        b = []
-        for index, series in df.iterrows():
-            a = []
-            print(df['Datetime'][index])
-            if index <= length + 1:
-                continue
-            elif df['Timestamp'][index] == end_check:
-                break
-
-            a.append(int(df['Timestamp'][index]))
-            a.append(df[title][index])
-            b.append(a)
-
-        d = {'name': title, 'data': b}
-        c.append(d)
-
-        # k = {'Price': df['Price'][index], 'Vol-Mean': df['Vol-Mean'][index], 'Vol-No-Mean': df['Vol-No-Mean'][index],
-        #      'Strategy-Cost': df[method][index], rf_header: df[rf_rates][index], 'ROI': df[returns][index],
-        #      'Probability-Density': pdf}
-
-        # k = {'Date': df['Datetime'][index], 'Price': df['Price'][index]}
-        # p = {df['Date'][index]: k}
-        # a.append(k)
-
+    #
+    # end = datetime.datetime(year=2018, month=7, day=5)
+    # end_check = UNIX_timestamp(end)
+    #
+    # headers = [option_length + '-' + 'VM', 'VIX']
+    #
+    # c = []
+    # for title in headers:
+    #     b = []
+    #     for index, series in df.iterrows():
+    #         a = []
+    #         print(df['Datetime'][index])
+    #         if index <= length + 1:
+    #             continue
+    #         elif df['Timestamp'][index] == end_check:
+    #             break
+    #
+    #         a.append(int(df['Timestamp'][index]))
+    #         a.append(df[title][index])
+    #         b.append(a)
+    #
+    #     d = {'name': title, 'data': b}
+    #     c.append(d)
+    #
+    #     k = {'Price': df['Price'][index], 'Vol-Mean': df['Vol-Mean'][index], 'Vol-No-Mean': df['Vol-No-Mean'][index],
+    #          'Strategy-Cost': df[method][index], rf_header: df[rf_rates][index], 'ROI': df[returns][index],
+    #          'Probability-Density': pdf}
+    #
+    #     k = {'Date': df['Datetime'][index], 'Price': df['Price'][index]}
+    #     p = {df['Date'][index]: k}
+    #     a.append(k)
+    #
     # df_length = len(a)
     # d = {'length': df_length, 'type': 'Query', 'data': a}
 
     # print(b)
-    y = json.JSONEncoder().encode(c)
+    # y = json.JSONEncoder().encode(c)
     # print(y)
     # print(type(y))
-    return y
+    # return y
 
 
 if __name__ == '__main__':

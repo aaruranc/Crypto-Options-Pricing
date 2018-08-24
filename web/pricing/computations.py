@@ -3,48 +3,53 @@ import os
 import pandas as pd
 from math import sqrt, log, exp, ceil
 from scipy.stats import norm
+# import pricing.strategies as strategies
 import strategies
 import numpy as np
+import copy
 
-def additional_strikes(query, new_strikes):
-    new_query = query
-    for val in new_strikes:
-        new_query.update({'strike': val})
-        search_and_compute(new_query)
-    return
 
 def handle_strategy(query, query_file):
 
     strategy = query['trading_strategy']
-    if strategy == 'Calls' or strategy == 'Puts':
-        return
+    new_strikes = strategies.missing_strikes(query, strategy)
 
-    new_strikes = strategies.missing_strikes(query, query_file, strategy)
     if new_strikes:
-        additional_strikes(query, new_strikes)
+        print(new_strikes)
+        new_query = copy.deepcopy(query)
+        for val in new_strikes:
+            new_query.update({'strike': str(val)})
+            new_query.update({'trading_strategy': 'Straddles'})
+            search_and_compute(new_query)
 
-    if strategy == 'Straddles':
-        strategies.straddle(query, query_file)
-    elif strategy == 'Bear-Spreads':
-        strategies.bear_spreads(query, query_file)
-    # elif strategy == 'Bull-Spreads':
-    #     strategies.bull_spreads(query, query_file)
-    # elif strategy == 'Box-Spreads':
-    #     strategies.box_spreads(query, query_file)
-    # elif strategy == 'Butterfly-Spreads':
-    #     strategies.butterfly_spreads(query, query_file)
-    # elif strategy == 'Calendar-Spreads':
-    #     strategies.calendar_spreads(query, query_file)
-    # elif strategy == 'Straps':
-    #     strategies.straps(query, query_file)
-    # elif strategy == 'Strips':
-    #     strategies.strips(query, query_file)
-    # elif strategy == 'Strangles':
-    #     strategies.strangles(query, query_file)
+    strategies.compute(query, query_file, strategy)
+
+    df = pd.read_csv(query_file)
+    print(df)
     return
 
 
-########## REWRITE B-S Code here
+def option_payoff(df, parameters, type, price):
+
+    index = int(parameters['index'])
+    time = int(parameters['days'])
+    new_index = index + time
+
+    strike = parameters['strike']
+    expiration_price = df['Price'][new_index]
+
+    if type == 'Calls':
+        if expiration_price < strike:
+            return -price
+        else:
+            return expiration_price - strike - price
+    elif type == 'Puts':
+        if expiration_price > strike:
+            return -price
+        else:
+            return strike - expiration_price - price
+    else:
+        return 0
 
 
 def put_price(parameters):
@@ -55,8 +60,7 @@ def put_price(parameters):
     rf = parameters['rf']
     length = parameters['length']
 
-    z = (norm.cdf(-d2) * strike * exp(-rf * length)) - (norm.cdf(-d1) * spot)
-    return z
+    return (norm.cdf(-d2) * strike * exp(-rf * length)) - (norm.cdf(-d1) * spot)
 
 
 def call_price(parameters):
@@ -67,27 +71,21 @@ def call_price(parameters):
     rf = parameters['rf']
     length = parameters['length']
 
-    y = (norm.cdf(d1) * spot) - (norm.cdf(d2) * strike * exp(-rf * length))
-    return y
+    return (norm.cdf(d1) * spot) - (norm.cdf(d2) * strike * exp(-rf * length))
 
 
 def calc_d2(d1, vol, length):
-    x = d1 - (vol * sqrt(length))
-    return x
+    return d1 - (vol * sqrt(length))
 
 
 def calc_d1(vol, length, ratio, rf):
-    w = (log(ratio) + (length * (rf + ((vol ** 2) / 2)))) / (vol * sqrt(length))
-    return w
+    return (log(ratio) + (length * (rf + ((vol ** 2) / 2)))) / (vol * sqrt(length))
 
 
 def black_scholes_dict(query, df, index):
 
-    test_query = {'trading_strategy': 'Calls', 'option_length': '10', 'strike': '100',
-                  'current_directory': 'data/1534716161', 'source': 'data/1534716161/AAPL.csv',
-                  'trading_days': 'weekdays-H'}
-
-    ratio = 100 / float(query['strike'])
+    strike_ratio = query['strike']
+    ratio = 100 / float(strike_ratio)
     spot = float(df['Price'][index])
     strike = spot / ratio
     length = query['option_length']
@@ -102,7 +100,8 @@ def black_scholes_dict(query, df, index):
     d1 = calc_d1(vol, year_length, ratio, rf)
     d2 = calc_d2(d1, vol, year_length)
 
-    d = {'d1': d1, 'd2': d2, 'strike': strike, 'spot': spot, 'rf': rf, 'length': year_length}
+    d = {'d1': d1, 'd2': d2, 'strike': strike, 'spot': spot, 'rf': rf, 'length': year_length, 'days': length,
+         'index': index}
     return d
 
 
@@ -111,24 +110,47 @@ def new_strike_data(query, query_file, df):
     length = int(query['option_length'])
     strike = query['strike']
     c = strike + '-Calls'
+    cp = c + '-P'
+    cr = c + '-ROI'
+
     p = strike + '-Puts'
+    pp = p + '-P'
+    pr = p + '-ROI'
 
     j = []
     k = []
+    l = []
+
+    s = []
+    t = []
+    u = []
+
+    big_container = [j, k, l, s, t, u]
+    small_container = [k, l, t, u]
+
+    df_length = len(df)
 
     for index, series in df.iterrows():
         if index < length + 1:
-            j.append('')
-            k.append('')
+            for name in big_container:
+                name.append('')
         else:
             parameters = black_scholes_dict(query, df, index)
             j.append(call_price(parameters))
-            k.append(put_price(parameters))
+            s.append(put_price(parameters))
 
-    d = {c: j, p: k}
+            if (index + length) < df_length:
+                k.append(option_payoff(df, parameters, 'Calls', j[-1]))
+                l.append((k[-1] / j[-1]) * 100)
+                t.append(option_payoff(df, parameters, 'Puts', s[-1]))
+                u.append((t[-1] / s[-1]) * 100)
+            else:
+                for name in small_container:
+                    name.append('')
+
+    d = {c: j, cp: k, cr: l, p: s, pp: t, pr: u}
     new_df = pd.DataFrame.from_dict(d)
     df = pd.concat([df, new_df], axis=1)
-    print(df)
     df.to_csv(query_file, index=False)
     return
 
@@ -145,8 +167,10 @@ def vol_mean(df, length, index, trading_days):
             multiplier = sqrt(252)
 
         k = []
+
         for n in range((index - length), index):
             k.append(log(df['Price'][n+1] / df['Price'][n]))
+
         x = np.std(k, ddof=1)
         return multiplier * 100 * x
 
@@ -165,9 +189,6 @@ def calc_volatility(df, length, trading_days):
 
 def fix_length(df, date_length, title=''):
     df_length = len(df)
-    # print(df)
-    # print(df_length)
-    # print(date_length)
     if df_length == date_length:
         return df
     else:
@@ -177,32 +198,28 @@ def fix_length(df, date_length, title=''):
         if diff > 0:
             shorter = True
 
+    if title == '':
+        name = 'VIX-Close'
+        df_header = 'VIX'
+    else:
+        name = title + '-LIBOR'
+        df_header = name
+
     if shorter:
-        if title == '':
-            name = 'VIX-Close'
-        else:
-            name = title + '-LIBOR'
         vals = df[name].tolist()
         counter = 0
         while (len(vals) < date_length):
             x = int(((counter + 1) * stepsize) + counter)
-            # print(stepsize)
-            # print(x)
-            # print(date_length)
             if x > len(vals):
                 vals.append(vals[len(vals) - 1])
             else:
                 vals.insert(x, vals[x-1])
             counter = counter + 1
-        d = {name: vals}
+        d = {df_header: vals}
         df = pd. DataFrame.from_dict(d)
 
     else:
-        if title == '':
-            name = 'VIX-Close'
-        else:
-            name = title + '-LIBOR'
-            vals = df[name].tolist()
+        vals = df[name].tolist()
         counter = 0
         while (len(vals) > date_length):
             x = -1 * int(((counter + 1) * stepsize) - counter)
@@ -211,7 +228,7 @@ def fix_length(df, date_length, title=''):
             else:
                 vals.pop(x)
             counter = counter + 1
-        d = {name: vals}
+        d = {df_header: vals}
         df = pd.DataFrame.from_dict(d)
 
     return df
@@ -219,10 +236,8 @@ def fix_length(df, date_length, title=''):
 
 def grab_data(dates, length=0):
     if length == 0:
-        print('VIX started')
         df = pd.read_csv('VIX.csv', usecols=['Datetime', 'VIX-Close'])
     else:
-        print('LIBOR started')
         header = option_label(length) + '-LIBOR'
         df = pd.read_csv('LIBOR.csv', usecols=['Datetime', header])
 
@@ -264,7 +279,7 @@ def option_label(length):
     if int(length) < 15:
         option_length = str(length) + '-Day'
     elif 14 < int(length) < 365:
-        num = length // 30
+        num = int(length) // 30
         option_length = str(num) + '-Month'
     else:
         option_length = '1-Year'
@@ -309,102 +324,46 @@ def search_and_compute(query):
         # Create DataFrame from user-info
         source = Path(query['source'])
         df = pd.read_csv(source)
+
         # Create Dictionary of Start & End dates
         dates = find_dates(df)
-        print(dates)
+
         # Compute Length of Source DataFrame
         date_length = len(df['Datetime'])
+
         # Copy VIX data between Start & End dates
         VIX = grab_data(dates)
         updated_VIX = fix_length(VIX, date_length)
+
         # Copy LIBOR data between Start & End dates
         LIBOR = grab_data(dates, length=length)
-        print(LIBOR)
         updated_LIBOR = fix_length(LIBOR, date_length, title=option_length)
+
         # Calculate option_length Volatility for all dates
         trading_days = query['trading_days']
         vols = calc_volatility(df, length, trading_days)
+
         # Concatenate DataFrames
         df = pd.concat([df, updated_VIX, updated_LIBOR, vols], axis=1)
-        print(df)
+
         # Calculate and Append Puts and Calls for user-specified combination of Length and Strike
         new_strike_data(query, query_file, df)
 
-        # # STILL HAVE TO COMPUTE PAYOFFS AND RETURNS FROM NEW STRIKES
-        # payoffs_and_returns(query, query_file, df, new_strike=True)
-
-
         # Compute Results from user-specified Option Strategy
-        # handle_strategy(query, query_file)
+        handle_strategy(query, query_file)
         return
 
 
 if __name__ == '__main__':
     print('computations main executed')
 
-    test_query = {'trading_strategy': 'Calls', 'option_length': '10', 'strike': '100',
+    test_query = {'trading_strategy': 'Strangles', 'option_length': '30', 'strike': '54',
                   'current_directory': 'data/1534716161', 'source': 'data/1534716161/AAPL.csv',
                   'trading_days': 'weekdays-H'}
 
     search_and_compute(test_query)
 
-    # loc = Path(test_query['current_directory']) / '9-Day.csv'
-    # df = pd.read_csv(loc)
-    # new_strike_data(test_query, loc, df)
 
-
-
-    # annual_rf = (1.121521739) ** (365 / 9)
-    #
-    # x = {'i': 1390, 'l': 0.024657534246575342, 'st': 78.66573000000001, 'sp': 71.5143,
-    #      'r': 0.9090909090909091, 'rf': 1.121521739, 'v': 48.10019478494585, 'd1': 3.764296825178816,
-    #      'd2': -3.7887409643280927, 'c': 71.50239022171021, 'p': 78.41845694879935}
-    #
-    # # d1 = 3.764296825178816
-    # # d2 = -3.7887409643280927
-    # # n_d1 = 0.9999164907998107
-    # # n_d2 = 7.570634363292039e-05
-    #
-    # calc_call = 71.50239022171021
-    # calc_put = 8.41845694879935
-    #
-    # web_call = .28 / .29
-    # web_put = 7.3 / 7.4
-    #
-    # # j = norm.ppf(.1118)
-    # # k = -norm.ppf(.8882)
-    # # l = norm.ppf((.0214 / (x['spot'] * sqrt(x['length']))) * exp(x['rf'] * x['length']))
-    # # temp = (.0352 * x['spot'] * sqrt(x['length']) * x['vol'])
-    # # print(temp)
-    # # m = norm.ppf(temp)
-    # # y = (j + k + l + m) / 4
-    # # print('d1')
-    # # print(j, k, l, m)
-    # # print(y)
-    # #
-    # # a = norm.ppf((.0019 / (x['strike'] * x['length'])) * exp(x['rf'] * x['length']))
-    # # b = -norm.ppf((.00175 / (x['strike'] * x['length'])) * exp(x['rf'] * x['length']))
-    # # c = norm.ppf((.0214 / (x['strike'] * sqrt(x['length']))) * exp(x['rf'] * x['length']))
-    # # d = norm.ppf(exp(x['rf'] * x['length']) * ((.0214 / (x['strike'] * sqrt(x['length']))) * exp(x['rf'] * x['length'])) / x['strike'])
-    # # z = (a + b + c + d) / 4
-    # # print('d2')
-    # # print(a, b, c, d)
-    # # print(z)
-    #
-    # # d1 = -1.217011
-    # # d2 = -3.095
-    #
-    # delta = .1107
-    # rho = .0019
-    # d1 = norm.ppf(delta)
-    # d2 = norm.ppf((rho / (x['st'] * x['l'])) * exp(x['rf'] * x['l']))
-    #
-    #
-    # c = x['sp'] * norm.cdf(d1) - (x['st'] * exp(-1 * x['rf'] * x['l']) * norm.cdf(d2))
-    # p = (x['st'] * exp(-1 * x['rf'] * x['l']) * norm.cdf(-d2)) - x['sp'] * norm.cdf(-d1)
-    #
-    # print(c)
-    # print(p)
 
 
     # search_and_compute(test_query)

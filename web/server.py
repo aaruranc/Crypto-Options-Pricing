@@ -17,7 +17,7 @@ app.debug = True
 
 
 @app.route('/', methods=['POST', 'GET'])
-@cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
+# @cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
 def index():
 
 	if request.method == 'GET':
@@ -63,7 +63,7 @@ def prices():
 
 
 @app.route('/update.html', methods=['GET', 'POST'])
-@cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
+# @cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
 def update():
 
 	if request.method == 'GET':

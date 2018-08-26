@@ -16,17 +16,19 @@ def handle_strategy(query, query_file):
     new_strikes = strategies.missing_strikes(query, strategy)
 
     if new_strikes:
-        print(new_strikes)
-        new_query = copy.deepcopy(query)
+        base = ['Calls', 'Puts']
         for val in new_strikes:
-            new_query.update({'strike': str(val)})
-            new_query.update({'trading_strategy': 'Straddles'})
-            search_and_compute(new_query)
+            for header in base:
+                new_query = copy.deepcopy(query)
+                new_query.update({'strike': str(val), 'trading_strategy': header})
+                title = str(val) + '-' + header
+                df = pd.read_csv(query_file)
+
+                if title not in list(df):
+                    new_strike_data(new_query, query_file, df)
 
     strategies.compute(query, query_file, strategy)
 
-    df = pd.read_csv(query_file)
-    print(df)
     return
 
 
@@ -64,6 +66,8 @@ def calc_volatility(df, length, trading_days):
 
 def fix_length(df, date_length, title=''):
     df_length = len(df)
+    # print(df_length)
+    # print(date_length)
     if df_length == date_length:
         return df
     else:
@@ -85,7 +89,11 @@ def fix_length(df, date_length, title=''):
         counter = 0
         while (len(vals) < date_length):
             x = int(((counter + 1) * stepsize) + counter)
-            if x > len(vals):
+            # print(x)
+            # print(len(vals))
+            if x == 0:
+                vals.insert(x, vals[x])
+            elif x > len(vals):
                 vals.append(vals[len(vals) - 1])
             else:
                 vals.insert(x, vals[x-1])
@@ -124,6 +132,17 @@ def grab_data(dates, length=0):
     start = dates['start']
     end = dates['end']
 
+    # end_datetime = datetime.date(year=int(end[:4]), month=int(end[5:7]), day=int(end[8:10]))
+    # if end not in df['Datetime']:
+    #     day = datetime.timedelta(days=1)
+    #     end = end_datetime + day
+    #     if end not in df['Datetime']:
+    #         end = end + day
+    #         if end not in df['Datetime']:
+    #             end = end + day
+    #
+    # print(end)
+
     for index, series in df.iterrows():
         if not started:
             if df['Datetime'][index] == start:
@@ -148,6 +167,7 @@ def find_dates(df):
     e = n - 1
     start_date = df['Datetime'][0]
     end_date = df['Datetime'][e]
+
     return {'start': start_date, 'end': end_date}
 
 

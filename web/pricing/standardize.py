@@ -84,8 +84,6 @@ def timestamp_convert(start, end):
 
 def validate(user_parameters):
 
-    print(user_parameters)
-
     start = user_parameters['start']
     end = user_parameters['end']
     trading_days = user_parameters['trading_days']
@@ -130,15 +128,16 @@ def validate(user_parameters):
     nonneg = True
     isnum = True
 
-    for index, series in df.iterrows():
-        if nonneg:
-            if float(df['Price'][index]) <= 0:
-                error.append('All Prices must be Greater than 0')
-                nonneg = False
-        if isnum:
-            if np.isnan(float(df['Price'][index])):
-                error.append('Prices must be Real Numbers')
-                isnum = False
+    if 'Price' in headers:
+        for index, series in df.iterrows():
+            if nonneg:
+                if float(df['Price'][index]) <= 0:
+                    error.append('All Prices must be Greater than 0')
+                    nonneg = False
+            if isnum:
+                if np.isnan(float(df['Price'][index])):
+                    error.append('Prices must be Real Numbers')
+                    isnum = False
 
     if not error:
 
@@ -207,7 +206,7 @@ def validate(user_parameters):
         b = {'Price': prices}
         price_df = pd.DataFrame.from_dict(b)
         df = pd.concat([new_df, price_df], axis=1)
-        print(df)
+        # print(df)
         df.to_csv(source, index=False)
         return []
     else:
@@ -251,7 +250,7 @@ def convert_date_to_datetime():
         datetime_df = pd.DataFrame.from_dict(d)
         vals = df[cols]
         new_df = pd.concat([datetime_df, vals], axis=1)
-        print(new_df)
+        # print(new_df)
         new_df.to_csv(file, index=False)
 
     return

@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def missing_strikes(query, strategy):
@@ -80,28 +81,21 @@ def strategy_payoff(query, df, index, strategy, cost):
         low_call = (ratio - .02) * df['Price'][index]
         high_call = (ratio + .02) * df['Price'][index]
 
-        if expiration_price <= low_call or expiration_price >= high_call:
-            return -cost
-        elif low_call < expiration_price < strike:
-            return expiration_price - low_call - cost
+        if expiration_price < low_call or expiration_price > high_call:
+            x = -cost
+            return x
+        elif low_call <= expiration_price < strike:
+            x = expiration_price - low_call - cost
+            return x
         elif strike <= expiration_price <= high_call:
-            return high_call - expiration_price - cost
+            x = high_call - expiration_price - cost
+            return x
         else:
             return ''
 
     elif strategy == 'Strangles':
         put = (ratio - .03) * df['Price'][index]
         call = (ratio + .03) * df['Price'][index]
-        print('Strike Price')
-        print(strike_price)
-        print('Expiration Price')
-        print(expiration_price)
-        print('Put')
-        print(put)
-        print('Call')
-        print(call)
-        print('Cost')
-        print(cost)
 
         if expiration_price <= put:
             return put - expiration_price - cost
@@ -129,12 +123,11 @@ def compute(query, query_file, strategy):
 
     for index in range(len(df)):
 
-        if str(df[call][index]) == '' or str(df[put][index]) == '':
-            cost = ''
-            profit = ''
-            returns = ''
-        else:
-            cost = ''
+        cost = ''
+        profit = ''
+        returns = ''
+
+        if not np.isnan(df[call][index]) and not np.isnan(df[put][index]):
             if strategy == 'Straddles':
                 cost = df[call][index] + df[put][index]
             elif strategy == 'Straps':
@@ -154,7 +147,7 @@ def compute(query, query_file, strategy):
                 high_call_strike = strike + 2
                 low_call = str(low_call_strike) + '-Calls'
                 high_call = str(high_call_strike) + '-Calls'
-                cost = df[low_call][index] + df[high_call] - (2 * df[put][index])
+                cost = df[low_call][index] + df[high_call][index] - (2 * df[call][index])
             elif strategy == 'Strangles':
                 put_strike = strike - 3
                 call_strike = strike + 3
@@ -164,7 +157,7 @@ def compute(query, query_file, strategy):
 
             profit = strategy_payoff(query, df, index, strategy, cost)
 
-            if str(profit) == '' or str(cost) == '':
+            if profit == '' or cost == '':
                 returns = ''
             else:
                 returns = 100 * profit / cost
@@ -180,6 +173,7 @@ def compute(query, query_file, strategy):
     d = {method: m, payoff: p, ROI: r}
 
     new_df = pd.DataFrame.from_dict(d)
+
     df = pd.concat([df, new_df], axis=1)
     df.to_csv(query_file, index=False)
     return

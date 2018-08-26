@@ -29,12 +29,12 @@
     
 <body>
 <header>
-    <h1 id="title">Options-Pricer</h1>
+    <h1 id="title">Option-Backtester</h1>
 </header>
     
 <div id="container">   
 <br>
-<p id="how-to">Options-Pricer is an an exploratory data visualization tool. The premise is simple: you choose an asset that you want <a href="https://www.investopedia.com/university/options/option.asp" target="_blank">option</a> pricing analysis on. O-P computes the results and renders them graphically. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below. Please make sure that the start and end dates match the 'mm-dd-yyyy' format. </p>
+<p id="how-to">Option-Backtester is an an exploratory data visualization tool. The premise is simple. You choose an asset that you want <a href="https://www.investopedia.com/university/options/option.asp" target="_blank">option</a> pricing analysis on and O-B computes the results and renders them graphically. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below. Please make sure that the start and end dates match the 'mm-dd-yyyy' format. </p>
 <p>O-P only supports option pricing from 1/2/01 to present.</p>
         
     {% if flags %}
@@ -66,7 +66,7 @@
                 </option>
                 <option value="weekdays">Mo-Tu-We-Th-Fr
                 </option>
-                <option value="weekends">Mo-Tu-We-Th-Fr-Sa-Su
+                <option value="weekends" >Mo-Tu-We-Th-Fr-Sa-Su
                 </option>
             </select>
             <br>

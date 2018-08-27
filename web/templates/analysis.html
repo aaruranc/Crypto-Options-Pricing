@@ -3,21 +3,34 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Custom CSS -->
-    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">
-<!--    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">-->
+<!--    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">-->
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">
+ <!-- Font Awesome -->   
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
 <!-- HighCharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
 <!-- jQuery -->  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
 </head>
     
 <body>
 <header>
     <h1 id="title">Options-Pricer</h1>
 </header>
+
+<div id="exit_button"></div>
+<div><p id="user_button"></p></div>
+{% for value in name %}     
+    <h1>{{ value }}</h1>
+{% endfor %}
     
-<h1>'AAPL'</h1>    
-<h2>'1-Day / 90% Spot / Bull Spread'</h2>
+<h2 id="strategy_name"></h2>
+
+    
 <button id = "selections" class="collapsible">Create New Visualizations</button>
     <div class="content">
         <div>
@@ -195,10 +208,26 @@ menu.addEventListener("click", function() {
   });
 </script>
 
+<script type="application/javascript">
+    function deleteConsole(){
+        $("#design").remove();
+//        $("#user_button").remove();
+        var exit = document.getElementById("exit_button");
+        var user = document.getElementById("user_button");
+        exit.innerHTML = '';
+        exit.removeAttribute("style")
+        user.innerHTML = '';
+        user.removeAttribute("style")
+    }
+    
+</script>
 
     
 <script>
 $( '#submit' ).click(function() {
+    var seconds = 0;
+    var counter = setInterval(incrementSeconds, 10);
+    incrementSeconds()
     
     var titles = ["Asset Price Evolution",
 //                  "Strategy Payoff Diagram", 
@@ -212,55 +241,130 @@ $( '#submit' ).click(function() {
     for (var i = 0; i < 6; i++){
         div_name = "container" + i;
         if (document.getElementById(div_name) === null) {
-            executed = true
+            executed = true;
             newNode(titles[i], div_name);
-        }
-    }
+        };
+    };
     
     if (executed){
-        makeCollapsible()
+        makeCollapsible();
     }
+    
+    var strategy_header = '';
+    var strategy_length = parseInt($('#option_length').val());
+    var strike = $('#strike').val();
+    var strategy = $('#trading_strategy').val();
+    
+    if (strategy_length === 365){
+        strategy_header = '1-Year /';
+    } else if (strategy_length >= 30){
+        var month = strategy_length / 30;
+        strategy_header = month + '-Month / ';
+    } else{
+        strategy_header = strategy_length + '-Day / ';
+    };
+        
+    strategy_header += 'Strike is ' + strike + '% Spot / ' + strategy;
+
+    var header = document.getElementById("strategy_name");
+    header.innerHTML = strategy_header;
+    
+    var exit = document.createElement("i")
+        exit.setAttribute("id", "design")
+        exit.setAttribute("class", "fas fa-times-circle");
+        exit.style.position = 'fixed';
+        exit.style.left = 87 + '%';
+        exit.style.top = 12.5 + '%';
+        exit.style.zIndex = 2;
+    
+    var leave = document.getElementById("exit_button");
+    
+    var user_info = document.getElementById("user_button");
+        user_info.style.position = 'fixed';
+        user_info.style.fontSize = '12px';
+        user_info.style.left = 70 + '%';
+        user_info.style.width = 15 + '%';
+        user_info.style.zIndex = 2;
+        user_info.style.borderStyle = 'solid';
+        user_info.style.borderWidth = 'thin';
+        user_info.style.padding = '30px';
+        user_info.innerText = "Computing Results...";
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'price' } )
     .done(function( data ) {
-        single_variate_TS(data, "container0", "Historical Prices", "Dollars", "Price")
+        if (data === 'bad_request'){
+            user_info.innerText = "Not enough datapoints to support pricing for this option length. Please try again."
+        } else{
+            single_variate_TS(data, "container0", "Historical Prices", "Dollars", "Price");
+            user_info.innerText = "Results computed";
+        }
+    
+        
     });
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'volatility' } )
     .done(function( data ) {
-        single_variate_TS(data, "container1", "N-Day Volatility", "Annualized Percentage", "Volatility")
+        if (data === 'bad_request'){
+        } else{
+            user_info.innerText = "Generating Volatility Evolution viz...";
+            single_variate_TS(data, "container1", "N-Day Volatility", "Annualized Percentage", "Volatility");
+        }
     });
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'strategy-cost' } )
     .done(function( data ) {
-        single_variate_TS(data, "container2", "Method Cost", "Dollars", "Strategy Cost")
+        if (data === 'bad_request'){
+        } else{
+            user_info.innerText = "Generating Strategy Cost Evolution viz...";
+            single_variate_TS(data, "container2", "Method Cost", "Dollars", "Strategy Cost");
+        }
     });
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'payoff' } )
     .done(function( data ) {
-        single_variate_TS(data, "container3", "Method Payoff", "Dollars", "Method Payoff")
+        if (data === 'bad_request'){
+        } else{
+            user_info.innerText = "Generating Day-to-Day Payoffs viz...";
+            single_variate_TS(data, "container3", "Method Payoff", "Dollars", "Method Payoff")
+        }
     });
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'ROI' } )
     .done(function( data ) {
-        single_variate_TS(data, "container4", "Method Return on Investment", "Percentage", "Method ROI")
+        if (data === 'bad_request'){
+        } else{
+            user_info.innerText = "Generating Day-to-Day ROI viz...";
+            single_variate_TS(data, "container4", "Method Return on Investment", "Percentage", "Method ROI")
+        }
     });
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'pdf' } )
     .done(function( data ) {
-        generateHistogram(data)
-        generateStatsTable(data)
-        removeLabels()
-        modifySpacing()
+        if (data === 'bad_request'){
+        } else{
+            user_info.innerText = "Generating Distribution of Payoffs viz...";
+            generateHistogram(data)
+            user_info.innerText = "Generating Distribution of Payoffs statistics...";
+            generateStatsTable(data);
+            removeLabels();
+            modifySpacing();
+            clearInterval(counter);
+            leave.appendChild(exit);
+            user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in plots by dragging.";
+        }
+        user_info.addEventListener("click", deleteConsole);
+        setTimeout(deleteConsole, 15000);
     });
     
-    
+    function incrementSeconds() {
+        seconds += .01;
+    }
     
     function newNode(title, container_name){
         var viz = document.getElementById("viz");
@@ -412,7 +516,9 @@ $( '#submit' ).click(function() {
 
     Highcharts.chart('container5', {
         chart: {
-            type: 'column'
+            type: 'column',
+            zoomType: 'xy'
+            
         },
         title: {
             text: ''
@@ -494,7 +600,7 @@ $( '#submit' ).click(function() {
         var lineBreak = document.createElement("br");
         var statsTable = document.createElement("table");
         
-        statsTableNode(statsTable, "Statistics", "Values");
+//        statsTableNode(statsTable, "Statistics", "Values");
         statsTableNode(statsTable, "Samples", data['samples']);
         statsTableNode(statsTable, "Minimum", data['min']);
         statsTableNode(statsTable, "Maximum", data['max']);
@@ -526,57 +632,6 @@ $( '#submit' ).click(function() {
     
 });
 </script>
-
-    
-<!--
-<div id="viz">
-    <button class="collapsible">Asset Price Evolution</button>
-        <div class="content">
-            <br>
-            <div id="container" style="width:100%; height:400px;"></div>
-            <br>
-        </div>
-</div>
--->
-    
-<!--
-<script>
-
-var options1 = {
-    chart: {
-        renderTo: 'container2'
-    },
-    series: []
-};
-
-var drawChart = function (data, name) {
-    // 'series' is an array of objects with keys: 'name' (string) and 'data' (array)
-    var newSeriesData = {
-        name: name,
-        data: data
-    };
-
-    // Add the new data to the series array
-    options1.series.push(newSeriesData);
-
-    // If you want to remove old series data, you can do that here too
-
-    // Render the chart
-    var chart = new Highcharts.Chart(options1);
-};
-var data = [];
-
-// we get new data
-data = [1, 2, 3, 4, 5];
-drawChart(data, 'Tokyo');
-
-// we get new data
-data = [10, 11, 12, 13, 14];
-drawChart(data, 'Sydney');
-    
-    
-</script>
--->
 
     
 </body>

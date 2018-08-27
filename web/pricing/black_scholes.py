@@ -53,6 +53,10 @@ def calc_d2(d1, vol, length):
 
 
 def calc_d1(vol, length, ratio, rf):
+
+    if vol == 0:
+        return 1000
+
     return (log(ratio) + (length * (rf + ((vol ** 2) / 2)))) / (vol * sqrt(length))
 
 
@@ -122,6 +126,7 @@ def new_strike_data(query, query_file, df):
                 name.append('')
         else:
             parameters = black_scholes_dict(query, df, index)
+
             j.append(call_price(parameters))
             s.append(put_price(parameters))
 

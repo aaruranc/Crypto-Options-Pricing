@@ -5,6 +5,7 @@ import time
 import numpy as np
 from scipy import stats
 
+
 def update_query(query, session):
     query.update({'current_directory': session['location'], 'source': session['source'],
                   'trading_days': session['trading_days']})

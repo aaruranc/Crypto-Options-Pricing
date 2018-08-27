@@ -3,58 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="c5341665-55de-4ace-9f7b-19b54456ff7f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1534366455/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1534965181/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535004072/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535004171/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535004246/5-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535004246/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005072/5-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005072/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005332/8-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005332/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005427/7-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005427/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/1-Month.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/1-Year.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/10-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/12-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/2-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/2-Month.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/6-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/6-Month.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535005686/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006217/7-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006217/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006410/3-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006410/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006632/3-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006632/AAPL-1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006752/2-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006752/7-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535006752/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535083733/3-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535083733/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535083796/1-Month.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535083796/10-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535083796/2-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535083796/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084163/1-Month.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084163/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084327/7-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084327/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084422/5-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084422/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084455/5-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084455/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084774/5-Day.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084774/AAPL.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084878/1-Month.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/data/1535084878/10-Day.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/black_scholes.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/black_scholes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pricing/computations.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/computations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/data/1534716161/1-Month.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/data/1534716161/2-Day.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/data/1534716161/3-Day.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/data/1534716161/3-Month.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/data/1534716161/4-Month.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pricing/data/1534716161/7-Day.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pricing/export.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/export.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pricing/standardize.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/standardize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pricing/strategies.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/pricing/strategies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/analysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/analysis.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/templates/analysis.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/analysis.html" afterDir="false" />
@@ -72,17 +30,17 @@
       <file leaf-file-name="scratch_13.py" pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_13.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="744">
+            <state relative-caret-position="6645">
               <caret line="443" column="14" selection-start-line="443" selection-start-column="14" selection-end-line="443" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="standardize.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="standardize.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/pricing/standardize.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="129" selection-start-line="129" selection-end-line="129" />
+            <state relative-caret-position="-1457">
+              <caret line="131" column="74" selection-start-line="131" selection-start-column="74" selection-end-line="131" selection-end-column="74" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -93,8 +51,8 @@
       <file leaf-file-name="computations.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/pricing/computations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
+            <state relative-caret-position="2925">
+              <caret line="195" selection-start-line="195" selection-end-line="195" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -105,11 +63,8 @@
       <file leaf-file-name="black_scholes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/pricing/black_scholes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="42" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="19" selection-start-column="19" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -117,7 +72,7 @@
       <file leaf-file-name="strategies.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/pricing/strategies.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
+            <state relative-caret-position="1425">
               <caret line="96" column="36" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -126,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="export.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="export.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/pricing/export.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1935">
-              <caret line="129" selection-start-line="129" selection-end-line="129" />
+            <state relative-caret-position="645">
+              <caret line="43" column="30" lean-forward="true" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -149,7 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>to_csv</find>
       <find>volatilit</find>
       <find>read</find>
       <find>from_dict</find>
@@ -179,6 +133,7 @@
       <find>rint</find>
       <find>from_</find>
       <find>print</find>
+      <find>trimmed_dates</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -187,7 +142,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/1_year_price_movements.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_3.py" />
         <option value="$PROJECT_DIR$/BTC_historical.py" />
         <option value="$PROJECT_DIR$/data_scraping/BTC_historical.py" />
@@ -235,14 +189,15 @@
         <option value="$PROJECT_DIR$/web/pricing/black-scholes.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_13.py" />
         <option value="$PROJECT_DIR$/web/pricing/strategies.py" />
-        <option value="$PROJECT_DIR$/web/pricing/export.py" />
         <option value="$PROJECT_DIR$/web/pricing/computations.py" />
+        <option value="$PROJECT_DIR$/web/pricing/black_scholes.py" />
         <option value="$PROJECT_DIR$/web/pricing/standardize.py" />
+        <option value="$PROJECT_DIR$/web/pricing/export.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="51" />
+    <option name="x" value="95" />
     <option name="width" value="950" />
     <option name="height" value="895" />
   </component>
@@ -340,19 +295,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="51" y="0" width="950" height="895" extended-state="0" />
+    <frame x="95" y="0" width="950" height="895" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.0" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.0" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3995128" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3995128" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -364,21 +319,21 @@
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -386,7 +341,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="13" />
+      <option name="time" value="15" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -524,24 +479,14 @@
     <entry file="file://$PROJECT_DIR$/web/pricing/LIBOR_data.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_13.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="744">
+        <state relative-caret-position="6645">
           <caret line="443" column="14" selection-start-line="443" selection-start-column="14" selection-end-line="443" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/export.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1935">
-          <caret line="129" selection-start-line="129" selection-end-line="129" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/pricing/strategies.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
+        <state relative-caret-position="1425">
           <caret line="96" column="36" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -549,30 +494,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/black_scholes.py">
+    <entry file="file://$PROJECT_DIR$/web/pricing/standardize.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="42" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/computations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
+        <state relative-caret-position="-1457">
+          <caret line="131" column="74" selection-start-line="131" selection-start-column="74" selection-end-line="131" selection-end-column="74" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/pricing/standardize.py">
+    <entry file="file://$PROJECT_DIR$/web/pricing/computations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="129" selection-start-line="129" selection-end-line="129" />
+        <state relative-caret-position="2925">
+          <caret line="195" selection-start-line="195" selection-end-line="195" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/black_scholes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pricing/export.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="30" lean-forward="true" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

@@ -16,11 +16,9 @@ app.debug = True
 
 
 @app.route('/', methods=['POST', 'GET'])
-# @cross_origin(origin='*', headers=['access-control-allow-origin','Content-Type'])
 def index():
 
 	if request.method == 'GET':
-	    print('executed')
 	    start_time = str(int(time.time()))
 	    session['location'] = 'data' + '/' + start_time
 	    return render_template('index.html')
@@ -28,7 +26,6 @@ def index():
 	if request.method == 'POST':
 		asset_name = request.form['asset']
 		session['asset_name'] = asset_name
-
 
 		if not request.files:
 			flags = ['No file uploaded']
@@ -59,24 +56,23 @@ def index():
 		flags = validate(user_parameters)
 
 		if not flags:
-			return render_template('/analysis.html')
+			name = [asset_name]
+			session['file_length'] = len(pd.read_csv(session['source']))
+			return render_template('/analysis.html', name=name)
 		else:
 			return render_template('index.html', flags=flags)
 
 @app.route('/update.html', methods=['GET', 'POST'])
 def update():
 
-	if request.method == 'GET':
-		
-		# Check if there is enough datapoints to conduct analysis
+	query = update_query(request.args.to_dict(), session)	
+	if session['file_length'] < 2 * (int(query['option_length']) + 1):
+		return 'bad_request'
 
-		query = update_query(request.args.to_dict(), session)
-		search_and_compute(query)
-		query_data = query_JSON(query)
-		return query_data
+	search_and_compute(query)
+	query_data = query_JSON(query)
+	return query_data
 
-	else: 
-		return render_template('/')
 
 if __name__ == '__main__':
 	app.run()

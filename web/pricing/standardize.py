@@ -107,6 +107,12 @@ def validate(user_parameters):
     n = len(df)
     headers = list(df)
 
+    webapp_start = datetime.date(year=2001, month=1, day=1)
+    webapp_end = datetime.date(year=2018, month=8, day=1)
+
+    # Needs to check if dates are supported
+    if date_info['start_datetime'] < webapp_start or date_info['end_datetime'] > webapp_end:
+        error.append('Dates are out of range. Please trim csv to time series data between 1/1/01 and 8/1/18')
     if n < 10:
         error.append('csv must have at least 10 data points ')
     if 'Date' not in headers:
@@ -121,9 +127,9 @@ def validate(user_parameters):
         error.append('End Date Incorrect')
     if 'Start Date Incorrect' not in error and 'End Date Incorrect' not in error:
         if n > correct_length + (.02 * n):
-            error.append('Duplicate Rows')
+            error.append('Duplicate Rows. Is Trading Days selection correct?')
         elif n < correct_length - (.02 * n):
-            error.append('Missing Rows')
+            error.append('Missing Rows. Is Trading Days selection correct?')
 
     nonneg = True
     isnum = True
@@ -140,7 +146,6 @@ def validate(user_parameters):
                     isnum = False
 
     if not error:
-
         start_datetime = date_info['start_datetime']
         end_datetime = date_info['end_datetime']
         dummy = start_datetime

@@ -8,7 +8,7 @@ from pricing.black_scholes import new_strike_data
 # from black_scholes import new_strike_data
 import numpy as np
 import copy
-
+import datetime
 
 def handle_strategy(query, query_file):
 
@@ -65,17 +65,6 @@ def calc_volatility(df, length, trading_days):
 
 
 def fix_length(df, date_length, title=''):
-    df_length = len(df)
-    # print(df_length)
-    # print(date_length)
-    if df_length == date_length:
-        return df
-    else:
-        shorter = False
-        diff = date_length - df_length
-        stepsize = ceil(df_length / diff)
-        if diff > 0:
-            shorter = True
 
     if title == '':
         name = 'VIX-Close'
@@ -84,37 +73,127 @@ def fix_length(df, date_length, title=''):
         name = title + '-LIBOR'
         df_header = name
 
+    df_length = len(df)
+    if df_length == date_length:
+        new_df = df[df_header]
+        return new_df
+    else:
+        shorter = False
+        diff = date_length - df_length
+        stepsize = df_length / diff
+        if diff > 0:
+            shorter = True
+
+    vals = df[name].tolist()
     if shorter:
-        vals = df[name].tolist()
         counter = 0
-        while (len(vals) < date_length):
-            x = int(((counter + 1) * stepsize) + counter)
-            # print(x)
-            # print(len(vals))
-            if x == 0:
-                vals.insert(x, vals[x])
-            elif x > len(vals):
+        while len(vals) < date_length:
+            x = ceil(((counter + 1) * stepsize) + counter)
+            if x >= len(vals):
                 vals.append(vals[len(vals) - 1])
             else:
                 vals.insert(x, vals[x-1])
             counter = counter + 1
-        d = {df_header: vals}
-        df = pd. DataFrame.from_dict(d)
-
     else:
-        vals = df[name].tolist()
         counter = 0
-        while (len(vals) > date_length):
-            x = -1 * int(((counter + 1) * stepsize) - counter)
+        while len(vals) > date_length:
+            x = ceil(((counter + 1) * stepsize) + counter)
             if x >= len(vals):
                 vals.pop()
             else:
                 vals.pop(x)
-            counter = counter + 1
-        d = {df_header: vals}
-        df = pd.DataFrame.from_dict(d)
 
-    return df
+            counter = counter + 1
+
+    d = {df_header: vals}
+    new_df = pd.DataFrame.from_dict(d)
+
+    return new_df
+
+
+def update_datetime(df, input, endpoint):
+
+    info = str(input).rsplit('-')
+    yr = int(info[0])
+    mo = int(info[1])
+    date = ''
+
+    if endpoint == 'Start':
+        if mo == 1:
+            date = str(yr - 1) + '-12'
+        else:
+            if mo < 11:
+                date = str(yr) + '-0' + str(mo-1)
+            else:
+                date = str(yr) + '-' + str(mo-1)
+
+    elif endpoint == 'End':
+        if mo == 12:
+            date = str(yr + 1) + '-01'
+        else:
+            if mo < 9:
+                date = str(yr) + '-0' + str(mo+1)
+            else:
+                date = str(yr) + '-' + str(mo+1)
+
+    list_index = -1
+    n = len(df)
+    for index in range(n):
+        if df['Datetime'][index][:7] == date:
+            list_index = index
+            break
+
+    if list_index == -1:
+        if endpoint == 'Start':
+            list_index = 0
+        elif endpoint == 'End':
+            list_index = n
+
+    start = ''
+    end = ''
+    day = ''
+    if endpoint == 'Start':
+        day = datetime.timedelta(days=1)
+        start = list_index
+        if start + 62 >= n:
+            end = n
+        else:
+            end = start + 62
+    elif endpoint == 'End':
+        day = datetime.timedelta(days=-1)
+        end = list_index
+        if end - 62 < 0:
+            start = 0
+        else:
+            start = end - 62
+
+    temp = input
+    trimmed_dates = (df['Datetime'].loc[start:end]).tolist()
+
+    while str(temp) not in trimmed_dates:
+        temp = temp + day
+
+    return temp
+
+
+def grab_index(df, endpoint, started=False):
+
+    endpoint_str = str(endpoint)
+
+    for index in range(len(df)):
+        if not started:
+            if df['Datetime'][index] == endpoint_str:
+                return index
+            continue
+        elif started:
+            if df['Datetime'][index] == endpoint_str:
+                return index
+            continue
+    return -1
+
+
+def string_to_datetime(string):
+    return datetime.date(year=int(string[:4]), month=int(string[5:7]), day=int(string[8:10]))
 
 
 def grab_data(dates, length=0):
@@ -126,34 +205,29 @@ def grab_data(dates, length=0):
         header = option_label(length) + '-LIBOR'
         df = pd.read_csv('LIBOR.csv', usecols=['Datetime', header])
 
-    started = False
-    start_index = 0
-    end_index = 0
     start = dates['start']
     end = dates['end']
+    start_index = grab_index(df, start)
+    end_index = grab_index(df, end, started=True)
 
-    # end_datetime = datetime.date(year=int(end[:4]), month=int(end[5:7]), day=int(end[8:10]))
-    # if end not in df['Datetime']:
-    #     day = datetime.timedelta(days=1)
-    #     end = end_datetime + day
-    #     if end not in df['Datetime']:
-    #         end = end + day
-    #         if end not in df['Datetime']:
-    #             end = end + day
-    #
-    # print(end)
+    needs_updated = []
+    if start_index == -1:
+        needs_updated.append('Start')
+    if end_index == -1:
+        needs_updated.append('End')
 
-    for index, series in df.iterrows():
-        if not started:
-            if df['Datetime'][index] == start:
-                started = True
-                start_index = index
-            continue
-        elif started:
-            if df['Datetime'][index] == end:
-                end_index = index
-                break
-            continue
+    if needs_updated:
+        start_datetime = string_to_datetime(start)
+        end_datetime = string_to_datetime(end)
+
+        for endpoint in needs_updated:
+            if endpoint == 'Start':
+                start_datetime = update_datetime(df, start_datetime, 'Start')
+            else:
+                end_datetime = update_datetime(df, end_datetime, 'End')
+
+        start_index = grab_index(df, start_datetime)
+        end_index = grab_index(df, end_datetime, started=True)
 
     data = (df.loc[start_index:end_index]).copy()
     data.reset_index(drop=True, inplace=True)
@@ -253,8 +327,8 @@ def search_and_compute(query):
 
 if __name__ == '__main__':
 
-    test_query = {'trading_strategy': 'Bull-Spreads', 'option_length': '90', 'strike': '100',
-                  'current_directory': 'data/1534716161', 'source': 'data/1534716161/AAPL.csv',
+    test_query = {'trading_strategy': 'Bull-Spreads', 'option_length': '6', 'strike': '100',
+                  'current_directory': 'data/1534716161', 'source': 'data/1534716161/BTC.csv',
                   'trading_days': 'weekdays-H'}
 
     search_and_compute(test_query)

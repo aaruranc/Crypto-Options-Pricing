@@ -30,3 +30,11 @@
 .spacing{
     margin-top: 5px;
 }
+
+#user_button{
+    font-size: 22px;
+    position: fixed;
+    left: 70%;
+    width: 15%;
+    border: 5px;
+}

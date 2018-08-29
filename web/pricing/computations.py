@@ -44,6 +44,8 @@ def vol_mean(df, length, index, trading_days):
             multiplier = sqrt(252)
 
         k = []
+        if length == 1:
+            length = 2
 
         for n in range((index - length), index):
             k.append(log(df['Price'][n+1] / df['Price'][n]))
@@ -203,6 +205,7 @@ def grab_data(dates, length=0):
         df = pd.read_csv('VIX.csv', usecols=['Datetime', 'VIX-Close'])
     else:
         header = option_label(length) + '-LIBOR'
+        print(header)
         df = pd.read_csv('LIBOR.csv', usecols=['Datetime', header])
 
     start = dates['start']

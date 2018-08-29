@@ -88,6 +88,7 @@ def query_JSON(query):
     df = pd.read_csv(file_loc)
     df_length = len(df)
 
+    data = ''
     if request == 'price':
         data = 'Price'
     elif request == 'volatility':
@@ -103,6 +104,7 @@ def query_JSON(query):
 
 
     k = []
+    m = []
     for index, series in df.iterrows():
         if index <= length:
             continue
@@ -114,6 +116,12 @@ def query_JSON(query):
         else:
             if request == 'pdf':
                 j = [float("{0:.3f}".format(val)), int(df['Timestamp'][index])]
+            elif request == 'ROI':
+                j = [int(df['Timestamp'][index]), float("{0:.3f}".format(val))]
+                m.append([int(df['Timestamp'][index]), float("{0:.3f}".format(df[rf_rates][index]))])
+            elif request == 'volatility':
+                j = [int(df['Timestamp'][index]), float("{0:.3f}".format(val))]
+                m.append([int(df['Timestamp'][index]), float("{0:.3f}".format(df['VIX'][index]))])
             else:
                 j = [int(df['Timestamp'][index]), float("{0:.3f}".format(val))]
             k.append(j)
@@ -125,7 +133,8 @@ def query_JSON(query):
                       'kurtosis': float(stat[5])}
         d = {'data': k, 'stats': statistics}
         json_data = d
-
+    elif request == 'ROI' or request == 'volatility':
+        json_data = [k, m]
     else:
         json_data = k
 

@@ -1,190 +1,175 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Custom CSS -->
-<!--    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">-->
-    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">
- <!-- Font Awesome -->   
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <meta http-equiv="content-type" content="text/html">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Automated Options Pricing, Analysis & Visualization">
+    <meta name="author" content="Aaruran Chandrasekhar">
+    <title>Option-Backtester</title>
+    
+<!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- HighCharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
-<!-- jQuery -->  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
+<!-- Custom CSS -->
+    <link rel="stylesheet" type = "text/css" href="../static/analysis.css">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='analysis.css') }}">
+ 
+<!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">   
     
+<!-- Font Awesome -->   
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
     
 <body>
 <header>
-    <h1 id="title">Options-Pricer</h1>
+    <h1 id="title">Option-Backtester</h1>
+    <hr id='line'>
 </header>
 
-<div id="exit_button"></div>
-<div><p id="user_button"></p></div>
 {% for value in name %}     
     <h1>{{ value }}</h1>
 {% endfor %}
     
+<div id="exit_button"></div>
+<div><p id="user_button"></p></div>
 <h2 id="strategy_name"></h2>
 
     
 <button id = "selections" class="collapsible">Create New Visualizations</button>
     <div class="content">
-        <div>
-<!--
-            <h3>Pricing Methodology</h3>
-            <select size="1" name="method">
-                <option value="B-S">Black-Scholes
-                </option>
-                <option value="GARCH(1,1)">GARCH(1,1)
-                </option>
-                <option value="GARCH(1,2)">GARCH(1,2)
-                </option>
-                <option value="NGARCH">NGARCH
-                </option>
-                <option value="Jump Diffusion">Jump Diffusion
-                </option>
-                <option value="10-Step Binomial">10-Step Binomial
-                </option>
-            </select>
--->
-            <h3>Trading Strategy</h3>
-            <select size="1" id="trading_strategy">
-                <option value="Calls">Calls
-                </option>
-                <option value="Puts">Puts
-                </option>
-                <option value="Bear-Spreads">Bear Spreads
-                </option>
-                <option value="Bull-Spreads">Bull Spreads
-                </option>
-<!--
-                <option value="Box Spreads">Box Spreads
-                </option>
--->
-                <option value="Butterfly-Spreads">Butterfly Spreads
-                </option>
-<!--
-                <option value="Calendar Spreads">Calendar Spreads
-                </option>
--->
-                <option value="Straddles">Straddles
-                </option>
-                <option value="Straps">Straps
-                </option>
-                <option value="Strips">Strips
-                </option>
-                <option value="Strangles">Strangles
-                </option>
-            </select>
-            <h3>Option Length</h3>
-            <select size="1" id="option_length" >
-                <option value="1">1-Day
-                </option>
-                <option value="2">2-Day
-                </option>
-                <option value="3">3-Day
-                </option>
-                <option value="4">4-Day
-                </option>
-                <option value="5" selected="selected">5-Day
-                </option>
-                <option value="6">6-Day
-                </option>
-                <option value="7">7-Day
-                </option>
-                <option value="8">8-Day
-                </option>
-                <option value="9">9-Day
-                </option>
-                <option value="10">10-Day
-                </option>
-                <option value="11">11-Day
-                </option>
-                <option value="12">12-Day
-                </option>
-                <option value="13">13-Day
-                </option>
-                <option value="14">14-Day
-                </option>
-                <option value="30">1-Month
-                </option>
-                <option value="60">2-Month
-                </option>
-                <option value="90">3-Month
-                </option>
-                <option value="120">4-Month
-                </option>
-                <option value="150">5-Month
-                </option>
-                <option value="180">6-Month
-                </option>
-                <option value="210">7-Month
-                </option>
-                <option value="240">8-Month
-                </option>
-                <option value="270">9-Month
-                </option>
-                <option value="300">10-Month
-                </option>
-                <option value="330">11-Month
-                </option>
-                <option value="365">1-Year
-                </option>
-            </select>
-            <h3>Strike Price (as Percentage of Spot Price)</h3>
-            <select size="1" id="strike">
-                <option value="90">90%
-                </option>
-                <option value="91">91%
-                </option>
-                <option value="92">92%
-                </option>
-                <option value="93">93%
-                </option>
-                <option value="94">94%
-                </option>
-                <option value="95">95%
-                </option>
-                <option value="96">96%
-                </option>
-                <option value="97">97%
-                </option>
-                <option value="98">98%
-                </option>
-                <option value="99">99%
-                </option>
-                <option value="100" selected="selected">100%
-                </option>
-                <option value="101">101%
-                </option>
-                <option value="102">102%
-                </option>
-                <option value="103">103%
-                </option>
-                <option value="104">104%
-                </option>
-                <option value="105">105%
-                </option>
-                <option value="106">106%
-                </option>
-                <option value="107">107%
-                </option>
-                <option value="108">108%
-                </option>
-                <option value="109">109%
-                </option>
-                <option value="110">110%
-                </option>
-            </select>
-            <br>
-            <br>
-            <button id="submit">Generate</button>
-        </div>
+        <h3 id="top">Trading Strategy</h3>
+        <select size="1" id="trading_strategy">
+            <option value="Calls">Calls
+            </option>
+            <option value="Puts">Puts
+            </option>
+            <option value="Bear-Spreads">Bear Spreads
+            </option>
+            <option value="Bull-Spreads">Bull Spreads
+            </option>
+            <option value="Butterfly-Spreads">Butterfly Spreads
+            </option>
+            <option value="Straddles">Straddles
+            </option>
+            <option value="Straps">Straps
+            </option>
+            <option value="Strips">Strips
+            </option>
+            <option value="Strangles">Strangles
+            </option>
+        </select>
+        <h3>Option Length</h3>
+        <select size="1" id="option_length" >
+            <option value="1">1-Day
+            </option>
+            <option value="2">2-Day
+            </option>
+            <option value="3">3-Day
+            </option>
+            <option value="4">4-Day
+            </option>
+            <option value="5" selected="selected">5-Day
+            </option>
+            <option value="6">6-Day
+            </option>
+            <option value="7">7-Day
+            </option>
+            <option value="8">8-Day
+            </option>
+            <option value="9">9-Day
+            </option>
+            <option value="10">10-Day
+            </option>
+            <option value="11">11-Day
+            </option>
+            <option value="12">12-Day
+            </option>
+            <option value="13">13-Day
+            </option>
+            <option value="14">14-Day
+            </option>
+            <option value="30">1-Month
+            </option>
+            <option value="60">2-Month
+            </option>
+            <option value="90">3-Month
+            </option>
+            <option value="120">4-Month
+            </option>
+            <option value="150">5-Month
+            </option>
+            <option value="180">6-Month
+            </option>
+            <option value="210">7-Month
+            </option>
+            <option value="240">8-Month
+            </option>
+            <option value="270">9-Month
+            </option>
+            <option value="300">10-Month
+            </option>
+            <option value="330">11-Month
+            </option>
+            <option value="365">1-Year
+            </option>
+        </select>
+        <h3>Strike Price (as Percentage of Spot Price)</h3>
+        <select size="1" id="strike">
+            <option value="90">90%
+            </option>
+            <option value="91">91%
+            </option>
+            <option value="92">92%
+            </option>
+            <option value="93">93%
+            </option>
+            <option value="94">94%
+            </option>
+            <option value="95">95%
+            </option>
+            <option value="96">96%
+            </option>
+            <option value="97">97%
+            </option>
+            <option value="98">98%
+            </option>
+            <option value="99">99%
+            </option>
+            <option value="100" selected="selected">100%
+            </option>
+            <option value="101">101%
+            </option>
+            <option value="102">102%
+            </option>
+            <option value="103">103%
+            </option>
+            <option value="104">104%
+            </option>
+            <option value="105">105%
+            </option>
+            <option value="106">106%
+            </option>
+            <option value="107">107%
+            </option>
+            <option value="108">108%
+            </option>
+            <option value="109">109%
+            </option>
+            <option value="110">110%
+            </option>
+        </select>
         <br>
+        <br>
+        <button id="submit">Generate</button>
     </div>
 
 <div id='viz'>
@@ -264,17 +249,19 @@ $( '#submit' ).click(function() {
         strategy_header = strategy_length + '-Day / ';
     };
         
-    strategy_header += 'Strike is ' + strike + '% Spot / ' + strategy;
-
+    strategy_header += ' Strike Price is ' + strike + '% of Spot Price / ' + strategy;
+    strategy_header = 'Backtest Selected: ' + strategy_header;
     var header = document.getElementById("strategy_name");
-    header.innerHTML = strategy_header;
+    header.innerText = strategy_header;
+    header.style.fontSize = '15px';
+    
     
     var exit = document.createElement("i")
         exit.setAttribute("id", "design")
         exit.setAttribute("class", "fas fa-times-circle");
         exit.style.position = 'fixed';
-        exit.style.left = 87 + '%';
-        exit.style.top = 12.5 + '%';
+        exit.style.left = '83%';
+        exit.style.top = '20%';
         exit.style.zIndex = 2;
     
     var leave = document.getElementById("exit_button");
@@ -282,12 +269,13 @@ $( '#submit' ).click(function() {
     var user_info = document.getElementById("user_button");
         user_info.style.position = 'fixed';
         user_info.style.fontSize = '12px';
-        user_info.style.left = 70 + '%';
-        user_info.style.width = 15 + '%';
+        user_info.style.left = '70%';
+        user_info.style.top = '19%';
+        user_info.style.width = '15%';
         user_info.style.zIndex = 2;
         user_info.style.borderStyle = 'solid';
         user_info.style.borderWidth = 'thin';
-        user_info.style.padding = '30px';
+        user_info.style.padding = '20px';
         user_info.innerText = "Computing Results...";
     
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
@@ -309,7 +297,7 @@ $( '#submit' ).click(function() {
         if (data === 'bad_request'){
         } else{
             user_info.innerText = "Generating Volatility Evolution viz...";
-            single_variate_TS(data, "container1", "N-Day Volatility", "Annualized Percentage", "Volatility");
+            bivariate_TS(data, "container1", "N-Day Volatility", "Annualized Percentage", "Volatility");
         }
     });
     
@@ -339,7 +327,7 @@ $( '#submit' ).click(function() {
         if (data === 'bad_request'){
         } else{
             user_info.innerText = "Generating Day-to-Day ROI viz...";
-            single_variate_TS(data, "container4", "Method Return on Investment", "Percentage", "Method ROI")
+            bivariate_TS(data, "container4", "Method Return on Investment", "Percentage", "Method ROI")
         }
     });
     
@@ -354,6 +342,7 @@ $( '#submit' ).click(function() {
             generateStatsTable(data);
             removeLabels();
             modifySpacing();
+            styleTable();
             clearInterval(counter);
             leave.appendChild(exit);
             user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in plots by dragging.";
@@ -370,21 +359,19 @@ $( '#submit' ).click(function() {
         var viz = document.getElementById("viz");
         var newButton = document.createElement("button");
             newButton.setAttribute("class", "collapsible");
+            newButton.style.fontFamily = 'Shree';
             newButton.innerText = title;
         var newDiv = document.createElement("div");
             newDiv.setAttribute("class", "content");
         var newDiv2 = document.createElement("div");
             newDiv2.setAttribute("id", container_name);
             newDiv2.setAttribute("style", "width:100%; height:400px;");
-        var lineBreak = document.createElement("br");
-            lineBreak.setAttribute("class", "spacing");
-        newDiv.appendChild(lineBreak);
         newDiv.appendChild(newDiv2);
         
         if (container_name === "container5"){
             var newDiv3 = document.createElement("div");
                 newDiv3.setAttribute("id", "container6");
-                newDiv3.setAttribute("style", "width:100%; height:200px;");
+                newDiv3.setAttribute("style", "width:100%; height:100%;");
             var lineBreak = document.createElement("br");
                 lineBreak.setAttribute("class", "spacing");
             newDiv.appendChild(lineBreak);
@@ -430,7 +417,7 @@ $( '#submit' ).click(function() {
             },
             yAxis: {
                 title: {
-                    text: '',
+                    text: 'Dollars',
                     min: 0,
                     softMin: 0
                 }
@@ -474,6 +461,96 @@ $( '#submit' ).click(function() {
             }]
         });
     }
+    
+    function bivariate_TS(data, container, title, y_axis_title, data_category){
+        if (container === 'container1'){
+            var bivariate_name = 'VIX';
+            var bivariate_title_1 = 'Dollars'
+            var bivariate_title_2 = 'Units of VIX'
+        } else{
+            var bivariate_name = "LIBOR";
+            var bivariate_title_1 = 'Strategy Percent Return'
+            var bivariate_title_2 = 'LIBOR Percent Return'
+        }
+        
+        Highcharts.chart(container, {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: ''
+            },
+//            subtitle: {
+//                text: document.ontouchstart === undefined ?
+//                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+//            },
+            xAxis: {
+                type: 'datetime',
+                minTickInterval: 28*24*3600*1000
+            },
+            yAxis: [{
+                title: {
+                    text: bivariate_title_1,
+                    min: 0,
+                    softMin: 0
+                }
+                }, {
+                opposite: true,
+                title: {
+                    text: bivariate_title_2,
+                    min: 0,
+                    softMin: 0
+                }
+            }],
+            legend: {
+                enabled: true
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            series: [{
+                type: 'line',
+                name: data_category,
+                data: JSON.parse(data)[0],
+                yAxis: 0,
+                turboThreshold: 0,
+                pointInterval: 10
+            }, {
+                type: 'area',
+                name: bivariate_name,
+                data: JSON.parse(data)[1],
+                color: 'ff0000',
+                yAxis: 1,
+                turboThreshold: 0,
+                pointInterval: 10,
+            }]
+        });
+    }
+    
     
     function generateHistogram(input){    
         var jsonData = JSON.parse(input)
@@ -582,10 +659,13 @@ $( '#submit' ).click(function() {
     
     function statsTableNode(statsTable, label, value){
         var row = document.createElement("tr")
+            row.setAttribute("class", "table_data")
         var rowLabel = document.createElement("th")
-            rowLabel.innerHTML = label
+            rowLabel.innerText = label
+            rowLabel.setAttribute("class", "table_data")
         var rowVal = document.createElement("th")
-            rowVal.innerHTML = value
+            rowVal.innerText = value
+            rowVal.setAttribute("class", "table_data")
         row.appendChild(rowLabel)
         row.appendChild(rowVal)
         statsTable.appendChild(row)
@@ -599,20 +679,35 @@ $( '#submit' ).click(function() {
         container.innerHTML = '';
         var lineBreak = document.createElement("br");
         var statsTable = document.createElement("table");
-        
+            statsTable.setAttribute("id", "stats_table")
 //        statsTableNode(statsTable, "Statistics", "Values");
         statsTableNode(statsTable, "Samples", data['samples']);
-        statsTableNode(statsTable, "Minimum", data['min']);
-        statsTableNode(statsTable, "Maximum", data['max']);
-        statsTableNode(statsTable, "Mean", data['mean']);
-        statsTableNode(statsTable, "Variance", data['variance']);
-        statsTableNode(statsTable, "Skewness", data['skewness']);
-        statsTableNode(statsTable, "Kurtosis", data['kurtosis']);
+        statsTableNode(statsTable, "Minimum", data['min'].toPrecision(4));
+        statsTableNode(statsTable, "Maximum", data['max'].toPrecision(4));
+        statsTableNode(statsTable, "Mean", data['mean'].toPrecision(4));
+        statsTableNode(statsTable, "Variance", data['variance'].toPrecision(4));
+        statsTableNode(statsTable, "Skewness", data['skewness'].toPrecision(4));
+        statsTableNode(statsTable, "Kurtosis", data['kurtosis'].toPrecision(4));
         
         container.appendChild(lineBreak);
         container.appendChild(statsTable);
     }
     
+    function styleTable(){
+        console.log('style table')
+        var items = document.getElementsByClassName("table_data")
+        console.log(items)
+        for (var i = 0; i < items.length; i++){
+            console.log('executed')
+            items[i].style.fontFamily = 'Shree';
+            items[i].style.padding = "15px";
+            items[i].style.border = "1px solid";
+        }
+        
+        var stats = document.getElementById("stats_table");
+            stats.style.margin = 'auto';
+            stats.cellPadding = '10';
+    }
     
     function removeLabels(){
         var credits = document.getElementsByClassName("highcharts-credits")

@@ -6,10 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <title>Options-Pricer</title>
+    <meta name="description" content="Automated Options Pricing, Analysis & Visualization">
+    <meta name="author" content="Aaruran Chandrasekhar">
+    <title>Option-Backtester</title>
     
 <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -18,25 +17,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
 <!-- Custom CSS -->
-<link rel="stylesheet" type = "text/css" href={{ url_for('static', filename='index.css') }}>
-    
-<!-- Custom Fonts -->
-<!--    <link href="https://fonts.googleapis.com/css?family=Uncial+Antiqua" rel="stylesheet">-->
+    <link rel="stylesheet" type = "text/css" href={{ url_for('static', filename='index.css') }}>
+    <link rel="stylesheet" type = "text/css" href='../static/index.css'>
     
 <!-- Favicon -->
-<!--    <link rel="icon" type="image/png" href="img/favicon.png">-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
     
 <body>
 <header>
     <h1 id="title">Option-Backtester</h1>
+    <hr id='line'>
 </header>
     
 <div id="container">   
+    <p id="how-to">Option-Backtester is an an exploratory data analysis tool. The premise is simple. You choose an asset that you want <a href="https://www.investopedia.com/university/options/option.asp" target="_blank">option</a> pricing analysis on; O-B computes the results and renders them graphically. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below. Please make sure that the start and end dates match the 'mm-dd-yyyy' format. </p>
     <br>
-    <p id="how-to">Option-Backtester is an an exploratory data visualization tool. The premise is simple. You choose an asset that you want <a href="https://www.investopedia.com/university/options/option.asp" target="_blank">option</a> pricing analysis on and O-B computes the results and renders them graphically. Upload a .csv file with 2 columns labeled 'Date' and 'Price' with time series data in the rows below. Please make sure that the start and end dates match the 'mm-dd-yyyy' format. </p>
-    <p>O-P only supports option pricing from 1/2/01 to present.</p>
-
+    <p id="highlight"><b>Due to the absence of LIBOR data, O-B only supports option pricing from 1/1/01 to 8/1/18. </b></p>
     {% if flags %}
         <h3>Error(s)</h3>
         {% for value in flags %}     
@@ -46,7 +43,7 @@
 
     <br>
     <form action= {{ url_for('index') }} method="post" enctype="multipart/form-data" id="upload">
-        <input type="file" value="historical" name="upload">
+        <input id="file_upload" type="file" value="historical" name="upload">
         <br>                
         <h4>Asset Name</h4>
             <input class="default" type="text" name="asset" value="AAPL">

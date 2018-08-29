@@ -1,4 +1,55 @@
+@font-face{
+    font-family: 'Helvetica';
+    src: url('Helvetica.woff') format('woff'),
+         url('Helvetica.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Shree';
+  src: url('ShreeDev0714.woff') format('woff'),
+       url('ShreeDev0714.ttf') format('truetype'); 
+}
+
+h1{
+    font-family: 'Helvetica', Fallback, sans-serif;
+}
+
+h2{
+    font-size: 15px; 
+}
+
+h3{
+    font-family: 'Helvetica', Fallback, sans-serif;
+    font-weight:200;
+    font-size: 20px;
+}
+
+#title{
+    padding-top: 20px;
+    text-align: center;
+}
+
+#line{
+    color: black;
+    background-color: black;
+    height: 3px;
+    width: 90%;
+}
+
+#selections{
+    font-family: 'Shree', Fallback, sans-serif;
+}
+
+#trading_strategy, #option_length, #strike{
+    font-family: 'Shree', Fallback, sans-serif;
+}
+
+#top{
+    margin-top: 0px;
+}
+
 .collapsible {
+    font-family: 'Shree', Fallback, sans-serif;
     background-color: #777;
     color: white;
     cursor: pointer;
@@ -10,25 +61,11 @@
     font-size: 15px;
 }
 
-.active, .collapsible:hover {
-    background-color: #555;
-}
-
 .content {
-    padding: 0 18px;
-    max-height: 0;
+    padding: 40px;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     background-color: #f1f1f1;
-}
-
-#title{
-    justify-content: center;
-    margin-left: 38%;
-}
-
-.spacing{
-    margin-top: 5px;
 }
 
 #user_button{

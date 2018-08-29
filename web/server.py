@@ -1,10 +1,7 @@
-from flask import Flask, json, redirect, render_template, request, session
-from werkzeug.utils import secure_filename
-from pathlib import Path
+from flask import Flask, send_from_directory, redirect, render_template, request, session
 import os
 import time
 import pandas as pd
-import json
 from pricing.standardize import validate
 from pricing.computations import search_and_compute
 from pricing.export import update_query, price_JSON, query_JSON
@@ -13,7 +10,6 @@ from pricing.export import update_query, price_JSON, query_JSON
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.debug = True
-
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -43,7 +39,6 @@ def index():
 		
 		if not os.path.isdir(session['location']):
 	   		os.mkdir(session['location'])
-		
 		file.save(dest)
 		file.close()
 		
@@ -51,7 +46,6 @@ def index():
 							'end': request.form['end'], 
 							'trading_days': request.form['trading_days'], 
 							'source': session['source']}
-
 		session['trading_days'] = user_parameters['trading_days']
 		flags = validate(user_parameters)
 
@@ -66,12 +60,13 @@ def index():
 def update():
 
 	query = update_query(request.args.to_dict(), session)	
+	
 	if session['file_length'] < 2 * (int(query['option_length']) + 1):
 		return 'bad_request'
-
-	search_and_compute(query)
-	query_data = query_JSON(query)
-	return query_data
+	else:
+		search_and_compute(query)
+		query_data = query_JSON(query)
+		return query_data
 
 
 if __name__ == '__main__':

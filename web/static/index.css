@@ -1,30 +1,49 @@
-/*
+@font-face{
+    font-family: 'Helvetica';
+    src: url('Helvetica.woff') format('woff'),
+         url('Helvetica.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Shree';
+  src: url('ShreeDev0714.woff') format('woff'),
+       url('ShreeDev0714.ttf') format('truetype'); 
+}
+
+h1, h3, h4{
+    font-family: 'Helvetica', Fallback, sans-serif;
+} 
+
+p{
+    font-family: 'Shree', Fallback, sans-serif;
+}
+
+#highlight{
+    font-family: 'Helvetica', Fallback, sans-serif;
+}
+
 #title{
-    justify-content: center;
-    margin-left: 38%;
+    padding-top: 20px;
+    text-align: center;
 }
 
-#how-to{
-    margin-left: 50px;
-    margin-top: 50px;
+
+#line{
+    color: black;
+    background-color: black;
+    height: 3px;
+    width: 90%;
 }
 
-#upload{
-    margin-left: 50%;
-    margin-top: 170px;
+#container{
+    text-align: center;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding-top: 20px;
+    padding-bottom: 40px;
 }
 
-#input_table{
+#file_upload{
+    margin: auto;
 }
 
-#file_display{
-    margin-top: 5px;
-}
-
-#next{
-    margin-left: 100%
-}
-
-input.default{
-    color: gray;
-}*/

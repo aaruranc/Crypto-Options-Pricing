@@ -4,8 +4,6 @@ import pandas as pd
 from math import sqrt, log, ceil
 import pricing.strategies as strategies
 from pricing.black_scholes import new_strike_data
-# import strategies
-# from black_scholes import new_strike_data
 import numpy as np
 import copy
 import datetime

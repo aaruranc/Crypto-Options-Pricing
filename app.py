@@ -83,9 +83,7 @@ def update():
 	if session['file_length'] < 2 * (int(query['option_length']) + 1):
 		return 'bad_request'
 	else:
-		
-		if query['request'] == 'price':
-			search_and_compute(query)
+		search_and_compute(query)
 		query_data = query_JSON(query)
 		return query_data
 

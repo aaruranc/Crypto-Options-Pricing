@@ -361,7 +361,7 @@ $( '#submit' ).click(function() {
     });
     
     function endMessage(count, user_info){
-        if (count === 5){
+        if (count === 6){
             clearInterval(counter);
             user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in by dragging. Click me to close.";
             user_info.addEventListener("click", deleteConsole);

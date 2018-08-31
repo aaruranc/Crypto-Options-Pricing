@@ -179,16 +179,8 @@ def compute(query, query_file, strategy):
 
     bucket = query['S3_info']['bucket']
     csv_name = query['source'] + '-' + query['option_length'] + '.csv'
-
-    print('got here')
     csv_buffer = StringIO()
-    print('stop 1')
-
-
-
     df.to_csv(csv_buffer)
-    print('XXXXXXXXXXXXXXXX')
     s3_resource = boto3.resource('s3')
     s3_resource.Object(bucket, csv_name).put(Body=csv_buffer.getvalue())
-    print('shouldve been uploaded')
     return

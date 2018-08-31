@@ -16,7 +16,6 @@ s3_resource = boto3.resource(
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.debug = True
 
 @app.route('/files', methods=['POST', 'GET'])
 def files():
@@ -80,7 +79,6 @@ def index():
 def update():
 
 	query = update_query(request.args.to_dict(), session)	
-	# print(query)
 
 	if session['file_length'] < 2 * (int(query['option_length']) + 1):
 		return 'bad_request'

@@ -206,7 +206,6 @@ def grab_data(dates, length=0):
         df = pd.read_csv('VIX.csv', usecols=['Datetime', 'VIX-Close'])
     else:
         header = option_label(length) + '-LIBOR'
-        print(header)
         df = pd.read_csv('LIBOR.csv', usecols=['Datetime', header])
 
     start = dates['start']
@@ -290,7 +289,6 @@ def search_and_compute(query):
     data = bucket.Object(source_file).get()['Body'].read().decode('utf-8')
     testdata = StringIO(data)
     df = pd.read_csv(testdata)
-    print(df)
 
     # loc = option_length + '.csv'
     # query_file = current_directory / loc
@@ -305,9 +303,6 @@ def search_and_compute(query):
         data = bucket.Object(query_file).get()['Body'].read().decode('utf-8')
         parsed_data = StringIO(data)
         df = pd.read_csv(parsed_data)
-
-        print(df)
-        print('if route')
 
         headers = list(df)
         strike = query['strike']
@@ -334,9 +329,6 @@ def search_and_compute(query):
         data = bucket.Object(source_file).get()['Body'].read().decode('utf-8')
         parsed_data = StringIO(data)
         df = pd.read_csv(parsed_data)
-
-        print(df)
-        print('else route')
 
         # Create Dictionary of Start & End dates
         dates = find_dates(df)

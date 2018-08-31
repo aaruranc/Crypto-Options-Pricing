@@ -4,10 +4,11 @@ import json
 import time
 import numpy as np
 from scipy import stats
-
+import boto3
+from io import StringIO
 
 def update_query(query, session):
-    query.update({'current_directory': session['location'], 'source': session['source'],
+    query.update({'source': session['source'], 'S3_info': session['S3_info'],
                   'trading_days': session['trading_days']})
     return query
 
@@ -47,6 +48,7 @@ def LIBOR_label(rf_rates):
     else:
         return 'Synthetic LIBOR'
 
+
 def option_label(length):
     
     if length <= 14:
@@ -70,8 +72,7 @@ def query_JSON(query):
     length = int(query['option_length'])
     strike = int(query['strike'])
     request = query['request']
-    current_directory = Path(query['current_directory'])
-    source = Path(query['source'])
+    source = query['source']
     trading_days = query['trading_days']
 
     method = str(strike) + '-' + trading_strategy
@@ -83,9 +84,12 @@ def query_JSON(query):
     rf_header = LIBOR_label(option_length)
     vol = option_length + '-VM'
 
-    current_file = option_length + '.csv'
-    file_loc = current_directory / current_file
-    df = pd.read_csv(file_loc)
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket(query['S3_info']['bucket'])
+    query_file = source + '-' + str(length) + '.csv'
+    data = bucket.Object(query_file).get()['Body'].read().decode('utf-8')
+    parsed_data = StringIO(data)
+    df = pd.read_csv(parsed_data)
     df_length = len(df)
 
     data = ''

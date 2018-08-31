@@ -7,6 +7,9 @@ from pricing.black_scholes import new_strike_data
 import numpy as np
 import copy
 import datetime
+import boto3
+from io import StringIO
+
 
 def handle_strategy(query, query_file):
 
@@ -260,18 +263,52 @@ def option_label(length):
 
 def search_and_compute(query):
 
+    test_query = {'trading_strategy': 'Calls', 'option_length': '5', 'strike': '100', 'request': 'pdf',
+                  'source': '1535661792-SQ',
+                  'S3_info': {'bucket': 'optionbacktester', 'key': 'AKIAJZ2U45FY6TBTUW3Q',
+                              'secret': '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'},
+                  'trading_days': 'weekdays-H'}
+
     # Initialize Query data to probe/generate information from User Directory
     length = int(query['option_length'])
-    current_directory = Path(query['current_directory'])
+    # current_directory = Path(query['current_directory'])
     option_length = option_label(length)
-    loc = option_length + '.csv'
-    query_file = current_directory / loc
+    s3 = boto3.resource('s3')
+
+    bucket = s3.Bucket(query['S3_info']['bucket'])
+
+    source = query['source']
+    source_file = source + '.csv'
+    query_file = source + '-' + str(length) + '.csv'
+
+
+    obj = s3.Object(bucket, source_file)
+    obj2 = s3.Object(bucket, query_file)
+    objs = list(bucket.objects.filter(Prefix=query_file))
+
+
+    data = bucket.Object(source_file).get()['Body'].read().decode('utf-8')
+    testdata = StringIO(data)
+    df = pd.read_csv(testdata)
+    print(df)
+
+    # loc = option_length + '.csv'
+    # query_file = current_directory / loc
+
 
     # Check if the required File exists
-    if os.path.isfile(query_file):
+    if len(objs) > 0 and objs[0].key == query_file:
 
         # Initialize Dataframe to compare Query against previous computations
-        df = pd.read_csv(query_file)
+        # df = pd.read_csv(query_file)
+
+        data = bucket.Object(query_file).get()['Body'].read().decode('utf-8')
+        parsed_data = StringIO(data)
+        df = pd.read_csv(parsed_data)
+
+        print(df)
+        print('if route')
+
         headers = list(df)
         strike = query['strike']
         strategy = query['trading_strategy']
@@ -294,8 +331,12 @@ def search_and_compute(query):
     else:
 
         # Create DataFrame from user-info
-        source = Path(query['source'])
-        df = pd.read_csv(source)
+        data = bucket.Object(source_file).get()['Body'].read().decode('utf-8')
+        parsed_data = StringIO(data)
+        df = pd.read_csv(parsed_data)
+
+        print(df)
+        print('else route')
 
         # Create Dictionary of Start & End dates
         dates = find_dates(df)
@@ -328,8 +369,11 @@ def search_and_compute(query):
 
 if __name__ == '__main__':
 
-    test_query = {'trading_strategy': 'Bull-Spreads', 'option_length': '6', 'strike': '100',
-                  'current_directory': 'data/1534716161', 'source': 'data/1534716161/BTC.csv',
+    test_query = {'trading_strategy': 'Calls', 'option_length': '5', 'strike': '100', 'request': 'pdf',
+                  'name': '1535661792-SQ',
+                  'S3_info': {'bucket': 'optionbacktester', 'key': 'AKIAJZ2U45FY6TBTUW3Q',
+                              'secret': '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'},
                   'trading_days': 'weekdays-H'}
+
 
     search_and_compute(test_query)

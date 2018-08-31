@@ -1,19 +1,26 @@
-from pathlib import Path
 import pandas as pd
 import numpy as np
 import time
 import datetime
 import holidays
-import os
 from math import ceil
+from io import StringIO
+import boto3
 
 
-def finish_validation(source, dates, prices):
+def finish_validation(S3_info, source, dates, prices):
 
     k = dates
     k.update({'Price': prices})
     df = pd.DataFrame.from_dict(k)
-    df.to_csv(source, index=False)
+
+    bucket = S3_info['bucket']
+    csv_name = source + '.csv'
+
+    csv_buffer = StringIO()
+    df.to_csv(csv_buffer)
+    s3_resource = boto3.resource('s3')
+    s3_resource.Object(bucket, csv_name).put(Body=csv_buffer.getvalue())
     return
 
 
@@ -210,13 +217,14 @@ def holiday_length(date_info):
     return count
 
 
-def validate(user_parameters):
+def validate(user_parameters, df):
 
     # Initialize input data
     start = user_parameters['start']
     end = user_parameters['end']
     trading_days = user_parameters['trading_days']
-    source = Path(user_parameters['source'])
+    S3_info = user_parameters['S3_info']
+    source = user_parameters['source']
 
     # Convert input into datetime and perform preliminary calculations
     date_info = timestamp_convert(start, end)
@@ -230,7 +238,6 @@ def validate(user_parameters):
         correct_length = date_info['length']
 
     # Check compatibility of user input to uploaded file and O-B requirements
-    df = pd.read_csv(source)
     error = error_check(df, date_info, start, end, correct_length)
 
     if not error:
@@ -242,10 +249,9 @@ def validate(user_parameters):
         prices = match_datetimes(df, dates)
 
         # Generate Dataframe from validated information
-        finish_validation(source, dates, prices)
+        finish_validation(S3_info, source, dates, prices)
         return []
     else:
-        os.remove(source)
         return error
 
 

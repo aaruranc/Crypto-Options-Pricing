@@ -69,7 +69,7 @@
         </select>
         <h3>Option Length</h3>
         <select size="1" id="option_length" >
-            <option value="1">1-Day
+            <option value="1" selected="selected">1-Day
             </option>
             <option value="2">2-Day
             </option>
@@ -77,7 +77,7 @@
             </option>
             <option value="4">4-Day
             </option>
-            <option value="5" selected="selected">5-Day
+            <option value="5" >5-Day
             </option>
             <option value="6">6-Day
             </option>
@@ -260,8 +260,8 @@ $( '#submit' ).click(function() {
         exit.setAttribute("id", "design")
         exit.setAttribute("class", "fas fa-times-circle");
         exit.style.position = 'fixed';
-        exit.style.left = '83%';
-        exit.style.top = '20%';
+        exit.style.left = '85%';
+        exit.style.top = '15.8%';
         exit.style.zIndex = 2;
     
     var leave = document.getElementById("exit_button");
@@ -270,8 +270,8 @@ $( '#submit' ).click(function() {
         user_info.style.position = 'fixed';
         user_info.style.fontSize = '12px';
         user_info.style.left = '70%';
-        user_info.style.top = '19%';
-        user_info.style.width = '15%';
+        user_info.style.top = '15%';
+        user_info.style.width = '18%';
         user_info.style.zIndex = 2;
         user_info.style.borderStyle = 'solid';
         user_info.style.borderWidth = 'thin';
@@ -344,8 +344,8 @@ $( '#submit' ).click(function() {
             modifySpacing();
             styleTable();
             clearInterval(counter);
-            leave.appendChild(exit);
-            user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in plots by dragging.";
+//            leave.appendChild(exit);
+            user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in by dragging. Click me to close.";
         }
         user_info.addEventListener("click", deleteConsole);
         setTimeout(deleteConsole, 15000);

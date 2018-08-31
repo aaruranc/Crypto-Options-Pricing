@@ -1,25 +1,50 @@
-from flask import Flask, send_from_directory, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, url_for
 import os
 import time
 import pandas as pd
 from pricing.standardize import validate
 from pricing.computations import search_and_compute
 from pricing.export import update_query, price_JSON, query_JSON
+import boto3
+from config import S3_BUCKET, S3_KEY, S3_SECRET
 
+s3_resource = boto3.resource(
+   "s3",
+   aws_access_key_id=S3_KEY,
+   aws_secret_access_key=S3_SECRET
+)
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.debug = True
+
+@app.route('/files', methods=['POST', 'GET'])
+def files():
+	
+	s3_resource = boto3.resource('s3')
+	my_bucket = s3_resource.Bucket(S3_BUCKET)
+	summaries = my_bucket.objects.all()
+
+
+
+
+	return render_template('test.html', my_bucket=my_bucket, files=summaries)
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
 	if request.method == 'GET':
 	    start_time = str(int(time.time()))
-	    session['location'] = 'data' + '/' + start_time
+	    session['start_time'] = start_time
 	    return render_template('index.html')
 
 	if request.method == 'POST':
+		
+		if not request.form['asset'] or not request.form['start'] or not request.form['end']:
+			flags = ['Incomplete form data']
+			return render_template('index.html', flags=flags)
+
 		asset_name = request.form['asset']
 		session['asset_name'] = asset_name
 
@@ -34,37 +59,39 @@ def index():
 			flags = ['Incorrect file type']
 			return render_template('index.html', flags=flags)
 
-		dest = session['location'] + '/' + file.filename
-		session['source'] = dest
-		
-		if not os.path.isdir(session['location']):
-	   		os.mkdir(session['location'])
-		file.save(dest)
-		file.close()
-		
+		S3_info = {'bucket': S3_BUCKET, 'key': S3_KEY, 'secret': S3_SECRET}
+		session['S3_info'] = S3_info
+		session['source'] = session['start_time'] + '-' + session['asset_name']
+
+		df = pd.read_csv(file)
+
 		user_parameters = {'start': request.form['start'], 
 							'end': request.form['end'], 
 							'trading_days': request.form['trading_days'], 
+							'S3_info': session['S3_info'],
 							'source': session['source']}
 		session['trading_days'] = user_parameters['trading_days']
-		flags = validate(user_parameters)
-
+		flags = validate(user_parameters, df)
+	
 		if not flags:
 			name = [asset_name]
-			session['file_length'] = len(pd.read_csv(session['source']))
+			session['file_length'] = len(df)
 			return render_template('/analysis.html', name=name)
 		else:
 			return render_template('index.html', flags=flags)
 
-@app.route('/update.html', methods=['GET', 'POST'])
+@app.route('/update.html', methods=['GET'])
 def update():
 
 	query = update_query(request.args.to_dict(), session)	
-	
+	# print(query)
+
 	if session['file_length'] < 2 * (int(query['option_length']) + 1):
 		return 'bad_request'
 	else:
-		search_and_compute(query)
+		
+		if query['request'] == 'price':
+			search_and_compute(query)
 		query_data = query_JSON(query)
 		return query_data
 

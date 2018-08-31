@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from io import StringIO
+import boto3
 
 
 def missing_strikes(query, strategy):
@@ -173,7 +175,20 @@ def compute(query, query_file, strategy):
     d = {method: m, payoff: p, ROI: r}
 
     new_df = pd.DataFrame.from_dict(d)
-
     df = pd.concat([df, new_df], axis=1)
-    df.to_csv(query_file, index=False)
+
+    bucket = query['S3_info']['bucket']
+    csv_name = query['source'] + '-' + query['option_length'] + '.csv'
+
+    print('got here')
+    csv_buffer = StringIO()
+    print('stop 1')
+
+
+
+    df.to_csv(csv_buffer)
+    print('XXXXXXXXXXXXXXXX')
+    s3_resource = boto3.resource('s3')
+    s3_resource.Object(bucket, csv_name).put(Body=csv_buffer.getvalue())
+    print('shouldve been uploaded')
     return

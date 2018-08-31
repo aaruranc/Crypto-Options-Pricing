@@ -278,6 +278,8 @@ $( '#submit' ).click(function() {
         user_info.style.padding = '20px';
         user_info.innerText = "Computing Results...";
     
+    var finished = 0
+    
     $.get( '{{ url_for('update') }}', { trading_strategy: $('#trading_strategy').val(), option_length: 
                $('#option_length').val(), strike: $('#strike').val(), request: 'price' } )
     .done(function( data ) {
@@ -286,6 +288,8 @@ $( '#submit' ).click(function() {
         } else{
             single_variate_TS(data, "container0", "Historical Prices", "Dollars", "Price");
             user_info.innerText = "Results computed";
+            finished++;
+            endMessage(finished);
         }
     
         
@@ -298,6 +302,8 @@ $( '#submit' ).click(function() {
         } else{
             user_info.innerText = "Generating Volatility Evolution viz...";
             bivariate_TS(data, "container1", "N-Day Volatility", "Annualized Percentage", "Volatility");
+            finished++;
+            endMessage(finished);
         }
     });
     
@@ -308,6 +314,8 @@ $( '#submit' ).click(function() {
         } else{
             user_info.innerText = "Generating Strategy Cost Evolution viz...";
             single_variate_TS(data, "container2", "Method Cost", "Dollars", "Strategy Cost");
+            finished++;
+            endMessage(finished);
         }
     });
     
@@ -317,7 +325,9 @@ $( '#submit' ).click(function() {
         if (data === 'bad_request'){
         } else{
             user_info.innerText = "Generating Day-to-Day Payoffs viz...";
-            single_variate_TS(data, "container3", "Method Payoff", "Dollars", "Method Payoff")
+            single_variate_TS(data, "container3", "Method Payoff", "Dollars", "Method Payoff");
+            finished++;
+            endMessage(finished);
         }
     });
     
@@ -327,7 +337,9 @@ $( '#submit' ).click(function() {
         if (data === 'bad_request'){
         } else{
             user_info.innerText = "Generating Day-to-Day ROI viz...";
-            bivariate_TS(data, "container4", "Method Return on Investment", "Percentage", "Method ROI")
+            bivariate_TS(data, "container4", "Method Return on Investment", "Percentage", "Method ROI");
+            finished++;
+            endMessage(finished);
         }
     });
     
@@ -343,13 +355,19 @@ $( '#submit' ).click(function() {
             removeLabels();
             modifySpacing();
             styleTable();
-            clearInterval(counter);
-//            leave.appendChild(exit);
-            user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in by dragging. Click me to close.";
+            finished++;
+            endMessage(finished);
         }
-        user_info.addEventListener("click", deleteConsole);
-        setTimeout(deleteConsole, 15000);
     });
+    
+    function endMessage(count){
+        if (count === 5){
+            clearInterval(counter);
+            user_info.innerText = "O-B took " + seconds.toPrecision(3) + " seconds. Zoom in by dragging. Click me to close.";
+            user_info.addEventListener("click", deleteConsole);
+            setTimeout(deleteConsole, 15000);
+        }
+    }
     
     function incrementSeconds() {
         seconds += .01;

@@ -15,7 +15,7 @@ s3_resource = boto3.resource(
 )
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = b'\tR\x81q\x91qP\x13\xb6\xfe\x1f}4\xb50Z\x04>\x8f\xb3Fw\x9d\x8f'
 
 @app.route('/files', methods=['POST', 'GET'])
 def files():

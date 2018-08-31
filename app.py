@@ -31,12 +31,12 @@ def files():
 def index():
 
 	if request.method == 'GET':
-	    start_time = str(int(time.time()))
-	    session['start_time'] = start_time
 	    return render_template('index.html')
 
 	if request.method == 'POST':
-		
+        start_time = str(int(time.time()))
+        session['start_time'] = start_time
+            
 		if not request.form['asset'] or not request.form['start'] or not request.form['end']:
 			flags = ['Incomplete form data']
 			return render_template('index.html', flags=flags)

@@ -280,15 +280,7 @@ def search_and_compute(query):
     source_file = source + '.csv'
     query_file = source + '-' + str(length) + '.csv'
 
-
-    obj = s3.Object(bucket, source_file)
-    obj2 = s3.Object(bucket, query_file)
     objs = list(bucket.objects.filter(Prefix=query_file))
-
-
-    data = bucket.Object(source_file).get()['Body'].read().decode('utf-8')
-    testdata = StringIO(data)
-    df = pd.read_csv(testdata)
 
     # loc = option_length + '.csv'
     # query_file = current_directory / loc

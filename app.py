@@ -6,12 +6,12 @@ from pricing.standardize import validate
 from pricing.computations import search_and_compute
 from pricing.export import update_query, price_JSON, query_JSON
 import boto3
-from pricing.config import S3_BUCKET, S3_KEY, S3_SECRET
+# from pricing.config import S3_BUCKET, S3_KEY, S3_SECRET
 
 s3_resource = boto3.resource(
    "s3",
-   aws_access_key_id=S3_KEY,
-   aws_secret_access_key=S3_SECRET
+   aws_access_key_id=process.env.S3_KEY,
+   aws_secret_access_key=process.env.S3_SECRET
 )
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ app.secret_key = b'\tR\x81q\x91qP\x13\xb6\xfe\x1f}4\xb50Z\x04>\x8f\xb3Fw\x9d\x8f
 def files():
 	
 	s3_resource = boto3.resource('s3')
-	my_bucket = s3_resource.Bucket(S3_BUCKET)
+	my_bucket = s3_resource.Bucket(process.env.S3_BUCKET)
 	summaries = my_bucket.objects.all()
 	return render_template('test.html', my_bucket=my_bucket, files=summaries)
 
@@ -54,7 +54,7 @@ def index():
 			flags = ['Incorrect file type']
 			return render_template('index.html', flags=flags)
 
-		S3_info = {'bucket': S3_BUCKET, 'key': S3_KEY, 'secret': S3_SECRET}
+		S3_info = {'bucket': process.env.S3_BUCKET, 'key': process.env.S3_KEY, 'secret': process.env.S3_SECRET}
 		session['S3_info'] = S3_info
 		session['source'] = session['start_time'] + '-' + session['asset_name']
 
